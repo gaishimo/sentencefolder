@@ -93,11 +93,11 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
     },
 
     onTouch: function(ev){
-
+      var $target = $(ev.target);
       var touch = ev.originalEvent.touches[0];
 
-      console.log("ev", ev.target);
-      if($(ev.target).hasClass('dragger') ){
+      if($target.hasClass('dragger') ||
+          $target.hasClass('sentence-item') ||$target.prop('tagName') === 'i'){
         return;
       }
 
