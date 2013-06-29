@@ -2,6 +2,7 @@ define([
   '../models/app_model',
   './studied-times-modal',
   './study-item-edit',
+  '../models/sentence',
   '../utils/confirm',
   '../helper/star',
   '../helper/slider',
@@ -11,7 +12,8 @@ define([
   'tiptip'
   ],
   function(AppModel, StudiedTimesModalView, StudyItemEditView,
-     ConfirmUtils, StarHelper, SliderHelper, TransitionHelper){
+    SentenceModel, ConfirmUtils,
+    StarHelper, SliderHelper, TransitionHelper){
 
   'use strict';
   var StudyItemView = Backbone.View.extend({
@@ -36,6 +38,7 @@ define([
         'click .item-select': 'clickItemSelect',
         'click .icon-star,.icon-star-empty': 'clickStar',
         'click .icon-trash': 'clickTrash',
+        'click .icon-copy': 'duplicateItem',
         'click .studied-times': 'clickStudiedTimes',
         'click .title': _.debounce(this.gotoEdit, 1000, true)
       }
@@ -142,6 +145,24 @@ define([
       ConfirmUtils.show({ onYes: function(){
         model.destroy();
       }});
+    },
+
+    duplicateItem: function(){
+      var model = new SentenceModel(_.clone(this.model.attributes));
+      delete model.attributes.created_at;
+      delete model.attributes.updated_at;
+      delete model.attributes.formattedUpdatedTime;
+      delete model.attributes.last_studied_time;
+      model.set({
+        _id: null,
+        sentence_id: '',
+        point: 0,
+        star: 0,
+        studied_times: []
+      });
+      TransitionHelper.gotoEdit(
+        new StudyItemEditView({ model: model })
+      );
     },
 
     clickStudiedTimes : function(ev){

@@ -252,9 +252,11 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
       ev.preventDefault();
       var isCreate = this.model.isNew();
 
+
       if(!this.checkRequiredValues()){
         return;
       }
+
 
       var itemInputs = this.getValuesFromForm();
 

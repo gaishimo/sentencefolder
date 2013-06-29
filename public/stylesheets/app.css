@@ -123,7 +123,7 @@ textarea:focus{
 
 
 .time{
-  font-family: "Lucida Console", Monaco, monospace;
+  /*font-family: "Lucida Console", Monaco, monospace;*/
   letter-spacing: 0;
   margin: 0 3px;
 }
@@ -244,9 +244,8 @@ input.error:focus, textarea.error:focus{
 .star-button .icon-star-empty:hover{
   opacity: 1;
 }
-.star-button .icon-trash:hover{
-  color: red;
-}
+
+
 
 .star-button .icon-star[data-star-idx="1"]{ color: #BEBE1E;}
 .star-button .icon-star[data-star-idx="2"]{ color: red; }
@@ -677,7 +676,7 @@ input.error:focus, textarea.error:focus{
   study-items
  ------------------------------------------------------*/
 #study-item-list{
-  width: 900px;
+  width: 930px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 80px;
@@ -715,10 +714,6 @@ input.error:focus, textarea.error:focus{
 /* ------------------------------------------------------
   item select
  ------------------------------------------------------*/
-/*#study-item-list .study-item:nth-child(even){
-  background: rgb(240, 245, 255);
-}
-*/
 
 
 #study-item-list .item-select{
@@ -841,7 +836,7 @@ input.error:focus, textarea.error:focus{
 
 #study-item-list .main{
   float: left;
-  width: 500px;
+  width: 530px;
 }
 
 #study-item-list .title{
@@ -854,7 +849,7 @@ input.error:focus, textarea.error:focus{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 430px;
+  width: 460px;
 }
 
 #study-item-list .title span{
@@ -893,6 +888,28 @@ input.error:focus, textarea.error:focus{
   color: rgb(70, 70, 70);
   text-align: right;
   margin-left: 30px;
+
+}
+
+#study-item-list .edit i{
+  opacity: 0.8;
+  margin-left: 10px;
+}
+
+#study-item-list .edit i:hover{
+  opacity: 1;
+}
+
+#study-item-list .edit .icon-copy{
+  font-size: 85%;
+}
+
+#study-item-list .edit .icon-trash{
+  margin-left: 3px;
+}
+
+#study-item-list .edit .icon-trash:hover{
+  color: red;
 }
 
 #study-item-list .sub{
@@ -1101,7 +1118,7 @@ input.error:focus, textarea.error:focus{
 }
 
 #study-item-edit-form{
-  width: 900px;
+  width: 930px;
   margin-right: auto;
   margin-left: auto;
   font-size: 1.3rem; font-size: 13px;

@@ -25,8 +25,7 @@
               <div id="search-tags"></div>
             </div>
             <span class="large-xxx star-button">
-              <i class="icon-star-empty"
-                  data-star-idx="0"></i>
+              <i class="icon-star-empty" data-star-idx="0"></i>
             </span>
           </div>
           <label>
@@ -115,14 +114,16 @@
                 <ul>
                   <li>ID: <@=get('sentence_id')@></li>
                   <li>作成:<span class="time"><@=get('formattedCreatedTime') @></span></li>
-                  <li>最終更新:<span class="time"><@=get('formattedUpdatedTime') @></span></li>
+                  <li>最終更新:<span class="time"><@=get('formattedUpdatedTime') || get('formattedCreatedTime') @></span></li>
                 </ul>
               </div>
 
-              <div class="edit">
-                <p class="large-xxx star-button">
+              <div class="edit large-xxx">
+                <div class="star-button">
                   <i class="icon-star<@=get('star') ? '':'-empty' @>"
                       data-star-idx="<@=get('star')? get('star') : '0'@>"></i>
+                </div>
+                  <i class="icon-copy tooltip" title="複製する"></i>
                   <i class="icon-trash tooltip" title="削除する"></i>
                 </p>
               </div>

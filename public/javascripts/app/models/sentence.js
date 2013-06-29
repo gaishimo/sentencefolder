@@ -60,14 +60,24 @@ define([ 'underscore', 'moment', 'underscore-string', 'backbone', 'backbone.comp
     formattedCreatedTime: {
       fields: ['created_at'],
       compute: function(fields){
-        return moment(fields.created_at).format('YYYY/MM/DD HH:mm');
+        if(fields.created_at){
+          return moment(fields.created_at).format('YYYY/MM/DD HH:mm');
+        }else{
+          return '';
+        }
+
       }
     },
 
     formattedUpdatedTime: {
       fields: ['updated_at'],
       compute: function(fields){
-        return moment(fields.updated_at).format('YYYY/MM/DD HH:mm');
+        if(fields.updated_at){
+          return moment(fields.updated_at).format('YYYY/MM/DD HH:mm');
+        }else{
+          return '';
+        }
+
       }
     },
 
