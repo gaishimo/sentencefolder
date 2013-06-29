@@ -1,5 +1,11 @@
-define(['../models/app_model', './studying-item', '../helper/slider', 'backbone'],
-    function( AppModel, StudyingItemView, SliderHelper ){
+define([
+    '../models/app_model',
+    './studying-item',
+    '../helper/slider',
+    '../helper/transition',
+    'backbone'],
+    function( AppModel, StudyingItemView, SliderHelper, TransitionHelper ){
+
   'use strict';
   var StudyingView = Backbone.View.extend({
     id: 'studying',
@@ -17,6 +23,7 @@ define(['../models/app_model', './studying-item', '../helper/slider', 'backbone'
           self.addStudiedTime();
           if(self.collection.length === 1){
             alert('全てのアイテムの学習が完了しました。');
+            self.backToList();
             return;
           }
           self.collection.remove(self.currentItemModel);
@@ -92,7 +99,10 @@ define(['../models/app_model', './studying-item', '../helper/slider', 'backbone'
       return model;
     },
 
-
+    backToList: function(){
+      console.log("content", TransitionHelper);
+      TransitionHelper.comeBackToList(this);
+    }
 
   });
   return StudyingView;

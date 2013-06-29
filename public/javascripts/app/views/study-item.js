@@ -164,7 +164,13 @@ define([
     },
 
     gotoEdit: function(){
-      TransitionHelper.gotoEdit(this.model);
+      var editView = new StudyItemEditView({ model: this.model });
+      $('#list-container').fadeOut(500, function(){
+        AppModel.getGeneralModel().trigger('hide_list_container');
+        $('#main-content').append(editView.render().el);
+        editView.doAfterViewShowed();
+        $('body').animate({ scrollTop: 0 }, 10);
+      });
     }
 
   });

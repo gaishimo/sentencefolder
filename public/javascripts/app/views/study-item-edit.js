@@ -1,5 +1,5 @@
-define([ '../models/app_model', 'select2', 'backbone'],
-    function(AppModel){
+define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
+    function(AppModel, TransitionHelper){
   'use strict';
 
   var controlEditIconShowing = function($rows){
@@ -66,7 +66,7 @@ define([ '../models/app_model', 'select2', 'backbone'],
 
     events: function(){
       return{
-        'click .back-to-list': _.debounce(this.backToList, 1000, true),
+        'click .back-to-list': _.debounce(this.comeBackToList, 1000, true),
         'click .icon-trash': 'removeRow',
         'click .icon-arrow-up': 'moveRowUp',
         'click .icon-arrow-down': 'moveRowDown',
@@ -119,22 +119,17 @@ define([ '../models/app_model', 'select2', 'backbone'],
           .select2( 'val', tagsArray);
     },
 
-    backToList: function(ev){
+    comeBackToList: function(ev){
       var self = this;
-      this.$el.fadeOut(300, function(){
+      TransitionHelper.comeBackToList(this, function(){
         var id;
-
-        self.remove();
-        $('#list-container').fadeIn(function(){
-          AppModel.getGeneralModel().trigger('show_list_container');
-          if(self.model){
-            id = self.model.get('_id');
-            var studyItemElPos = $('.study-item[data-id=' + id + ']');
-            if(studyItemElPos.length > 0){
-              $('body').animate({ scrollTop: studyItemElPos.position().top - 260 }, 10);
-            }
+        if(self.model){
+          id = self.model.get('_id');
+          var studyItemElPos = $('.study-item[data-id=' + id + ']');
+          if(studyItemElPos.length > 0){
+            $('body').animate({ scrollTop: studyItemElPos.position().top - 260 }, 10);
           }
-        });
+        }
       });
 
     },

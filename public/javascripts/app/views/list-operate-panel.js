@@ -5,11 +5,12 @@ define([
   '../utils/confirm',
   './tag-modal-add',
   './tag-modal-remove',
+  './studying',
   '../helper/transition',
   'tiptip', 'backbone', 'jquery.ui.effect' ],
    function(AppModel, SentenceModel, SentenceCollection,
-    DeleteConfirm, TagModalAddView,
-    TagModalRemoveView, TransitionHelper){
+    DeleteConfirm, TagModalAddView, TagModalRemoveView,
+    StudyingView, TransitionHelper){
 
   'use strict';
   var ListOperatePanelView = Backbone.View.extend({
@@ -125,7 +126,17 @@ define([
         selectedItems.add(self.collection.get(id));
       });
       if(selectedItems.length === 0){ return; }
-      TransitionHelper.gotoStudy(selectedItems);
+      this.gotoStudy(selectedItems);
+    },
+
+    gotoStudy: function(items){
+      var studyingView = new StudyingView({ collection: items });
+      $('#list-container').fadeOut(500, function(){
+        AppModel.getGeneralModel().trigger('hide_list_container');
+        $('#main-content').append(studyingView.render().el);
+        $('body').animate({ scrollTop: 0 }, 10);
+        studyingView.showNextItem();
+      });
     }
 
   });
