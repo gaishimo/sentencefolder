@@ -16,6 +16,7 @@ define([ 'underscore', 'moment', 'underscore-string', 'backbone', 'backbone.comp
         before: [ { 'question': '', 'answer': '', speaker: 1 } ],
         after: [ { 'question': '', 'answer': '', speaker: 1 } ],
       },
+      star: 0,
       point: 0,
       studied_times: [],
     },
