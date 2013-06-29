@@ -5,12 +5,13 @@ define([
   '../utils/confirm',
   './tag-modal-add',
   './tag-modal-remove',
+  './study-item-edit',
   './studying',
   '../helper/transition',
   'tiptip', 'backbone', 'jquery.ui.effect' ],
    function(AppModel, SentenceModel, SentenceCollection,
     DeleteConfirm, TagModalAddView, TagModalRemoveView,
-    StudyingView, TransitionHelper){
+    StudyItemEditView, StudyingView, TransitionHelper){
 
   'use strict';
   var ListOperatePanelView = Backbone.View.extend({
@@ -114,7 +115,8 @@ define([
     },
 
     addNewItem: function(){
-      TransitionHelper.gotoEdit(new SentenceModel( { user_id: 'user1' } ));
+      TransitionHelper.gotoEdit(
+        new StudyItemEditView({ model: new SentenceModel() }));
     },
 
     startStudy: function(){
