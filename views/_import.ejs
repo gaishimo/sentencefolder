@@ -1,0 +1,63 @@
+    <link href="/stylesheets/reset.css" rel="stylesheet">
+    <link href="/stylesheets/font-awesome/font-awesome.min.css" rel="stylesheet">
+    <link href="/stylesheets/simple-slider.css" rel="stylesheet">
+    <link href="/stylesheets/iThing.css" rel="stylesheet">
+    <link href="/stylesheets/tiptip.css" rel="stylesheet">
+    <link href="/stylesheets/select2/select2.css" rel="stylesheet">
+    <link href="/stylesheets/app.css" rel="stylesheet">
+
+    <script>
+    window.require = {
+      paths: {
+        'backbone': '../backbone/backbone',
+        'backbone.compute': '../backbone/backbone.compute',
+        'underscore': '../underscore/underscore',
+        'underscore-string': '../underscore/underscore.string',
+        'moment': '../moment/moment',
+        'expanding': '../jquery/ui/expanding/expanding',
+        'highlight': '../jquery/highlight/jquery.highlight',
+        'slider': '../jquery/ui/simple-slider/simple-slider',
+        'tiptip': '../jquery/ui/tooltip/jquery.tiptip.min',
+        'range-slider': '../jquery/ui/range-slider/jQAllRangeSliders-min',
+        'speak': '../speak/speakClient',
+        'mousewheel': '../jquery/ui/mousewheel/jquery.mousewheel',
+        'select2': '../jquery/ui/select2/select2',
+        'bottom': '../jquery/ui/jquery_bottom/jquery.bottom-1.0',
+        'jquery.ui.core': '../jquery/jquery.ui/jquery.ui.core',
+        'jquery.ui.widget': '../jquery/jquery.ui/jquery.ui.widget',
+        'jquery.ui.mouse': '../jquery/jquery.ui/jquery.ui.mouse',
+        'jquery.ui.core': '../jquery/jquery.ui/jquery.ui.core',
+        'jquery.ui.effect': '../jquery/jquery.ui/jquery.ui.effect',
+        'jquery.ui.autocomplete': '../jquery/jquery.ui/jquery.ui.autocomplete'
+      },
+      shim: {
+        'underscore' : {
+          exports: '_'
+        },
+        'underscore-string' : {
+          deps: [ 'underscore' ]
+        },
+        'backbone': {
+          deps: [ 'underscore' ]
+        },
+        'backbone.compute': {
+          deps: [ 'backbone' ]
+        },
+        'range-slider': {
+          deps: [ 'mousewheel' ]
+        },
+        'mousewheel': {
+          deps: [  'jquery.ui.mouse' ]
+        },
+        'jquery.ui.widget': {
+          deps: [ 'jquery.ui.core' ]
+        },
+        'jquery.ui.mouse': {
+          deps: [ 'jquery.ui.core', 'jquery.ui.widget' ]
+        },
+        'jquery.ui.effect': {
+          depts: [ 'jquery.ui.core' ]
+        }
+      }
+    };
+    </script>

@@ -1,0 +1,97 @@
+var _ = require('underscore'),
+  moment = require('moment'),
+  async = require('async'),
+  model = require('../dao/sentences_dao');
+
+module.exports = {
+
+  list: function( user_id, param, callback){
+    var query = this.prepareQuery(param, user_id);
+    var sort = { created_at: -1 };
+    var condition;
+
+    if(!_.isUndefined(param.sort)){
+      switch(param.sort){
+        case  '1': sort.created_at = 1; break;
+        case '-2': sort.last_studied_time = -1; break;
+        case '2': sort.last_studied_time = 1; break;
+      }
+    }
+
+    condition = { query: query, sort: sort, limit: 20 };
+    if(!_.isUndefined(param.offset)){
+      condition.skip = param.offset;
+    }
+
+    console.log("condition", condition);
+
+    model.find(condition, callback);
+  },
+
+  count: function( user_id, param, callback ){
+    var query = this.prepareQuery(param, user_id);
+    model.count(query, callback);
+  },
+
+  prepareQuery: function(p, user_id){
+    var query = { user_id: user_id };
+    if(!_.isUndefined(p.point_min)){
+      query.point = { $gte: p.point_min, $lte: p.point_max };
+    }
+
+    if(!_.isUndefined(p.tags)){
+      query.tags = { $all: p.tags.split(',') };
+    }
+
+    if(!_.isUndefined(p.star)){
+      query.star = p.star;
+    }
+
+   if(!_.isUndefined(p.last_studied_time_min)){
+     var criteria = [];
+     var rangeEnd = moment()
+        .add('days', -p.last_studied_time_max )
+        .toDate();
+     if(p.last_studied_time_min === 0 ){
+         query.last_studied_time = { $or: [ { $exist: false}, { $gte: rangeEnd } ] };
+     }else{
+       var rangeBegin = moment()
+          .add('days', -p.last_studied_time_min )
+          .toDate();
+       query.last_studied_time = { $lte: rangeBegin, $gte: rangeEnd };
+     }
+
+   }
+    if(!_.isUndefined(p.text)){
+      if(p.text_lang === 'ja'){
+        query.$or = [];
+        var regexp = new RegExp( p.text , 'ig');
+        query.$or.push({ question: regexp });
+        query.$or.push({ situation: regexp });
+        query.$or.push({ memo: regexp });
+        query.$or.push({ tags: regexp });
+        query.$or.push({ 'dialog.before.question': regexp });
+        query.$or.push({ 'dialog.after.question': regexp});
+        query.$or.push({ 'answer.memo': regexp});
+        query.$or.push({ 'param_sets.params.question': regexp });
+      }else if(p.text_lang === 'en'){
+        query.$or = [];
+        var regexp = new RegExp( p.text , 'ig');
+        query.$or.push({ 'answers.sentence': regexp });
+        query.$or.push({ 'dialog.before.answer': regexp });
+        query.$or.push({ 'dialog.after.answer': regexp});
+        query.$or.push({ tags: regexp });
+        query.$or.push({ 'param_sets.params.answer': regexp});
+      }else{
+        query.sentence_id = parseInt(p.text, 10);
+      }
+
+      console.log("query", query);
+    }
+
+    return query;
+  }
+
+
+
+};

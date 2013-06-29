@@ -1,0 +1,35 @@
+{
+  "name": "product-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "grunt": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-csslint": "*",
+    "express": "3.1.0",
+    "express-partials": "*",
+    "express-logger": "*",
+    "ejs": "*",
+    "ejs-locals": "*",
+    "connect": "*",
+    "connect-redis" : "*",
+    "piping": "*",
+    "config": "*",
+    "async": "*",
+    "moment": "*",
+    "mocha": "*",
+    "should": "*",
+    "connect-ltsv-logger": "*",
+    "mongoskin": "*",
+    "redis": "*",
+    "underscore": "*",
+    "underscore.string": "*",
+    "request": "*"
+  },
+  "engines":{
+    "node" : "0.11"
+  }
+}

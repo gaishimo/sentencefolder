@@ -1,0 +1,39 @@
+    <script id="tmpl-studied-times-modal" type="text/template">
+        <h1 class="large">
+          学習日時
+          <span class="large-x"><i class="icon-remove-sign"></i></span>
+        </h1>
+        <div class="body">
+        <ul class="large-x">
+          <@get('formattedStudiedTimes').forEach(function(time, i){ @>
+          <li class="time"><@=time@>
+            <span class="remove-studied-time"><i class="icon-remove"></i></span>
+          </li>
+          <@});@>
+        </ul>
+        </div>
+    </script>
+
+    <script id="tmpl-add-tag-modal" type="text/template">
+        <h1 class="large">タグの一括追加<span class="large-x"><i class="icon-remove-sign"></i></span></h1>
+        <div class="body">
+          <div class="tags"></div>
+        </div>
+        <div class="footer">
+          <button class="btn-medium add-tags">追加する</button>
+        </div>
+    </script>
+
+    <script id="tmpl-remove-tag-modal" type="text/template">
+        <h1 class="large">タグの一括解除<span class="large-x"><i class="icon-remove-sign"></i></span></h1>
+        <div class="body">
+          <select multiple>
+          <@_.each(tags, function(t){@>
+            <option value="<@=t@>"><@=t@></option>
+          <@}); @>
+          </select>
+        </div>
+        <div class="footer">
+          <button class="btn-medium remove-tags">解除する</button>
+        </div>
+    </script>

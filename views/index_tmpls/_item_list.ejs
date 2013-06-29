@@ -1,0 +1,176 @@
+    <script id='tmpl-filter-form' type='text/template'>
+      <form id="filter-form" method="get" class="medium">
+        <div>
+          <label>
+            <span class="tooltip" title="理解度の範囲を指定">理解度</span>
+          </label>
+          <div class="search-input">
+            <div id="range-slider-point"></div>
+          </div>
+          <label>
+            <span class="tooltip" title="直近で学習した日時の範囲を指定">最終学習日時</span>
+          </label>
+          <div class="search-input">
+            <div id="range-slider-last-study"></div>
+          </div>
+        </div>
+        <div>
+          <label>
+            <span class="tags-icon large-xx tooltip" title="指定のタグで絞り込む(AND条件)">
+              <i class="icon-tags"></i>
+            </span>
+          </label>
+          <div class="search-input">
+            <div class="search-tags-wrapper">
+              <div id="search-tags"></div>
+            </div>
+            <span class="large-xxx star-button">
+              <i class="icon-star-empty"
+                  data-star-idx="0"></i>
+            </span>
+          </div>
+          <label>
+            <span class="large-xx tooltip" title="テキストで絞り込む">
+              <i class="icon-search"></i>
+            </span>
+          </label>
+          <div class="search-input">
+
+            <span><i class="icon-level-down large-x"></i></span>
+            <input type="text" name="text-search" id="text-search" class="text-search">
+            <select id="text-lang" name="lang">
+              <option value="ja">日本語</option>
+              <option value="en">英語</option>
+              <option value="id">ID</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </script>
+
+    <script id='tmpl-list-operate-panel' type='text/template'>
+      <div id="list-operate-panel">
+        <div class="study-start">
+          <button class="show-at-selected">学習開始</button>
+        </div>
+        <div class="toolbar">
+          <ul>
+            <li class="large-xx tooltip add-new-item"
+                title="新規センテンスの追加">
+                <i class="icon-plus-sign"></i>
+            </li>
+            <li class="large-xx tooltip check-select-all-switch"
+                title="全て選択/解除">
+                <i class="icon-check-empty"></i>
+            </li>
+            <li class="large-xx tooltip show-at-selected add-tag" title="タグを追加">
+              <i class="icon-tag"></i>
+            </li>
+            <li class="large-xx tag-trash tooltip show-at-selected remove-tag"
+                 title="設定しているタグを解除">
+              <i class="icon-tag"></i>
+              <i class="icon-trash"></i>
+            </li>
+            <li class="large-xx tooltip show-at-selected remove-item"
+                  title="センテンスを削除">
+              <i class="icon-trash"></i>
+            </li>
+          </ul>
+        </div>
+        <div class="number-and-sort">
+          <div class="number-of-items large-x">
+            <span><span id="fetch-cnt"></span> /</span>
+            <span>Total: <span id="total-cnt"></span></span>
+          </div>
+          <div class="sort">
+            <select>
+              <option value="-1">-並び替え-</option>
+              <option value="-1">作成日時▼</option>
+              <option value="1">作成日時▲</option>
+              <option value="-2">最終学習日時▼</option>
+              <option value="2">最終学習日時▲</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script id='tmpl-study-item' type='text/template'>
+      <li class="study-item point-<@=get('point')@> <@=get('isNew')? 'new-item':''@>"
+          data-id="<@=get('_id')@>">
+        <div>
+          <div class="item-select" data-checked="false">
+            <div class="pseudo-check"></div>
+          </div>
+
+          <div class="seperator"></div>
+          <div class="master">
+            <div class="main">
+
+              <div class="title link large">
+                <a><@=get('question')@></a>
+              </div>
+
+              <div class="updated-info small">
+                <ul>
+                  <li>ID: <@=get('sentence_id')@></li>
+                  <li>作成:<span class="time"><@=get('formattedCreatedTime') @></span></li>
+                  <li>最終更新:<span class="time"><@=get('formattedUpdatedTime') @></span></li>
+                </ul>
+              </div>
+
+              <div class="edit">
+                <p class="large-xxx star-button">
+                  <i class="icon-star<@=get('star') ? '':'-empty' @>"
+                      data-star-idx="<@=get('star')? get('star') : '0'@>"></i>
+                  <i class="icon-trash tooltip" title="削除する"></i>
+                </p>
+              </div>
+
+              <div class="sub small">
+                <div class="situation">
+                  <@if(get('situation')){@>
+                  <span class="tooltip"
+                     title="<@=get('situation')@>"><@=get('situation')@></span>
+                  <@}@>
+                </div>
+                <div class="tags">
+                  <span class="tags-icon"><i class="icon-tags"></i></span>
+                  <div class="tags-text">
+                    <a  title="タグ: <@=get('formattedTags')@>" class="tooltip"><@=get('formattedTags')@></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="progress">
+              <div class="progress-point">
+                <div class="slider"></div>
+                <div>
+                  <span class="point"><@=get('point')@></span>
+                </div>
+              </div>
+
+          </div>
+        </div>
+      </li>
+    </script>
+
+    <script id="tmpl-studied-times" type="text/template">
+      <@var existRecords = get('formattedStudiedTimes').length > 0; @>
+      <div class="studied-times<@=existRecords ? ' tooltip':''@>" <@=existRecords ? "title='学習日時(クリックで全て表示)'" : "" @>>
+        <ul class="medium" >
+          <@get('formattedStudiedTimes').forEach(function(time, i){ @>
+            <@if( i < 3 ){@>
+          <li class="time"><@=time@></li>
+            <@}@>
+          <@});@>
+        </ul>
+        <@if( get('formattedStudiedTimes').length === 0 ){@>
+          <span class="medium">未学習</span>
+        <@}@>
+        <@if( get('formattedStudiedTimes').length > 3 ){@>
+        <span>...</span>
+        <@}@>
+      </div>
+    </script>

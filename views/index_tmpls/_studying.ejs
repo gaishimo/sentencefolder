@@ -1,0 +1,129 @@
+<script id='tmpl-studying' type='text/template'>
+  <div class="item-num">
+    残りアイテム数: <span class="large-x"><@=itemNum@></span>
+  </div>
+</script>
+
+<script id='tmpl-studying-item' type='text/template'>
+    <div class="top-line"></div>
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="attribute-box">
+          <label>ID:</label>
+          <div class="id-contents">
+            <p class="sentence-id"><@=get('sentence_id')@></p>
+          </div>
+        </div>
+        <div class="attribute-box">
+          <label><i class="icon-tags"></i>:</label>
+          <p class="text-content"><@=get('formattedTags')@></p>
+        </div>
+        <@if(get('situation')){@>
+        <div class="attribute-box">
+          <label>状況:</label>
+          <p class="text-content"><@=get('situation')@></p>
+        </div>
+        <@}@>
+        <@if(get('description')){@>
+        <div class="attribute-box">
+          <label><span class="description-disp-switch">説明</span>:</label>
+          <p class="description-text text-content hide"><@=get('description')@></p>
+        </div>
+        <@}@>
+        <div class="star-button">
+          <i class="icon-star large-xx" data-star-idx="<@=get('star')@>"></i>
+        </div>
+
+        <div class="param-box">
+          <@if(get('param_sets').length >0){@>
+          <label>パラメータ:</label>
+          <div>
+            <select>
+              <option>option1</option>
+              <option>option2</option>
+            </select>
+            <select>
+              <option>option1</option>
+              <option>option2</option>
+            </select>
+          </div>
+          <@}@>
+        </div>
+
+        <@var dialog = get('dialog') || { before: [], after:[] };@>
+        <ul class="large sentences">
+          <@_.each(dialog.before, function(sentence){@>
+          <li class="speaker-<@=sentence.speaker@>">
+            <div>
+              <p><@=sentence.answer@></p>
+              <p class="sub-text"><@=sentence.question@></p>
+            </div>
+          </li>
+          <@});@>
+
+          <li class="main-sentence speaker-1">
+            <p class="sub-text"><@=get('question')@></p>
+            <div>
+              <ul>
+                <@_.each(get('answers'), function(answer){@>
+                <li>
+                  <div>
+
+                    <div class="sentence-item" data-is-showing="false">
+                      <i class="icon-question"></i>
+                      <div class="memo small"><@=answer.memo@></div>
+                      <div class="sentence-text hidden"><@=answer.sentence@></div>
+                    </div>
+                    <div class="speaker">
+                      <i class="icon-play-circle large-xxx"></i>
+                    </div>
+                  </div>
+                </li>
+                <@});@>
+              </ul>
+            </div>
+
+          </li>
+
+          <@_.each(dialog.after, function(sentence){@>
+          <li class="speaker-<@=sentence.speaker@>">
+            <div>
+              <p><@=sentence.answer@></p>
+              <p class="sub-text"><@=sentence.question@></p>
+            </div>
+          </li>
+          <@});@>
+
+        </ul>
+      </div>
+
+      <div class="footer">
+        <div class="box footer-box">
+          <div>
+            <div>
+              <button class="finish-study btn-medium" data-studied="false">
+                <i class="icon-check-empty"></i><span>学習済にする</span></button>
+            </div>
+            <div class="progress">
+              <div class="point large-xxx">
+                <span><@=get('point')@></span>
+              </div>
+              <div class="slider">
+              </div>
+
+           </div>
+         </div>
+         <div class="goto-next">
+            <i class="icon-chevron-sign-right "></i>
+         </div>
+      </div>
+
+    </div>
+
+</script>
+
+
+
+
+
+

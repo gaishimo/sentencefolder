@@ -1,0 +1,1 @@
+db.users.insert({ _id: 'user1', password: 'pass', created_at: new Date() });
