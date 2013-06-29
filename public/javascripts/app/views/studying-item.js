@@ -10,7 +10,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
     template: _.template($('#tmpl-studying-item').html()),
 
     events: {
-      'click .icon-star,.icon-star-empty': 'changeStar',
+      'click .star-button': 'changeStar',
       'click .description-disp-switch': 'switchDescriptionDisp',
       'click .sentence-item': 'switchSentenceItemDisp',
       'click .finish-study': 'switchStudyingStatus',
@@ -127,7 +127,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
 
     changeStar: function(ev){
       var self = this;
-      var $star = $(ev.target);
+      var $star = this.$('.star-button i');
       var starIdx = StarHelper.switchStar($star);
 
       this.starUpdating = starIdx;

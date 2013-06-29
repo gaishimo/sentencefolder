@@ -219,6 +219,13 @@ input.error:focus, textarea.error:focus{
 
 
 /* -- star button -- */
+.star-button{
+  /* prevent text from being selected */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+}
+
 .star-button .icon-star,
 .star-button .icon-star-empty{
   cursor: pointer;
@@ -229,10 +236,8 @@ input.error:focus, textarea.error:focus{
   cursor: pointer;
   color: gray;
   opacity: 0.8;
-  /* prevent text from being selected */
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
+
+
 }
 
 .star-button .icon-star:hover,
@@ -1420,7 +1425,9 @@ input.error:focus, textarea.error:focus{
 #studying .star-button{
   position: absolute;
   left: 220px;
-  top: 25px;
+  top: 10px;
+  font-size: 30px;
+  padding: 5px;
 }
 
 #studying .description-disp-switch{
