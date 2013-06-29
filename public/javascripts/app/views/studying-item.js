@@ -1,14 +1,16 @@
-define(['../models/app_model', '../helper/slider', 'backbone'],
-    function( AppModel, SliderHelper ){
+define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone'],
+    function( AppModel, SliderHelper, StarHelper ){
   'use strict';
   var StudyingItemView = Backbone.View.extend({
 
     className: 'item-panel hide',
 
     pointUpdating: null,
+    starUpdating: null,
     template: _.template($('#tmpl-studying-item').html()),
 
     events: {
+      'click .icon-star,.icon-star-empty': 'changeStar',
       'click .description-disp-switch': 'switchDescriptionDisp',
       'click .sentence-item': 'switchSentenceItemDisp',
       'click .finish-study': 'switchStudyingStatus',
@@ -121,9 +123,24 @@ define(['../models/app_model', '../helper/slider', 'backbone'],
     gotoNext: function(){
       var finishThis = this.$('.finish-study').attr('data-studied') === 'true';
       AppModel.getGeneralModel().trigger('goto_next_item', finishThis);
+    },
+
+    changeStar: function(ev){
+      var self = this;
+      var $star = $(ev.target);
+      var starIdx = StarHelper.switchStar($star);
+
+      this.starUpdating = starIdx;
+      //update for the latest star click in 3 seconds
+      setTimeout(function(){
+        if(self.starUpdating !== null){
+          self.model.save({ 'star': self.starUpdating }, {
+            patch: true
+          });
+          self.starUpdating = null;
+        }
+      }, 3000);
     }
-
-
 
   });
   return StudyingItemView;
