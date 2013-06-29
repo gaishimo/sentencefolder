@@ -78,7 +78,9 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
         'click .advanced-setting-switch': 'switchAdvancedSettingShowing',
         'focus input,textarea,select': 'onFocusInput',
         'blur input,textarea,select': 'onBlurInput',
-        'click .save-item': 'save'
+        'change .basic textarea[name=question]': 'onQuestionTextChange',
+        'change .basic li:first-child textarea[name=sentence]': 'onAnswerTextChange',
+        'click .save-item': 'save',
       }
     },
 
@@ -104,6 +106,14 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
       if($targetEl.hasClass('error')){
         $targetEl.removeClass('error');
       }
+    },
+
+    onQuestionTextChange: function(ev){
+      this.$('.dialog-main-question').text($(ev.target).val());
+    },
+
+    onAnswerTextChange: function(ev){
+      this.$('.dialog-main-answer').text($(ev.target).val());
     },
 
     doAfterViewShowed: function(){

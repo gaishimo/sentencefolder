@@ -102,12 +102,12 @@
           <div class="dialog-main clearfix">
             <label>本文</label>
             <div class="form-input">
-              <p>
+              <p class="dialog-main-answer">
                  <@if(get('answers') && get('answers').length > 0){ @>
                  <@=get('answers')[0].sentence@>
                  <@} @>
               </p>
-              <p><@=get('question')@></p>
+              <p class="dialog-main-question"><@=get('question')@></p>
             </div>
           </div>
 
