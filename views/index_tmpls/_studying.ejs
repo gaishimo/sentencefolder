@@ -27,7 +27,7 @@
         <@if(get('description')){@>
         <div class="attribute-box">
           <label><span class="description-disp-switch">説明</span>:</label>
-          <p class="description-text text-content hide"><@=get('description')@></p>
+          <pre class="description-text text-content hide"><@=get('description')@></pre>
         </div>
         <@}@>
         <div class="star-button">
@@ -55,8 +55,16 @@
           <@_.each(dialog.before, function(sentence){@>
           <li class="speaker-<@=sentence.speaker@>">
             <div>
-              <p><@=sentence.answer@></p>
-              <p class="sub-text"><@=sentence.question@></p>
+              <div>
+              <@sentence.answer.match(/[^\r\n]+/g).forEach(function(line){ @>
+                <p><@=line@></p>
+              <@});@>
+              </div>
+              <div>
+              <@sentence.question.match(/[^\r\n]+/g).forEach(function(line){ @>
+                <p class="sub-text"><@=line@></p>
+              <@});@>
+              </div>
             </div>
           </li>
           <@});@>
@@ -72,7 +80,11 @@
                     <div class="sentence-item" data-is-showing="false">
                       <i class="icon-question"></i>
                       <div class="memo small"><@=answer.memo@></div>
-                      <div class="sentence-text hidden"><@=answer.sentence@></div>
+                      <div class="sentence-text hidden">
+                        <@answer.sentence.match(/[^\r\n]+/g).forEach(function(line){ @>
+                        <p><@=line@></p>
+                        <@});@>
+                      </div>
                     </div>
                     <div class="speaker">
                       <i class="icon-play-circle large-xxx"></i>
@@ -88,8 +100,16 @@
           <@_.each(dialog.after, function(sentence){@>
           <li class="speaker-<@=sentence.speaker@>">
             <div>
-              <p><@=sentence.answer@></p>
-              <p class="sub-text"><@=sentence.question@></p>
+              <div>
+              <@sentence.answer.match(/[^\r\n]+/g).forEach(function(line){ @>
+                <p><@=line@></p>
+              <@});@>
+              </div>
+              <div>
+              <@sentence.question.match(/[^\r\n]+/g).forEach(function(line){ @>
+                <p class="sub-text"><@=line@></p>
+              <@});@>
+              </div>
             </div>
           </li>
           <@});@>
