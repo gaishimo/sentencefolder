@@ -15,7 +15,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
       'click .sentence-item': 'switchSentenceItemDisp',
       'click .finish-study': 'switchStudyingStatus',
       'click .goto-next': 'gotoNext',
-      'change .param-select': 'paramChange',
+      'change .param-select': 'reflectParam',
       'touchstart': 'onTouch',
       'touchmove': 'onTouch',
       'touchend': 'onTouch'
@@ -64,7 +64,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
           question: $option.attr('data-question'),
           answer: $option.attr('data-answer')
         };
-      })
+      });
 
       this.$('.sentences div.answer>p,.sentences div.question>p').each(function(){
         var $textEl = $(this);
