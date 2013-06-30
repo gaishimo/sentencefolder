@@ -53,7 +53,7 @@
         <@var dialog = get('dialog') || { before: [], after:[] };@>
         <ul class="large sentences">
           <@_.each(dialog.before, function(sentence){@>
-          <li class="speaker-<@=sentence.speaker@>">
+          <li class="sub-sentence speaker-<@=sentence.speaker@>">
             <div>
               <div>
               <@sentence.answer.match(/[^\r\n]+/g).forEach(function(line){ @>
@@ -98,7 +98,7 @@
           </li>
 
           <@_.each(dialog.after, function(sentence){@>
-          <li class="speaker-<@=sentence.speaker@>">
+          <li class="sub-sentence speaker-<@=sentence.speaker@>">
             <div>
               <div>
               <@sentence.answer.match(/[^\r\n]+/g).forEach(function(line){ @>
