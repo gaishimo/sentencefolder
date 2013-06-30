@@ -1263,7 +1263,8 @@ input.error:focus, textarea.error:focus{
   margin-left: 110px;
 }
 
-#study-item-edit-form .dialog-main p{
+#study-item-edit-form .dialog-main-answer,
+#study-item-edit-form .dialog-main-question{
   float: left;
   width: 280px;
   padding: 0 10px;
