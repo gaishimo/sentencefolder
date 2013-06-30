@@ -262,11 +262,9 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
       ev.preventDefault();
       var isCreate = this.model.isNew();
 
-
       if(!this.checkRequiredValues()){
         return;
       }
-
 
       var itemInputs = this.getValuesFromForm();
 
@@ -283,7 +281,7 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
                 $message.fadeOut();
               }, 3000);
             });
-          }, 1000);
+          }, 500);
 
           if(isCreate){
             model.set('isNew', true);
