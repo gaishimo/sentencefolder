@@ -154,7 +154,7 @@
             </span>
           </legend>
           <div class="param-sets <@=paramSets.length == 0 ? 'hide':''@>">
-            <label>パラメータ<p>各20文字以内</p></label>
+            <label>パラメータ<p>各40文字以内</p></label>
             <div class="form-input">
 
               <ul  id="param-set-list" class="param-set clearfix array-field-items"
@@ -168,7 +168,7 @@
                 <li class="large-x clearfix">
                   <span class="param-name">
                     ${<input type="text" name="param_name"
-                              placeholder="パラメータ名" value="<@=paramset.param_name@>" maxlength="20">}
+                              placeholder="パラメータ名" value="<@=paramset.param_name@>" maxlength="40">}
                   </span>
                   <i class="icon-trash"></i>
                   <i class="icon-arrow-down large-x <@=downAlowOn ? '':'hide'@>"></i>
@@ -184,10 +184,10 @@
                       @>
                       <li>
                         <input type ="text" name="answer"
-                              class="param-answer answer-text" maxlength="20"
+                              class="param-answer answer-text" maxlength="40"
                               placeholder="値: 英語" value="<@=param.answer@>">
                         :<input type="text" name="question"
-                              class="param-question question-text" maxlength="20"
+                              class="param-question question-text" maxlength="40"
                               placeholder="値: 日本語" value="<@=param.question@>">
                         <i class="icon-trash large-x"></i>
                         <i class="icon-arrow-down large-x <@=downAlowOn_ ? '':'hide'@>"></i>
