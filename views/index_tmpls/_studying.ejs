@@ -38,14 +38,19 @@
           <@if(get('param_sets').length >0){@>
           <label>パラメータ:</label>
           <div>
-            <select>
-              <option>option1</option>
-              <option>option2</option>
-            </select>
-            <select>
-              <option>option1</option>
-              <option>option2</option>
-            </select>
+            <ul>
+            <@get('param_sets').forEach(function(paramset){@>
+              <li>
+                <select class="param-select" name="<@=paramset.param_name@>">
+                  <@paramset.params.forEach(function(param){@>
+                  <option data-question="<@=param.question@>" data-answer="<@=param.answer@>">
+                    <@=param.question || param.answer@>
+                  </option>
+                  <@});@>
+                </select>
+              </li>
+            <@});@>
+            </ul>
           </div>
           <@}@>
         </div>
@@ -55,14 +60,14 @@
           <@_.each(dialog.before, function(sentence){@>
           <li class="sub-sentence speaker-<@=sentence.speaker@>">
             <div>
-              <div>
-              <@sentence.answer.match(/[^\r\n]+/g).forEach(function(line){ @>
-                <p><@=line@></p>
+              <div class="answer">
+              <@(sentence.answer.match(/[^\r\n]+/g) || []).forEach(function(line){ @>
+                <p data-original-text="<@=line@>"><@=line@></p>
               <@});@>
               </div>
-              <div>
-              <@sentence.question.match(/[^\r\n]+/g).forEach(function(line){ @>
-                <p class="sub-text"><@=line@></p>
+              <div class="question">
+              <@(sentence.question.match(/[^\r\n]+/g) || []).forEach(function(line){ @>
+                <p class="sub-text" data-original-text="<@=line@>"><@=line@></p>
               <@});@>
               </div>
             </div>
@@ -70,19 +75,22 @@
           <@});@>
 
           <li class="main-sentence speaker-1">
-            <p class="sub-text"><@=get('question')@></p>
+            <div class="question sub-text">
+            <@get('question').match(/[^\r\n]+/g).forEach(function(line){ @>
+              <p class="question" data-original-text="<@=line@>"><@=line@></p>
+            <@});@>
+            </div>
             <div>
               <ul>
                 <@_.each(get('answers'), function(answer){@>
                 <li>
                   <div>
-
                     <div class="sentence-item" data-is-showing="false">
                       <i class="icon-question"></i>
                       <div class="memo small"><@=answer.memo@></div>
-                      <div class="sentence-text hidden">
-                        <@answer.sentence.match(/[^\r\n]+/g).forEach(function(line){ @>
-                        <p><@=line@></p>
+                      <div class="sentence-text answer hidden">
+                        <@(answer.sentence.match(/[^\r\n]+/g) || [] ).forEach(function(line){ @>
+                        <p data-original-text="<@=line@>"><@=line@></p>
                         <@});@>
                       </div>
                     </div>
@@ -100,14 +108,14 @@
           <@_.each(dialog.after, function(sentence){@>
           <li class="sub-sentence speaker-<@=sentence.speaker@>">
             <div>
-              <div>
-              <@sentence.answer.match(/[^\r\n]+/g).forEach(function(line){ @>
-                <p><@=line@></p>
+              <div class="answer">
+              <@(sentence.answer.match(/[^\r\n]+/g) || []).forEach(function(line){ @>
+                <p data-original-text="<@=line@>"><@=line@></p>
               <@});@>
               </div>
-              <div>
-              <@sentence.question.match(/[^\r\n]+/g).forEach(function(line){ @>
-                <p class="sub-text"><@=line@></p>
+              <div class="question">
+              <@(sentence.question.match(/[^\r\n]+/g) || []).forEach(function(line){ @>
+                <p class="sub-text" data-original-text="<@=line@>"><@=line@></p>
               <@});@>
               </div>
             </div>
