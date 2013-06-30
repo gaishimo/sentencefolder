@@ -42,8 +42,10 @@
             <@get('param_sets').forEach(function(paramset){@>
               <li>
                 <select class="param-select" name="<@=paramset.param_name@>">
-                  <@paramset.params.forEach(function(param){@>
-                  <option data-question="<@=param.question@>" data-answer="<@=param.answer@>">
+                  <@var randomIdx = Math.floor( Math.random() * paramset.params.length );@>
+                  <@paramset.params.forEach(function(param, i){@>
+                  <option data-question="<@=param.question@>"
+                    data-answer="<@=param.answer@>" <@= i==randomIdx ? 'selected': '' @>>
                     <@=param.question || param.answer@>
                   </option>
                   <@});@>

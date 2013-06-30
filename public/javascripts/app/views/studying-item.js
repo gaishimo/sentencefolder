@@ -21,36 +21,10 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
       'touchend': 'onTouch'
     },
 
-    paramChange: function(ev){
-      var paramSets = _.map(this.$('.param-select'), function(select){
-        var $select = $(select);
-        var $option = $select.children('option:selected');
-        return {
-          name: $select.attr('name'),
-          question: $option.attr('data-question'),
-          answer: $option.attr('data-answer')
-        };
-      })
-
-      this.$('.sentences div.answer>p,.sentences div.question>p').each(function(){
-        var $textEl = $(this);
-        var textForEdit = $textEl.attr('data-original-text');
-        _.each(paramSets, function(paramSet){
-          var word = $textEl.parent().hasClass('question') ?
-             paramSet.question: paramSet.answer;
-          var regex = new RegExp('\\$\\{'+ paramSet.name + '\\}', 'gi');
-          textForEdit = textForEdit.replace(regex,
-              '<em>' + _.str.escapeHTML(word) + '</em>');
-        });
-        $textEl.html(textForEdit);
-      });
-
-    },
-
     render: function(){
       this.$el.html(this.template(this.model));
       if(this.model.get('param_sets').length > 0){
-        this.paramChange();
+        this.reflectParam();
       }
       return this;
     },
@@ -79,6 +53,32 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
 
         }
       );
+    },
+
+    reflectParam: function(ev){
+      var paramSets = _.map(this.$('.param-select'), function(select){
+        var $select = $(select);
+        var $option = $select.children('option:selected');
+        return {
+          name: $select.attr('name'),
+          question: $option.attr('data-question'),
+          answer: $option.attr('data-answer')
+        };
+      })
+
+      this.$('.sentences div.answer>p,.sentences div.question>p').each(function(){
+        var $textEl = $(this);
+        var textForEdit = $textEl.attr('data-original-text');
+        _.each(paramSets, function(paramSet){
+          var word = $textEl.parent().hasClass('question') ?
+             paramSet.question: paramSet.answer;
+          var regex = new RegExp('\\$\\{'+ paramSet.name + '\\}', 'gi');
+          textForEdit = textForEdit.replace(regex,
+              '<em>' + _.str.escapeHTML(word) + '</em>');
+        });
+        $textEl.html(textForEdit);
+      });
+
     },
 
     switchDescriptionDisp: function(){
