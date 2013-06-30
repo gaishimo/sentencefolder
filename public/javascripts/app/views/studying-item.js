@@ -61,7 +61,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
         var $option = $select.children('option:selected');
         return {
           name: $select.attr('name'),
-          question: $option.attr('data-question'),
+          question: $option.attr('data-question') || $option.attr('data-answer'),
           answer: $option.attr('data-answer')
         };
       });
