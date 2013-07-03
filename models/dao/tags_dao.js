@@ -26,7 +26,7 @@ module.exports = _.extend( mongodao('tags'), {
     var me = this;
 
     this.exist(
-      { user_id: user_id, l  tag_id: tag_id },
+      { user_id: user_id, tag_id: tag_id },
       function(err, isExist){
         if(isExist){
           callback(err, false);

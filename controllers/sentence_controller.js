@@ -31,52 +31,29 @@ module.exports = {
   },
 
   create: function(req, res){
-    var user_id = req.session.user._id,
+    var userId = req.session.user._id,
           newSequence;
-    sequence.getNextSequence(user_id, function(err, result){
-      newSentence = _.extend(req.body,
-          { user_id: user_id, created_at: new Date(), sentence_id: result} );
-      model.insert(newSentence, function(err, result){
-          if(err){
-              res.send(500);
-              return;
-          }
-          res.send(result[0]);
-      });
+    sentencesLogic.create(userId, req.body, function(err, result){
+      if(err){
+          res.send(500);
+          return;
+      }
+      res.send(result[0]);
     });
   },
 
   update: function(req, res){
-    var user_id = req.session.user._id,
+    var userId = req.session.user._id,
           id = req.param('id'),
-          sentence = req.body,
-          updateDoc = {};
-
-    _.each( ['question', 'description', 'answers', 'dialog',
-        'param_sets', 'studied_times', 'point', 'star', 'tags', 'situation'], function(field){
-      if( !_.isUndefined(sentence[field]) ){
-        if(field === 'studied_times'){
-          var dates = _.map(sentence[field], function(d){
-            return moment(d).toDate();
-          });
-          console.log("dates", dates);
-          updateDoc['studied_times'] = dates;
-          updateDoc['last_studied_time'] = _.max(dates);
-        }else{
-          updateDoc[field] = sentence[field];
-        }
-      }
-
-    });
-    updateDoc.updated_at = new Date();
-
-    model.update( { _id: ObjectId(id) }, {$set: updateDoc}, function(err, doc){
+          sentence = req.body;
+    sentencesLogic.update(userId, id, sentence, function(err, result){
       if(err){
         res.send(500);
         return;
       }
-      res.json(doc);
+      res.json(result);
     });
+
   },
 
   delete: function(req, res){

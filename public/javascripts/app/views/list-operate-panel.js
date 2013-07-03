@@ -104,8 +104,8 @@ define([
       var self = this;
       DeleteConfirm.show({ onYes: function(){
         var targetModels = [];
-        $('.study-item .item-select[data-checked=true]').each(function(i, item){
-          var id = $(item).closest('li').attr('data-id');
+        $('.study-item-select[data-checked=true]').each(function(i, item){
+          var id = $(item).closest('.study-item-container').attr('data-id');
           targetModels.push( self.collection.get(id) );
         });
         _.each(targetModels, function(model){

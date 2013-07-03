@@ -13,6 +13,7 @@ var express = require('express'),
       index = require('./controllers/index_controller'),
       login = require('./controllers/login_controller'),
       sentence = require('./controllers/sentence_controller');
+      tag = require('./controllers/tag_controller');
 
 module.exports = function(){
   var server;
@@ -97,6 +98,8 @@ module.exports = function(){
       app.post('/sentences/new', sentence.create);
       app.patch('/sentences/:id', sentence.update);
       app.delete('/sentences/:id', sentence.delete);
+
+      app.get('/tags', tag.list);
 
       server = http.createServer(app);
       server.listen(app.get('port'), function(){

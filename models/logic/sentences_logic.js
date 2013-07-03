@@ -1,7 +1,10 @@
 var _ = require('underscore'),
   moment = require('moment'),
   async = require('async'),
-  model = require('../dao/sentences_dao');
+  ObjectId = require('mongoskin').ObjectID,
+  model = require('../dao/sentences_dao'),
+  sequence = require('../dao/sentences_seq_dao'),
+  tags = require('../dao/tags_dao');
 
 module.exports = {
 
@@ -22,15 +25,59 @@ module.exports = {
     if(!_.isUndefined(param.offset)){
       condition.skip = param.offset;
     }
-
-    console.log("condition", condition);
-
     model.find(condition, callback);
   },
 
   count: function( user_id, param, callback ){
     var query = this.prepareQuery(param, user_id);
     model.count(query, callback);
+  },
+
+  create: function( userId, sentenceData, callback ){
+    sequence.getNextSequence(userId, function(err, result){
+      var newSentence = _.extend(sentenceData,
+          { user_id: userId, created_at: new Date(), sentence_id: result} );
+      model.insert(newSentence, function(err, result){
+        if(err){ callback(err); return; }
+        if(result[0].tags.length > 0){
+          tags.addTags(userId, result[0].tags, function(){
+            callback(err, result);
+          });
+        }else{
+          callback(err, result);
+        }
+      });
+    });
+  },
+
+  update: function(userId, itemId, sentence, callback){
+    var updateDoc = {};
+    _.each( ['question', 'description', 'answers', 'dialog',
+        'param_sets', 'studied_times', 'point', 'star', 'tags', 'situation'], function(field){
+      if( !_.isUndefined(sentence[field]) ){
+        if(field === 'studied_times'){
+          var dates = _.map(sentence[field], function(d){
+            return moment(d).toDate();
+          });
+          updateDoc['studied_times'] = dates;
+          updateDoc['last_studied_time'] = _.max(dates);
+        }else{
+          updateDoc[field] = sentence[field];
+        }
+      }
+    });
+
+    model.update( { _id: ObjectId(itemId) }, {$set: updateDoc}, function(err, result){
+      if(err){ callback(err); return; }
+
+      if( updateDoc.tags.length > 0 ){
+        tags.addTags(userId, updateDoc.tags, function(){
+          callback(err, result);
+        });
+      }else{
+        callback(err, result);
+      }
+    });
   },
 
   prepareQuery: function(p, user_id){
