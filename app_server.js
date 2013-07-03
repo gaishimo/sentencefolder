@@ -133,8 +133,8 @@ function checkAuth(req, res, next){
 
   if( !needAuth ){ next(); return; }
 
-  console.log("req.user", req.user);
-  console.log("req.session", req.session);
+  // console.log("req.user", req.user);
+  // console.log("req.session", req.session);
 
   if(!req.session.user){
     res.redirect('/login');
