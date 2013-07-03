@@ -30,6 +30,8 @@ dwsync.xml
 *.komodoproject
 .komodotools
 
+css
+
 # Folders to ignore
 .hg
 .svn
