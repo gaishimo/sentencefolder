@@ -70,7 +70,7 @@ module.exports = {
     model.update( { _id: ObjectId(itemId) }, {$set: updateDoc}, function(err, result){
       if(err){ callback(err); return; }
 
-      if( updateDoc.tags.length > 0 ){
+      if( updateDoc.tags && updateDoc.tags.length > 0 ){
         tags.addTags(userId, updateDoc.tags, function(){
           callback(err, result);
         });
