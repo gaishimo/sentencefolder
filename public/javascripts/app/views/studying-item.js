@@ -145,7 +145,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
         this.diffX = this.startX - touch.pageX;
         if(this.diffX > 5){
           ev.preventDefault();
-          $('.item-panel').css( "left", -this.diffX );
+          $('.studying-item').css( "left", -this.diffX );
         }
       }else if(ev.type === "touchend"){
         if(this.diffX > 100){
@@ -153,7 +153,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
           this.gotoNext();
         }else if(this.diffX > 5){
           ev.preventDefault();
-          $( '.item-panel' ).animate({ left: 0 }, 200);
+          $( '.studying-item' ).animate({ left: 0 }, 200);
         }
       }
     },
