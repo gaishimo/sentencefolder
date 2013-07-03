@@ -4,21 +4,21 @@
       <i class="icon-circle-arrow-left"></i>
       </a>
 
-      <form  id="study-item-edit-form">
-        <fieldset class="basic">
+      <form  id="study-item-edit-form" class="edit-form">
+        <fieldset class="edit-form-basic">
           <legend>基本情報</legend>
           <div class="sentence-id <@=get('sentence_id') == '' ? 'hide':''@>">
             <label>ID</label>
-            <p class="form-input"><@=get('sentence_id')@></p>
+            <p class="edit-form-input"><@=get('sentence_id')@></p>
           </div>
           <label>日本語文<p>200文字以内</p></label>
-          <div class="form-input">
+          <div class="edit-form-input">
             <textarea name="question" maxlength="200" placeholder="日本語訳を入力"
-                  class="question-text"><@=get('question')@></textarea>
+                  class="edit-form-question-text"><@=get('question')@></textarea>
           </div>
-          <label class="answer-label">英文<p>各200文字以内</p></label>
-          <div class="form-input">
-            <ul class="answer-list array-field-items" data-add-button-id="add-answer">
+          <label class="edit-form-answer-label">英文<p>各200文字以内</p></label>
+          <div class="edit-form-input">
+            <ul class="answer-list edit-form-array-field-items" data-add-button-id="add-answer">
           <@(function(){   // -- anonymous function start
                   var answers = get('answers') || []; var answersLength = answers.length;
             @>
@@ -28,7 +28,7 @@
                   @>
               <li>
                 <textarea name="sentence" maxlength="200" placeholder="覚えたい英文を入力"
-                      class="answer-text"><@=answer.sentence@></textarea>
+                      class="edit-form-answer-text"><@=answer.sentence@></textarea>
                 <textarea name="memo" class="mini"
                       placeholder="memo" maxlength="200"><@=answer.memo@></textarea>
                   <i class="icon-arrow-down large-x <@=downAlowOn ? '':'hide'@>"></i>
@@ -44,13 +44,13 @@
 
           </div>
           <label>状況<p>50文字以内</p></label>
-          <input type="text" name="situation" class="form-input input-medium"
+          <input type="text" name="situation" class="edit-form-input input-medium"
              value="<@=get('situation')@>" maxlength="50" placeholder="会話のシチュエーション">
           <label for="">説明<p>500文字以内</p></label>
-          <textarea name="description" class="form-input"
+          <textarea name="description" class="edit-form-input"
                 maxlength="500" placeholder="補足事項・説明があれば入力"><@=get('description')@></textarea>
           <label for="">タグ<p>5つまで</p></label>
-          <div class="form-input tags">
+          <div class="edit-form-input edit-form-tags">
             <input name="tags" data-values="<@=get('tags')@>">
           </div>
 
@@ -66,14 +66,14 @@
 
           <legend>前後の会話文</legend>
 
-          <div class="dialog-before clearfix">
+          <div class="edit-form-dialog-before clearfix">
             <label>前の文<p>各200文字以内</p></label>
-            <div class="form-input">
-              <ul class="dialog-before-list array-field-items"
+            <div class="edit-form-input">
+              <ul class="edit-form-dialog-before-list edit-form-array-field-items"
                   data-add-button-id="add-dialog-before-row">
               <@if(beforeLength >0 ){@>
                 <@_.each(get('dialog').before, function(sentence, i){@>
-                  <@ var downAlowOn = ( beforeLength >= 2 && beforeLength-1 != i );
+                  <@ var downAlowOn = ( beforeLength >= 2 && bereLength-1 != i );
                         var upAlowOn =  ( beforeLength >= 2 && i != 0 );
                   @>
                 <li>
@@ -81,9 +81,9 @@
                     <option value="1" <@=sentence.speaker == 1 ? 'selected':''@>>自分</option>
                     <option value="2" <@=sentence.speaker == 2 ? 'selected':''@>>相手</option>
                   </select>
-                  <textarea name="answer" class="input-medium answer-text"
+                  <textarea name="answer" class="input-medium edit-form-answer-text"
                         placeholder="English" maxlength="200"><@=sentence.answer@></textarea>
-                  <textarea name="question" class="input-medium question-text"
+                  <textarea name="question" class="input-medium edit-form-question-text"
                         placeholder="日本語" maxlength="200"><@=sentence.question@></textarea>
                   <i class="icon-trash large-x"></i>
                     <i class="icon-arrow-down large-x <@=downAlowOn ? '':'hide'@>"></i>
@@ -93,25 +93,25 @@
               <@}@>
 
               </ul>
-              <button id="add-dialog-before-row" class="btn-medium add-dialog-before-row">
+              <button id="add-dialog-before-row" class="btn-medium">
                 <i class="icon-plus-sign"></i>追加
               </button>
             </div>
           </div>
 
-          <div class="dialog-main clearfix">
+          <div class="edit-form-dialog-main clearfix">
             <label>本文</label>
-            <div class="form-input">
-              <pre class="dialog-main-answer"><@if(get('answers') && get('answers').length > 0){ @><@=get('answers')[0].sentence@><@} @>
+            <div class="edit-form-input">
+              <pre class="edit-form-dialog-main-answer"><@if(get('answers') && get('answers').length > 0){ @><@=get('answers')[0].sentence@><@} @>
               </pre>
-              <pre class="dialog-main-question"><@=get('question')@></pre>
+              <pre class="edit-form-dialog-main-question"><@=get('question')@></pre>
             </div>
           </div>
 
-          <div class="dialog-after clearfix">
+          <div class="edit-form-dialog-after clearfix">
             <label>後の文<p>各200文字以内</p></label>
-            <div class="form-input">
-              <ul class="dialog-after-list array-field-items" data-add-button-id="add-dialog-after-row">
+            <div class="edit-form-input">
+              <ul class="edit-form-dialog-after-list edit-form-array-field-items" data-add-button-id="add-dialog-after-row">
               <@if(afterLength >0 ){@>
                 <@_.each(get('dialog').after, function(sentence, i){@>
                   <@ var downAlowOn = ( afterLength >= 2 && afterLength-1 != i );
@@ -122,9 +122,9 @@
                     <option value="1" <@=sentence.speaker == 1 ? 'selected':''@>>自分</option>
                     <option value="2" <@=sentence.speaker == 2 ? 'selected':''@>>相手</option>
                   </select>
-                  <textarea name="answer" class="input-medium answer-text"
+                  <textarea name="answer" class="input-medium edit-form-answer-text"
                         placeholder="English" maxlength="200"><@=sentence.answer@></textarea>
-                  <textarea name="question" class="input-medium question-text"
+                  <textarea name="question" class="input-medium edit-form-question-text"
                         placeholder="日本語" maxlength="200"><@=sentence.question@></textarea>
                   <i class="icon-trash large-x"></i>
                   <i class="icon-arrow-down large-x <@=downAlowOn ? '':'hide'@>"></i>
@@ -134,7 +134,7 @@
               <@}@>
 
               </ul>
-              <button id="add-dialog-after-row" class="btn-medium add-dialog-after-row">
+              <button id="add-dialog-after-row" class="btn-medium">
                 <i class="icon-plus-sign"></i>追加
               </button>
             </div>
@@ -144,7 +144,7 @@
           <@})();    // anonymous function end @>
         </fieldset>
 
-        <fieldset class="advanced-setting">
+        <fieldset class="edit-form-advanced-setting">
           <@(function(){    // anonymous function start -------------
               var paramSets = get('param_sets') || [];
             @>
@@ -153,11 +153,11 @@
               <i class="icon-caret-<@=paramSets.length == 0 ? 'right':'down'@> large-xxx"></i>
             </span>
           </legend>
-          <div class="param-sets <@=paramSets.length == 0 ? 'hide':''@>">
+          <div class="edit-form-param-sets <@=paramSets.length == 0 ? 'hide':''@>">
             <label>パラメータ<p>各40文字以内</p></label>
-            <div class="form-input">
+            <div class="edit-form-input">
 
-              <ul  id="param-set-list" class="param-set clearfix array-field-items"
+              <ul  id="param-set-list" class="edit-form-param-set clearfix edit-form-array-field-items"
                     data-add-button-id="add-param-set-row">
                 <@  // -- param_set loop start -----
                  var setsLength = paramSets.length;
@@ -173,9 +173,9 @@
                   <i class="icon-trash"></i>
                   <i class="icon-arrow-down large-x <@=downAlowOn ? '':'hide'@>"></i>
                   <i class="icon-arrow-up large-x <@=upAlowOn ? '':'hide'@>" ></i>
-                  <div class="params">
+                  <div class="edit-form-params">
                     <@var paramsLength = paramset.params.length; @>
-                    <ul class="param-list array-field-items" data-add-button-id="add-param-row-<@=i@>">
+                    <ul class="param-list edit-form-array-field-items" data-add-button-id="add-param-row-<@=i@>">
 
                       <@ // -- params (inner) loop start -----
                          _.each(paramset.params, function(param, j){ @>
@@ -184,10 +184,10 @@
                       @>
                       <li>
                         <input type ="text" name="answer"
-                              class="param-answer answer-text" maxlength="40"
+                              class="param-answer edit-form-answer-text" maxlength="40"
                               placeholder="値: 英語" value="<@=param.answer@>">
                         :<input type="text" name="question"
-                              class="param-question question-text" maxlength="40"
+                              class="param-question edit-form-question-text" maxlength="40"
                               placeholder="値: 日本語" value="<@=param.question@>">
                         <i class="icon-trash large-x"></i>
                         <i class="icon-arrow-down large-x <@=downAlowOn_ ? '':'hide'@>"></i>
@@ -198,7 +198,7 @@
 
                     </ul>
                     <button id="add-param-row-<@=i@>"
-                          class="add-param-row btn-small<@=paramsLength >= 5 ? ' hide':''@>">
+                          class="edit-form-add-param-row btn-small<@=paramsLength >= 5 ? ' hide':''@>">
                       <i class="icon-plus-sign"></i>追加
                     </button>
                   </div>
@@ -213,11 +213,11 @@
           <@})();    // anonymous function end ------------- @>
         </fieldset>
 
-        <div class="form-bottom">
+        <div class="edit-form-bottom">
           <button class="btn-medium save-item clearfix">
             <i class="icon-refresh"></i>更新
           </button>
-          <p class="update-message hide">更新が完了しました</p>
+          <p class="edit-form-update-message hide">更新が完了しました</p>
         </div>
       </form>
     </script>
@@ -226,7 +226,7 @@
     <script id="tmpl-answer-row" type="text/template">
       <li class="hide">
         <textarea name="sentence" maxlength="200"
-              class="answer-text" placeholder="覚えたい英文を入力"></textarea>
+              class="edit-form-answer-text" placeholder="覚えたい英文を入力"></textarea>
         <textarea name="memo" class="mini" placeholder="memo"></textarea>
           <i class="icon-arrow-down large-x hide"></i>
           <i class="icon-arrow-up large-x" ></i>
@@ -240,9 +240,9 @@
           <option value="1">自分</option>
           <option value="2">相手</option>
         </select>
-                  <textarea name="answer" class="input-medium answer-text"
+                  <textarea name="answer" class="input-medium edit-form-answer-text"
                         placeholder="English" maxlength="200"></textarea>
-                  <textarea name="question" class="input-medium question-text"
+                  <textarea name="question" class="input-medium edit-form-question-text"
                         placeholder="日本語" maxlength="200"></textarea>
         <i class="icon-trash large-x"></i>
           <i class="icon-arrow-down large-x hide"></i>
@@ -253,21 +253,21 @@
 
     <script id="tmpl-param-set-row" type="text/template">
       <li class="large-x clearfix">
-        <span class="param-name">
+        <span class="edit-form-param-name">
           ${<input type="text" name="param_name"  placeholder="パラメータ名" value="">}
         </span>
         <i class="icon-trash"></i>
         <i class="icon-arrow-down large-x"></i>
         <i class="icon-arrow-up large-x hide" ></i>
-        <div class="params">
+        <div class="edit-form-params">
           <ul class="param-list array-value-field"
                   data-add-button-id="add-param-row-<@=idx@>">
             <li>
               <input type ="text" name="answer"
-                    class="param-answer answer-text" maxlength="40"
+                    class="param-answer edit-form-answer-text" maxlength="40"
                   placeholder="値: 英語" >
               :<input type="text" name="question"
-                    class="param-question question-text" maxlength="40"
+                    class="param-question edit-form-question-text" maxlength="40"
                   placeholder="値: 日本語" >
               <i class="icon-trash large-x"></i>
               <i class="icon-arrow-down large-x"></i>
@@ -285,9 +285,9 @@
     <script id="tmpl-param-row" type="text/template">
       <li class="hide">
         <input type ="text" name="answer"
-              class="param-answer answer-text" placeholder="値: 英語" value="" maxlength="40">
+              class="param-answer edit-form-answer-text" placeholder="値: 英語" value="" maxlength="40">
         :<input type="text" name="question"
-              class="param-question question-text" placeholder="値: 日本語" value="" maxlength="40">
+              class="param-question edit-form-question-text" placeholder="値: 日本語" value="" maxlength="40">
         <i class="icon-trash large-x"></i>
         <i class="icon-arrow-down large-x hide"></i>
         <i class="icon-arrow-up large-x" ></i>

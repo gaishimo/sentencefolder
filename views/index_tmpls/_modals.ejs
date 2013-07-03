@@ -15,25 +15,25 @@
     </script>
 
     <script id="tmpl-add-tag-modal" type="text/template">
-        <h1 class="large">タグの一括追加<span class="large-x"><i class="icon-remove-sign"></i></span></h1>
-        <div class="body">
-          <div class="tags"></div>
+        <h1 class="edit-tag-modal-header large">タグの一括追加<span class="large-x"><i class="icon-remove-sign"></i></span></h1>
+        <div class="edit-tag-modal-body">
+          <div class="edit-tag-modal-tags"></div>
         </div>
-        <div class="footer">
-          <button class="btn-medium add-tags">追加する</button>
+        <div class="edit-tag-modal-footer">
+          <button class="btn-medium edit-tag-modal-add">追加する</button>
         </div>
     </script>
 
     <script id="tmpl-remove-tag-modal" type="text/template">
-        <h1 class="large">タグの一括解除<span class="large-x"><i class="icon-remove-sign"></i></span></h1>
-        <div class="body">
-          <select multiple>
+        <h1 class="edit-tag-modal-header large">タグの一括解除<span class="large-x"><i class="icon-remove-sign"></i></span></h1>
+        <div class="edit-tag-modal-body">
+          <select class="remove-tag-modal-select" multiple>
           <@_.each(tags, function(t){@>
             <option value="<@=t@>"><@=t@></option>
           <@}); @>
           </select>
         </div>
-        <div class="footer">
-          <button class="btn-medium remove-tags">解除する</button>
+        <div class="edit-tag-modal-footer">
+          <button class="btn-medium edit-tag-modal-remove">解除する</button>
         </div>
     </script>

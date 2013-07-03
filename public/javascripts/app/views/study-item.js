@@ -17,6 +17,10 @@ define([
 
   'use strict';
   var StudyItemView = Backbone.View.extend({
+
+    tagName: 'li',
+    className: 'study-item',
+
     template: _.template($('#tmpl-study-item').html()),
     templateStudiedTimes: _.template($('#tmpl-studied-times').html()),
     pointUpdating: null,
@@ -35,12 +39,12 @@ define([
 
     events: function(){
       return{
-        'click .item-select': 'clickItemSelect',
+        'click .study-item-select': 'clickItemSelect',
         'click .icon-star,.icon-star-empty': 'clickStar',
         'click .icon-trash': 'clickTrash',
         'click .icon-copy': 'duplicateItem',
-        'click .studied-times': 'clickStudiedTimes',
-        'click .title': _.debounce(this.gotoEdit, 1000, true)
+        'click .study-item-studied-times': 'clickStudiedTimes',
+        'click .study-item-title': _.debounce(this.gotoEdit, 1000, true)
       }
     },
 
@@ -58,16 +62,16 @@ define([
     },
 
     renderStudiedTimes: function(){
-      var $originalEl = this.$el.find('.studied-times');
+      var $originalEl = this.$el.find('.study-item-studied-times');
       var $newEl = this.templateStudiedTimes(this.model);
       if($originalEl.length > 0){
         $originalEl.remove();
       }
-      this.$el.find('.progress').append($newEl);
+      this.$el.find('.study-item-progress').append($newEl);
     },
 
     renderTags: function(){
-      var $text = this.$('.tags-text>a');
+      var $text = this.$('.study-item-tags-text>a');
       var tags = this.model.get('formattedTags');
       $text.fadeOut(500, function(){
         $text.attr('title', 'タグ: ' + tags)
@@ -81,8 +85,8 @@ define([
     setSlider: function(){
       var self = this;
 
-      var $slider = this.$('.slider');
-      var $point = $slider.siblings('div').children('.point');
+      var $slider = this.$('.study-item-slider');
+      var $point = this.$('.study-item-progress-point')
       SliderHelper.setSlider($slider, $point,
         this.model.get('point'), function(pointVal){
           $slider.closest('.study-item')
@@ -105,18 +109,18 @@ define([
     },
 
     unsetSlider: function(){
-      SliderHelper.unsetSlider(this.$('.slider'));
+      SliderHelper.unsetSlider(this.$('.study-item-slider'));
     },
 
     clickItemSelect: function(ev){
-      var current = this.$('.item-select').attr('data-checked') === 'true';
+      var current = this.$('.study-item-select').attr('data-checked') === 'true';
       var changeTo = !current;
-      this.$('.item-select').attr('data-checked', changeTo)
+      this.$('.study-item-select').attr('data-checked', changeTo)
 
       if(changeTo){
         AppModel.getGeneralModel().trigger('selected_item');
       }else{
-        if( $('.item-select[data-checked=true]').length === 0 ){
+        if( $('.study-item-select[data-checked=true]').length === 0 ){
           AppModel.getGeneralModel().trigger('unselected_all_item');
         }
       }
@@ -170,18 +174,18 @@ define([
         var modalView = new StudiedTimesModalView({
           model: this.model
         });
-        $(ev.target).closest('.progress').append(modalView.render().el);
+        $(ev.target).closest('.study-item-progress').append(modalView.render().el);
         modalView.$el.fadeIn(500);
       }
 
     },
 
     selectAllItem: function(){
-      this.$('.item-select').attr('data-checked', 'true');
+      this.$('.study-item-select').attr('data-checked', 'true');
     },
 
     unselectAllItem: function(){
-      this.$('.item-select').attr('data-checked', 'false');
+      this.$('.study-item-select').attr('data-checked', 'false');
     },
 
     gotoEdit: function(){

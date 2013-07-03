@@ -9,7 +9,7 @@ define([
   'use strict';
   var StudyingView = Backbone.View.extend({
     id: 'studying',
-    className: 'large',
+    className: 'studying large',
     currentItemView: null,
     currentItemModel: null,
     template: _.template($('#tmpl-studying').html()),
@@ -51,11 +51,8 @@ define([
       var self = this;
       this.currentItemModel = this.selectItemAtRandom();
       this.currentItemView =new StudyingItemView({ model: this.currentItemModel });
-      this.$('.item-num').after(this.currentItemView.render().el);
-
-      $('#studying')
-        .removeClass(SliderHelper.getPointClasses().join(' '))
-        .addClass('point-' + this.currentItemModel.get('point'));
+      this.$('.studying-item-num').after(this.currentItemView.render().el);
+      this.currentItemView.setPointClass();
 
       this.currentItemView.$el.css('left', 500)
         .show()
@@ -90,7 +87,7 @@ define([
 
     refreshItemNum: function(){
       var itemNum = this.collection.length;
-      this.$('.item-num span').text(itemNum);
+      this.$('.studying-item-num-text').text(itemNum);
     },
 
     selectItemAtRandom: function(){

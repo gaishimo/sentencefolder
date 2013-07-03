@@ -17,24 +17,22 @@
   </head>
   <body id="sentence-folder">
     <div id="overall-layer"></div>
-    <%%>
     <%- partial('_header', { menu: true}) %>
 
     <div id="main-content">
-      <div id="list-container" class="">
+      <div id="list-container">
         <div id="list-header"></div>
         <ul id="study-item-list"></ul>
         <div id="study-item-list-loading"><i class="icon-spinner"></i></div>
       </div>
-
     </div>
 
     <div id="del-confirm">
-      <p class="large-x">削除してよろしいですか？</p>
+      <p class="del-confirm-msg large-x">削除してよろしいですか？</p>
       <div>
-        <ul>
-          <li><button class="cancel">キャンセル</button></li>
-          <li><button class="del">削除</button></li>
+        <ul class="del-confirm-buttons">
+          <li><button class="del-confirm-cancel">キャンセル</button></li>
+          <li><button class="del-confirm-del">削除</button></li>
         </ul>
       </div>
     </div>

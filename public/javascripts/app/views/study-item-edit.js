@@ -71,15 +71,15 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
         'click .icon-arrow-up': 'moveRowUp',
         'click .icon-arrow-down': 'moveRowDown',
         'click .add-answer': 'addAnswerRow',
-        'click .add-dialog-before-row': 'addDialogBeforeRow',
-        'click .add-dialog-after-row': 'addDialogAfterRow',
+        'click #add-dialog-before-row': 'addDialogBeforeRow',
+        'click #add-dialog-after-row': 'addDialogAfterRow',
         'click #add-param-set-row': 'addParamSetRow',
-        'click .add-param-row': 'addParamRow',
+        'click .edit-form-add-param-row': 'addParamRow',
         'click .advanced-setting-switch': 'switchAdvancedSettingShowing',
         'focus input,textarea,select': 'onFocusInput',
         'blur input,textarea,select': 'onBlurInput',
-        'change .basic textarea[name=question]': 'onQuestionTextChange',
-        'change .basic li:first-child textarea[name=sentence]': 'onAnswerTextChange',
+        'change .edit-form-basic textarea[name=question]': 'onQuestionTextChange',
+        'change .edit-form-basic li:first-child textarea[name=sentence]': 'onAnswerTextChange',
         'click .save-item': 'save',
       }
     },
@@ -97,12 +97,12 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
     },
 
     onFocusInput: function(ev){
-      $(ev.target).closest('.form-input').prev('label').children('p').fadeIn(500);
+      $(ev.target).closest('.edit-form-input').prev('label').children('p').fadeIn(500);
     },
 
     onBlurInput: function(ev){
       var $targetEl = $(ev.target);
-      $targetEl.closest('.form-input').prev('label').children('p').fadeOut(500);
+      $targetEl.closest('.edit-form-input').prev('label').children('p').fadeOut(500);
       if($targetEl.hasClass('error')){
         $targetEl.removeClass('error');
       }
@@ -120,7 +120,7 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
       //this method should be called after when view is attached to DOM
 
       //select2 setting
-      var tagInput = this.$('.tags>input');
+      var tagInput = this.$('.edit-form-tags>input');
       var tags = tagInput.attr('data-values') || '';
       var tagsArray  = tags.split(',');
 
@@ -236,13 +236,13 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
 
     addDialogBeforeRow: function(ev){
       ev.preventDefault();
-      var $dialogList = this.$('.dialog-before-list');
+      var $dialogList = this.$('.edit-form-dialog-before-list');
       addDialogRow($(ev.target), $dialogList, this.templateDialog);
    },
 
     addDialogAfterRow: function(ev){
       ev.preventDefault();
-      var $dialogList = this.$('.dialog-after-list');
+      var $dialogList = this.$('.edit-form-dialog-after-list');
       addDialogRow($(ev.target), $dialogList, this.templateDialog);
    },
 
@@ -274,7 +274,7 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
         patch: true,
         success: function(model, response, options){
           setTimeout(function(){
-            var $message = self.$('.update-message');
+            var $message = self.$('.edit-form-update-message');
             self.$('.save-item i').removeClass('icon-spin');
             $message.fadeIn(1000, function(){
               setTimeout(function(){
@@ -303,7 +303,7 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
     },
 
     checkRequiredValues: function(){
-      var $question = this.$('.basic textarea[name=question]');
+      var $question = this.$('.edit-form-basic textarea[name=question]');
       if($question.val().trim() === ''){
         $question.addClass('error').focus();
         return false;
@@ -314,9 +314,9 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
     getValuesFromForm: function(){
       var  self = this;
       var inputs = {};
-      inputs.question = this.$('.basic [name=question]').val().trim();
+      inputs.question = this.$('.edit-form-basic [name=question]').val().trim();
       inputs.answers =
-        _.chain(this.$('.basic .answer-list>li'))
+        _.chain(this.$('.edit-form-basic .answer-list>li'))
         .map( function(li){
           var sentence = $(li).children('[name=sentence]').val().trim();
           var memo = $(li).children('[name=memo]').val().trim();
@@ -331,9 +331,9 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
         }).value();
 
 
-      inputs.situation = this.$('.basic input[name=situation]').val().trim();
-      inputs.description = this.$('.basic textarea[name=description]').val().trim();
-      inputs.tags = this.$('.tags>input').select2('val');
+      inputs.situation = this.$('.edit-form-basic input[name=situation]').val().trim();
+      inputs.description = this.$('.edit-form-basic textarea[name=description]').val().trim();
+      inputs.tags = this.$('.edit-form-tags>input').select2('val');
       inputs.dialog = {};
       _.each( ['before', 'after'], function(identifier){
         var $items = self.$(_.str.sprintf('.dialog-%s ul>li', identifier));

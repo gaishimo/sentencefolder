@@ -7,7 +7,7 @@ define([ './modal', '../helper/item_select', 'select2',  'backbone'],
     template: _.template($('#tmpl-add-tag-modal').html()),
 
     events: _.extend({}, ModalView.prototype.events, {
-      'click .add-tags': 'addTags'
+      'click .edit-tag-modal-add': 'addTags'
     }),
 
     render: function(){
@@ -18,7 +18,7 @@ define([ './modal', '../helper/item_select', 'select2',  'backbone'],
 
     setSelect2: function(){
       var self = this;
-      this.$('.tags').select2( { tags: [], maximumSelectionSize: 3 } )
+      this.$('.edit-tag-modal-tags').select2( { tags: [], maximumSelectionSize: 3 } )
         .on('change', function(ev, data){
           var val = ev.val;
           if(val.length === 0){
@@ -32,7 +32,7 @@ define([ './modal', '../helper/item_select', 'select2',  'backbone'],
     addTags: function(){
       var self = this;
 
-      var inputtedTags = this.$('.tags').select2('val');
+      var inputtedTags = this.$('.edit-tag-modal-tags').select2('val');
       var targetModels = ItemSelectHelper.getSelectedModels(this.collection);
       _.each(targetModels, function(model){
         var tags = model.get('tags') || [];

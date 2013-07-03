@@ -6,8 +6,8 @@ define([], function(){
 
     this.getSelectedModels = function(collection){
       var models = [];
-      $('.study-item .item-select[data-checked=true]').each(function(i, item){
-        var id = $(item).closest('li').attr('data-id');
+      $('.study-item-select[data-checked=true]').each(function(i, item){
+        var id = $(item).closest('.study-item-container').attr('data-id');
         models.push( collection.get(id) );
       });
       return models;

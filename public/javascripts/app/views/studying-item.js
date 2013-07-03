@@ -3,7 +3,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
   'use strict';
   var StudyingItemView = Backbone.View.extend({
 
-    className: 'item-panel hide',
+    className: 'studying-item hide',
 
     pointUpdating: null,
     starUpdating: null,
@@ -11,11 +11,11 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
 
     events: {
       'click .star-button': 'changeStar',
-      'click .description-disp-switch': 'switchDescriptionDisp',
+      'click .studying-item-desc-switch': 'switchDescriptionDisp',
       'click .sentence-item': 'switchSentenceItemDisp',
-      'click .finish-study': 'switchStudyingStatus',
-      'click .goto-next': 'gotoNext',
-      'change .param-select': 'reflectParam',
+      'click .studying-item-finish-study': 'switchStudyingStatus',
+      'click .studying-item-goto-next': 'gotoNext',
+      'change .studying-item-param': 'reflectParam',
       'touchstart': 'onTouch',
       'touchmove': 'onTouch',
       'touchend': 'onTouch'
@@ -29,16 +29,24 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
       return this;
     },
 
+    setPointClass: function(pointVal){
+      if(_.isUndefined(pointVal)){
+        pointVal = this.model.get('point');
+      }
+      $('.studying-item')
+        .removeClass(SliderHelper.getPointClasses().join(' '))
+        .addClass('point-'+ pointVal);
+    },
+
     afterDomAttached: function(){
       var self = this;
-      var $slider = this.$('.slider');
-      var $point = this.$('.point span');
+
+      var $slider = this.$('.studying-item-slider');
+      var $point = this.$('.studying-item-point-num');
       SliderHelper.setSlider($slider, $point,
         this.model.get('point'), function afterChanged(pointVal){
-          $('#studying')
-            .removeClass(SliderHelper.getPointClasses().join(' '))
-            .addClass('point-'+ pointVal);
 
+          self.setPointClass(pointVal);
           self.pointUpdating = pointVal;
 
           //update for the latest slider operation in 2 seconds
@@ -56,7 +64,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
     },
 
     reflectParam: function(ev){
-      var paramSets = _.map(this.$('.param-select'), function(select){
+      var paramSets = _.map(this.$('.studying-item-param'), function(select){
         var $select = $(select);
         var $option = $select.children('option:selected');
         return {
@@ -66,7 +74,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
         };
       });
 
-      this.$('.sentences div.answer>p,.sentences div.question>p').each(function(){
+      this.$('.studying-item-sentences div.answer>p,.studying-item-sentences div.question>p').each(function(){
         var $textEl = $(this);
         var textForEdit = $textEl.attr('data-original-text');
         _.each(paramSets, function(paramSet){
@@ -112,7 +120,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
     },
 
     switchStudyingStatus: function(ev){
-      var $btn = this.$('.finish-study');
+      var $btn = this.$('.studying-item-finish-study');
       if($btn.attr('data-studied') === 'false'){
         $btn.attr('data-studied', true).children('span').text('学習済');
         $btn.children('i').switchClass('icon-check-empty', 'icon-check');
@@ -151,7 +159,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
     },
 
     gotoNext: function(){
-      var finishThis = this.$('.finish-study').attr('data-studied') === 'true';
+      var finishThis = this.$('.studying-item-finish-study').attr('data-studied') === 'true';
       AppModel.getGeneralModel().trigger('goto_next_item', finishThis);
     },
 

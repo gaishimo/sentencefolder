@@ -33,7 +33,7 @@ define([
       'click .remove-item': 'removeItem',
       'click .add-tag': 'showTagAddModal',
       'click .remove-tag': 'showTagRemoveModal',
-      'click .study-start': 'startStudy',
+      'click .operate-study-start': 'startStudy',
       'change .sort select': 'onChangeItemSort'
     },
 
@@ -123,11 +123,12 @@ define([
       var self = this;
       var selectedItems = new SentenceCollection();
       //get selected models
-      _.map($('.study-item .item-select[data-checked=true]').closest('li'), function(item){
+      _.map($('.study-item-select[data-checked=true]')
+                        .closest('.study-item-container'), function(item){
         var id = $(item).attr('data-id');
         selectedItems.add(self.collection.get(id));
       });
-      if(selectedItems.length === 0){ return; }
+      if(selectedItems.length === 0){ console.log('no items are selected.'); return; }
       this.gotoStudy(selectedItems);
     },
 

@@ -1,32 +1,32 @@
 <script id='tmpl-studying' type='text/template'>
-  <div class="item-num">
-    残りアイテム数: <span class="large-x"><@=itemNum@></span>
+  <div class="studying-item-num">
+    残りアイテム数: <span class="studying-item-num-text large-x"><@=itemNum@></span>
   </div>
 </script>
 
 <script id='tmpl-studying-item' type='text/template'>
-    <div class="top-line"></div>
-    <div class="content-wrapper">
+    <div class="studying-item-top-line"></div>
+    <div class="studying-item-content-wrapper">
       <div class="content">
-        <div class="attribute-box">
+        <div class="studying-item-attribute-box">
           <label>ID:</label>
-          <div class="id-contents">
+          <div class="studying-item-id">
             <p class="sentence-id"><@=get('sentence_id')@></p>
           </div>
         </div>
-        <div class="attribute-box">
+        <div class="studying-item-attribute-box">
           <label><i class="icon-tags"></i>:</label>
           <p class="text-content"><@=get('formattedTags')@></p>
         </div>
         <@if(get('situation')){@>
-        <div class="attribute-box">
+        <div class="studying-item-attribute-box">
           <label>状況:</label>
           <p class="text-content"><@=get('situation')@></p>
         </div>
         <@}@>
         <@if(get('description')){@>
-        <div class="attribute-box">
-          <label><span class="description-disp-switch">説明</span>:</label>
+        <div class="studying-item-attribute-box">
+          <label><span class="studying-item-desc-switch">説明</span>:</label>
           <pre class="description-text text-content hide"><@=get('description')@></pre>
         </div>
         <@}@>
@@ -34,14 +34,14 @@
           <i class="icon-star" data-star-idx="<@=get('star')@>"></i>
         </div>
 
-        <div class="param-box">
+        <div class="studying-item-param-box">
           <@if(get('param_sets').length >0){@>
           <label>パラメータ:</label>
           <div>
             <ul>
             <@get('param_sets').forEach(function(paramset){@>
               <li>
-                <select class="param-select" name="<@=paramset.param_name@>">
+                <select class="studying-item-param" name="<@=paramset.param_name@>">
                   <@var randomIdx = Math.floor( Math.random() * paramset.params.length );@>
                   <@paramset.params.forEach(function(param, i){@>
                   <option data-question="<@=param.question@>"
@@ -58,9 +58,9 @@
         </div>
 
         <@var dialog = get('dialog') || { before: [], after:[] };@>
-        <ul class="large sentences">
+        <ul class="large studying-item-sentences">
           <@_.each(dialog.before, function(sentence){@>
-          <li class="sub-sentence speaker-<@=sentence.speaker@>">
+          <li class="studying-item-sub-sentence speaker-<@=sentence.speaker@>">
             <div>
               <div class="answer">
               <@(sentence.answer.match(/[^\r\n]+/g) || []).forEach(function(line){ @>
@@ -76,7 +76,7 @@
           </li>
           <@});@>
 
-          <li class="main-sentence speaker-1">
+          <li class="studying-item-main-sentence speaker-1">
             <div class="question sub-text">
             <@get('question').match(/[^\r\n]+/g).forEach(function(line){ @>
               <p class="question" data-original-text="<@=line@>"><@=line@></p>
@@ -108,7 +108,7 @@
           </li>
 
           <@_.each(dialog.after, function(sentence){@>
-          <li class="sub-sentence speaker-<@=sentence.speaker@>">
+          <li class="studying-item-sub-sentence speaker-<@=sentence.speaker@>">
             <div>
               <div class="answer">
               <@(sentence.answer.match(/[^\r\n]+/g) || []).forEach(function(line){ @>
@@ -127,23 +127,23 @@
         </ul>
       </div>
 
-      <div class="footer">
-        <div class="box footer-box">
+      <div class="studying-item-footer">
+        <div class="box studying-item-footer-box">
           <div>
             <div>
-              <button class="finish-study btn-medium" data-studied="false">
+              <button class="studying-item-finish-study btn-medium" data-studied="false">
                 <i class="icon-check-empty"></i><span>学習済にする</span></button>
             </div>
-            <div class="progress">
-              <div class="point large-xxx">
-                <span><@=get('point')@></span>
+            <div class="studying-item-progress">
+              <div class="point studying-item-point large-xxx">
+                <span class="studying-item-point-num"><@=get('point')@></span>
               </div>
-              <div class="slider">
+              <div class="studying-item-slider">
               </div>
 
            </div>
          </div>
-         <div class="goto-next">
+         <div class="studying-item-goto-next">
             <i class="icon-chevron-sign-right "></i>
          </div>
       </div>

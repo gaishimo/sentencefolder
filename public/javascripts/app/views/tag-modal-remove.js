@@ -7,7 +7,7 @@ define([ './modal', '../helper/item_select', 'select2',  'backbone'],
     template: _.template($('#tmpl-remove-tag-modal').html()),
 
     events: _.extend({}, ModalView.prototype.events, {
-      'click .remove-tags': 'removeTags'
+      'click .edit-tag-modal-remove': 'removeTags'
     }),
 
     render: function(){
@@ -34,7 +34,6 @@ define([ './modal', '../helper/item_select', 'select2',  'backbone'],
     removeTags: function(){
       var self = this;
       var inputtedTags = this.$('select').val();
-      console.log("inputtedTags", inputtedTags);
       var targetModels = ItemSelectHelper.getSelectedModels(this.collection);
       _.each(targetModels, function(model){
         var tags = model.get('tags') || [];
