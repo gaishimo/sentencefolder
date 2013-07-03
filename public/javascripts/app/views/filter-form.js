@@ -1,6 +1,18 @@
-define(['../models/app_model', '../utils/studied_range', '../utils/input', '../helper/star', 'select2', 'range-slider', 'tiptip', 'backbone'],
-    function(AppModel, StudiedRangeUtil, InputUtils, StarHelper){
-  'use strict';
+'use strict';
+
+define([
+  '../models/app_model',
+  '../utils/studied_range',
+   '../utils/input',
+   '../helper/star',
+   '../helper/select2',
+   'select2',
+   'range-slider',
+   'tiptip',
+   'backbone'],
+    function(AppModel, StudiedRangeUtil,
+      InputUtils, StarHelper, Select2Helper){
+
   var FilterFormView = Backbone.View.extend({
 
     starSearching: null,
@@ -120,11 +132,10 @@ define(['../models/app_model', '../utils/studied_range', '../utils/input', '../h
 
     setSelect2: function(){
       var self = this;
-      $('#search-tags')
-        .select2({ tags: ['AAAA', 'BBBBB'], maximumSelectionSize: 3 })
-        .on('change', function(){
+      var $select2 = Select2Helper.createOneForTags($('#search-tags'), 3);
+      $select2.on('change', function(){
           self.loadRecords();
-        });
+      });
     },
 
     onKeyPress: function(ev){

@@ -2204,7 +2204,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         selected = selection.find(".select2-search-choice-focus");
                     if (selected.length > 0) {
                         this.unselect(selected.first());
-                        this.search.width(10);
+                        this.search.width(200);
                         killEvent(e);
                         return;
                     }
@@ -2350,7 +2350,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 // we could call this.resizeSearch(), but we do not because that requires a sizer and we do not want to create one so early because of a firefox bug, see #944
                 this.search.width(maxWidth > 0 ? maxWidth : this.container.css("width"));
             } else {
-                this.search.val("").width(10);
+                this.search.val("").width(200);
             }
         },
 
@@ -2439,10 +2439,10 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (this.opts.closeOnSelect) {
                 this.close();
-                this.search.width(10);
+                this.search.width(200);
             } else {
                 if (this.countSelectableResults()>0) {
-                    this.search.width(10);
+                    this.search.width(200);
                     this.resizeSearch();
                     if (this.getMaximumSelectionSize() > 0 && this.val().length >= this.getMaximumSelectionSize()) {
                         // if we reached max selection size repaint the results so choices
@@ -2453,7 +2453,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 } else {
                     // if nothing left to select close
                     this.close();
-                    this.search.width(10);
+                    this.search.width(200);
                 }
             }
 

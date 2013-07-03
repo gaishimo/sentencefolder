@@ -29,7 +29,8 @@ define([
     initialize: function(){
       this.listenTo(this.model, {
         update_studied_times: this.renderStudiedTimes,
-        update_tags: this.renderTags
+        update_tags: this.onUpdateTags,
+        update_item: this.onUpdateItem
       });
       this.listenTo(AppModel.getGeneralModel(), {
         'select_all_item': this.selectAllItem,
@@ -70,15 +71,31 @@ define([
       this.$el.find('.study-item-progress').append($newEl);
     },
 
-    renderTags: function(){
+    onUpdateItem: function(){
+      this.onUpdateTags();
+    },
+
+    onUpdateTags: function(){
       var $text = this.$('.study-item-tags-text>a');
       var tags = this.model.get('formattedTags');
+      var tagCollection, tagModels;
+
       $text.fadeOut(500, function(){
         $text.attr('title', 'タグ: ' + tags)
                 .text(tags)
                 .tipTip( { defaultPosition: 'top' } );
         $text.fadeIn(2000);
       });
+
+      tagModels = _.map(this.model.get('tags'), function(tag){
+        return new Backbone.Model({ tag_id: tag });
+      });
+      if(tagModels.length > 0){
+        tagCollection = AppModel.getTagList();
+        _(tagModels).each(function(tag){
+          tagCollection.add(tag);
+        });
+      }
 
     },
 

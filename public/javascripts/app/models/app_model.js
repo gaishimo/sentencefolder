@@ -1,11 +1,12 @@
-define(['../collections/sentences', 'backbone'],
-  function(SentenceCollection){
+define(['../collections/sentences', '../collections/tags', 'backbone'],
+  function(SentenceCollection, TagsCollection){
 
   //singleton
   var AppModel = function(){
     var instance = this;
 
     var sentenceList = new SentenceCollection([]);
+    var tagList = new TagsCollection();
     var generalModel = new Backbone.Model();
     var filterModel = new Backbone.Model();
 
@@ -15,6 +16,17 @@ define(['../collections/sentences', 'backbone'],
 
     this.setSentenceList = function(list){
       sentenceList = list;
+    };
+
+    tagList.comparator = function(tag){ return tag.get('tag_id'); };
+    tagList.fetch();
+
+    this.getTagList = function(){
+      return tagList;
+    };
+
+    this.addTagList = function(tags){
+      tagList.add(tags);
     };
 
     this.getGeneralModel = function(){

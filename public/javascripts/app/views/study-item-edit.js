@@ -1,6 +1,11 @@
-define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
-    function(AppModel, TransitionHelper){
-  'use strict';
+'use strict';
+
+define([ '../models/app_model',
+  '../helper/transition',
+  '../helper/select2',
+  'select2',
+  'backbone'],
+  function(AppModel, TransitionHelper, Select2Helper){
 
   var controlEditIconShowing = function($rows){
     $rows.each(function(i, row){
@@ -124,9 +129,12 @@ define([ '../models/app_model', '../helper/transition', 'select2', 'backbone'],
       var tags = tagInput.attr('data-values') || '';
       var tagsArray  = tags.split(',');
 
-      tagInput
-          .select2( { tags:tagsArray, maximumSelectionSize: 5 } )
-          .select2( 'val', tagsArray);
+      Select2Helper.createOneForTags(tagInput, 5, true);
+      tagInput.select2( 'val', tagsArray);
+
+      // tagInput
+      //     .select2( { tags:tagsArray, maximumSelectionSize: 5 } )
+
     },
 
     comeBackToList: function(ev){
