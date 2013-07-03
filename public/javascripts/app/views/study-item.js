@@ -103,10 +103,10 @@ define([
       var self = this;
 
       var $slider = this.$('.study-item-slider');
-      var $point = this.$('.study-item-progress-point')
+      var $point = this.$('.study-item-progress-point .point')
       SliderHelper.setSlider($slider, $point,
         this.model.get('point'), function(pointVal){
-          $slider.closest('.study-item')
+          $slider.closest('.study-item-container')
                   .removeClass(SliderHelper.getPointClasses().join(' '))
                   .addClass('point-'+ pointVal);
           self.pointUpdating = pointVal;
