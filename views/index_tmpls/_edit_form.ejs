@@ -73,7 +73,7 @@
                   data-add-button-id="add-dialog-before-row">
               <@if(beforeLength >0 ){@>
                 <@_.each(get('dialog').before, function(sentence, i){@>
-                  <@ var downAlowOn = ( beforeLength >= 2 && bereLength-1 != i );
+                  <@ var downAlowOn = ( beforeLength >= 2 && beforeLength-1 != i );
                         var upAlowOn =  ( beforeLength >= 2 && i != 0 );
                   @>
                 <li>
