@@ -23,7 +23,8 @@ define([
         'unselected_all_item': this.onUnselectAllItem,
         'create_new_item': this.plusTotalCount,
       });
-      this.listenTo(this.collection, 'sync', this.countRefresh);
+      this.listenTo(AppModel.getGeneralModel() ,
+        'load_items', this.countRefresh);
 
     },
 
@@ -46,8 +47,7 @@ define([
       return this;
     },
 
-    countRefresh: function(collection, resp, options){
-      var param = options.data;
+    countRefresh: function(param){
       this.collection.count(param, { onSuccess: function(cnt){
         $('#fetch-cnt').text(cnt);
       }})

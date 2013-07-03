@@ -95,6 +95,7 @@ define([
 
       this.collection.fetch({ data: params });
       AppModel.setFilterModel(new Backbone.Model(params));
+      AppModel.getGeneralModel().trigger('load_items', params);
 
     },
 

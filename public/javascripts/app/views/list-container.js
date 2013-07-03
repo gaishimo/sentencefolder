@@ -38,6 +38,7 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
          self.collection = sentences;
          self.setBottomEvent();
       }});
+      AppModel.getGeneralModel().trigger('load_items', {});
 
       return this;
     },
