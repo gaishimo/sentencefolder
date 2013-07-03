@@ -32,8 +32,7 @@ define([
 
     onChangeSort: function(){
       var self = this;
-      var sortVal = parseInt($('#list-operate-panel .sort select').val(), 10);
-      console.log("sortVal", sortVal);
+      var sortVal = parseInt($('.operate-sort-select').val(), 10);
       this.collection.comparator= function(s){
         if(sortVal === -1){
           return -( moment(s.get("created_at")).unix() );

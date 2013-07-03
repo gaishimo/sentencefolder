@@ -34,7 +34,7 @@ define([
       'click .add-tag': 'showTagAddModal',
       'click .remove-tag': 'showTagRemoveModal',
       'click .operate-study-start': 'startStudy',
-      'change .sort select': 'onChangeItemSort'
+      'change .operate-sort-select': 'onChangeItemSort'
     },
 
     render: function(){
