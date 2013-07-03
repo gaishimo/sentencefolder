@@ -64,7 +64,7 @@ define([
       var text_lang = this.$('#text-lang').val();
       var params = {};
       var studiedRangeSetting = StudiedRangeUtil.getSetting();
-      var sort = parseInt($('#list-operate-panel .sort select').val(), 10);
+      var sort = parseInt($('.operate-sort-select').val(), 10);
       if(pointRange.min !== 0 || pointRange.max !== 100){
         params.point_min = pointRange.min;
         params.point_max = pointRange.max;
