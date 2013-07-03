@@ -344,7 +344,7 @@ define([ '../models/app_model',
       inputs.tags = this.$('.edit-form-tags>input').select2('val');
       inputs.dialog = {};
       _.each( ['before', 'after'], function(identifier){
-        var $items = self.$(_.str.sprintf('.dialog-%s ul>li', identifier));
+        var $items = self.$(_.str.sprintf('.edit-form-dialog-%s ul>li', identifier));
         inputs.dialog[identifier] =
            _.chain($items)
              .map(function(li){
