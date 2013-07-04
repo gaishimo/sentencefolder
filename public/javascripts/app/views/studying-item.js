@@ -15,10 +15,29 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
       'click .sentence-item': 'switchSentenceItemDisp',
       'click .studying-item-finish-study': 'switchStudyingStatus',
       'click .studying-item-goto-next': 'gotoNext',
+      'click .studying-item-sub-sentence': 'speakSubSentence',
+      'click .speaker': 'speakMainSentence',
       'change .studying-item-param': 'reflectParam',
+
       'touchstart': 'onTouch',
       'touchmove': 'onTouch',
       'touchend': 'onTouch'
+    },
+
+    speakMainSentence: function(ev){
+      var $target = $(ev.target);
+      if($target.hasClass('icon-play-circle')){
+        var text = $target.parents('div')
+          .siblings('.sentence-item').find('.answer>p').text();
+        speak(text);
+      }
+    },
+
+    speakSubSentence: function(ev){
+      console.log("ev", ev.target);
+      var $li = $(ev.target).closest('li');
+      var text = $li.find('.answer>p').text();
+      speak(text);
     },
 
     render: function(){
