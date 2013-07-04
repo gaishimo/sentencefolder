@@ -39,6 +39,7 @@ css
 intermediate
 publish
 .idea
+.sass-cache
 node_modules
 docs
 
