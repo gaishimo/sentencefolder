@@ -1,7 +1,6 @@
 var _ = require('underscore'),
      spawn = require('child_process').spawn,
-     config = require('config'),
-     tags = require('../models/dao/tags_dao');
+     config = require('config');
 
 module.exports = {
 
@@ -10,27 +9,24 @@ module.exports = {
     var speakCmd = config.speak.cmd;
     var espeak = spawn(speakCmd, [sentence, '--stdout'])
     var lame = spawn('lame', ['-']);
-
+    var buffers = [], buffersLength = 0;
 
     res.writeHead(200, { 'Content-Type': 'audio/mpeg' });
 
-    espeak.stdout.on('data', function(data){
-      lame.stdin.write(data);
+    espeak.stdout.on('data', function(buffer){
+      lame.stdin.write(buffer);
     });
-
-    espeak.on('exit', function(){
+    espeak.stdout.on('end', function(){
       lame.stdin.end();
     });
 
-    lame.stdout.on('data', function(data){
-      res.write(data);
+    lame.stdout.on('data', function(buffer){
+      res.write(buffer);
     });
 
-    lame.on('exit', function(){
+    lame.stdout.on('end', function(){
       res.end();
     });
-
-
 
   }
 

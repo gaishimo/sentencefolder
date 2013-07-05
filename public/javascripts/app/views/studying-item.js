@@ -2,9 +2,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
     function( AppModel, SliderHelper, StarHelper ){
   'use strict';
 
-  var speak =  function(text){
-    new Audio('/speak?sentence=' + text).play('');
-  };
+
 
   var StudyingItemView = Backbone.View.extend({
 
@@ -27,22 +25,6 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
       'touchstart': 'onTouch',
       'touchmove': 'onTouch',
       'touchend': 'onTouch'
-    },
-
-    speakMainSentence: function(ev){
-      var $target = $(ev.target);
-      if($target.hasClass('icon-play-circle')){
-        var text = $target.parents('div')
-          .siblings('.sentence-item').find('.answer>p').text();
-        speak(text);
-      }
-    },
-
-
-    speakSubSentence: function(ev){
-      var $li = $(ev.target).closest('li');
-      var text = $li.find('.answer>p').text();
-      speak(text);
     },
 
     render: function(){
@@ -85,6 +67,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
 
         }
       );
+
     },
 
     reflectParam: function(ev){
@@ -202,6 +185,39 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
           self.starUpdating = null;
         }
       }, 3000);
+    },
+
+    speak: function(text){
+      var $playing = $('.studying-speaking');
+      var a = new Audio('/speak?sentence=' + text);
+
+      a.play();
+      $playing.addClass('studying-speaking-loading')
+        .addClass('icon-spin').show();
+      a.addEventListener('playing', function(){
+        $playing.removeClass('studying-speaking-loading')
+            .removeClass('icon-spin')
+            .addClass('studying-speaking-playing');
+      });
+      a.addEventListener('ended', function(){
+        $playing.hide().removeClass('icon-spin')
+            .removeClass('studying-speaking-playing');
+      });
+    },
+
+    speakMainSentence: function(ev){
+      var $target = $(ev.target);
+      if($target.hasClass('icon-play-circle')){
+        var text = $target.parents('div')
+          .siblings('.sentence-item').find('.answer>p').text();
+        this.speak(text);
+      }
+    },
+
+    speakSubSentence: function(ev){
+      var $li = $(ev.target).closest('li');
+      var text = $li.find('.answer>p').text();
+      this.speak(text);
     }
 
   });

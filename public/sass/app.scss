@@ -1138,13 +1138,28 @@ input.error, textarea.error{
 .studying-item-num{
   position: fixed;
   top: 55px;
-  right: 20px;
+  right: 30px;
   color: white;
   background-color: rgba(200, 0, 0, .3);
   text-align: center;
   padding: 3px 10px;
   border-radius: 5px;
   z-index: 5;
+}
+
+.studying-speaking{
+  display: none;
+  position: fixed;
+  top: 150px;
+  right: 40px;
+  z-index: 10;
+  font-size: 50px;
+  &.studying-speaking-loading{
+    color: rgba(180, 180, 180, 0.3);
+  }
+  &.studying-speaking-playing{
+    color: rgba(100, 150, 230, 0.3);
+  }
 }
 
 .studying-item{
@@ -1341,7 +1356,7 @@ input.error, textarea.error{
   }
   .sentence-item{
     position: relative;
-    margin-right: 10px;
+    margin-right: 5px;
     padding: 10px 10px;
     width: 85%;
     box-sizing:border-box;
@@ -1358,6 +1373,9 @@ input.error, textarea.error{
   }
   .speaker{
     padding: 10px 0 0 0;
+    .icon-play-circle{
+      font-size: 40px;
+    }
   }
   .memo{
     color: rgb(150, 130, 130);
