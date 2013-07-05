@@ -257,10 +257,10 @@ define([ '../models/app_model',
    switchAdvancedSettingShowing: function(ev){
      var $switch = $(ev.target);
      if($switch.hasClass('icon-caret-right')){
-       this.$('.param-sets').fadeIn();
+       this.$('.edit-form-param-sets').fadeIn();
        $switch.switchClass('icon-caret-right', 'icon-caret-down', 200);
      }else{
-      this.$('.param-sets').fadeOut();
+      this.$('.edit-form-param-sets').fadeOut();
        $switch.switchClass('icon-caret-down', 'icon-caret-right', 200);
      }
    },
