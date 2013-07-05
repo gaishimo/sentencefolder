@@ -3,11 +3,6 @@ define([ './views/main', './init'], function(MainView){
     var mainView = new MainView( { el: 'body' } );
     mainView.render();
 
-    //load speak.js
-    require([ '../speak/speakClient'], function(){
-      speak('');  //practice swing
-    });
-
   }
 });
 

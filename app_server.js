@@ -9,11 +9,15 @@ var express = require('express'),
       redis = require('redis').createClient(),
       _ = require('underscore'),
       ltsvlogger = require('connect-ltsv-logger'),
+      espeak = require('espeak'),
+      spawn = require('child_process').spawn,
+      request = require('request'),
       basicAuth = config.basicAuth,
       index = require('./controllers/index_controller'),
       login = require('./controllers/login_controller'),
       sentence = require('./controllers/sentence_controller');
-      tag = require('./controllers/tag_controller');
+      tag = require('./controllers/tag_controller'),
+      speak = require('./controllers/speak_controller');
 
 module.exports = function(){
   var server;
@@ -101,8 +105,12 @@ module.exports = function(){
 
       app.get('/tags', tag.list);
 
+      app.get('/speak', speak.speak);
+
+
       server = http.createServer(app);
       server.listen(app.get('port'), function(){
+
         console.log("Express server listening on port " + app.get('port'));
         if(callback){
           callback();

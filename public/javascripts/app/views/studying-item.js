@@ -1,6 +1,11 @@
 define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone'],
     function( AppModel, SliderHelper, StarHelper ){
   'use strict';
+
+  var speak =  function(text){
+    new Audio('/speak?sentence=' + text).play('');
+  };
+
   var StudyingItemView = Backbone.View.extend({
 
     className: 'studying-item hide',
@@ -33,8 +38,8 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
       }
     },
 
+
     speakSubSentence: function(ev){
-      console.log("ev", ev.target);
       var $li = $(ev.target).closest('li');
       var text = $li.find('.answer>p').text();
       speak(text);

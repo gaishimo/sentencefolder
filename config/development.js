@@ -1,5 +1,6 @@
 module.exports= {
   piping: true,
+  speak: { cmd: 'speak' },
   db: {
     mongodb: {
       url : "mongodb://localhost:27017/sentences?auto_reconnect"

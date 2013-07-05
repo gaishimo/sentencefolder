@@ -24,7 +24,7 @@
     "moment": "*",
     "mocha": "*",
     "should": "*",
-    "connect-ltsv-logger": "*",
+    "connect-ltsv-logger": "0.0.2",
     "mongoskin": "*",
     "redis": "*",
     "underscore": "*",
