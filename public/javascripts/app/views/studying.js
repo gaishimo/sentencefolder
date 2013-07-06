@@ -49,7 +49,11 @@ define([
 
     showNextItem: function(){
       var self = this;
+
       this.currentItemModel = this.selectItemAtRandom();
+      if(this.currentItemView){
+        this.currentItemView.remove();
+      }
       this.currentItemView =new StudyingItemView({ model: this.currentItemModel });
       this.$('.studying-item-num').after(this.currentItemView.render().el);
       this.currentItemView.setPointClass();
