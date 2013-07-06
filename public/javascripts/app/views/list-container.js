@@ -69,7 +69,6 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
     },
 
     unsetBottomEvent: function(){
-      console.log("unsetBottomEvent");
       $(window).bottom().off('bottom');
     }
 
