@@ -19,6 +19,7 @@ define(['../models/app_model'], function(AppModel){
           query: function (query) {
             var tags = getTagsDataForSelect2();
             var filteredTags = _.filter(tags, function(tag){
+              if(_.isUndefined(tag.text)){ return false; }
               return query.term.length === 0 ||
                   tag.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0;
             });
