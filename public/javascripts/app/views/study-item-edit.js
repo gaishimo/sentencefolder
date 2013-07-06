@@ -129,11 +129,11 @@ define([ '../models/app_model',
       var tags = tagInput.attr('data-values') || '';
       var tagsArray  = tags.split(',');
 
-      Select2Helper.createOneForTags(tagInput, 5, true);
-      tagInput.select2( 'val', tagsArray);
 
-      // tagInput
-      //     .select2( { tags:tagsArray, maximumSelectionSize: 5 } )
+      Select2Helper.createOneForTags(tagInput, 5, true);
+      if(tagsArray.length >=2 || tagsArray[0] !== ''){
+        tagInput.select2( 'val', tagsArray);
+      }
 
     },
 
