@@ -1,5 +1,5 @@
-define([ './modal', '../helper/item_select', 'select2',  'backbone'],
-    function(ModalView, ItemSelectHelper){
+define([ './modal', '../helper/item_select', '../helper/select2', 'select2',  'backbone'],
+    function(ModalView, ItemSelectHelper, Select2Helper){
   'use strict';
   var TagModalAddView = ModalView.extend({
     id: 'add-tag-modal',
@@ -18,8 +18,9 @@ define([ './modal', '../helper/item_select', 'select2',  'backbone'],
 
     setSelect2: function(){
       var self = this;
-      this.$('.edit-tag-modal-tags').select2( { tags: [], maximumSelectionSize: 3 } )
-        .on('change', function(ev, data){
+      var $tagInput = this.$('.edit-tag-modal-tags');
+      Select2Helper.createOneForTags($tagInput, 10, true);
+      $tagInput.on('change', function(ev, data){
           var val = ev.val;
           if(val.length === 0){
             self.$('button').hide();
