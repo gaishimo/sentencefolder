@@ -130,7 +130,7 @@ define([ '../models/app_model',
       var tagsArray  = tags.split(',');
 
 
-      Select2Helper.createOneForTags(tagInput, 5, true);
+      Select2Helper.createOneForTags(tagInput, 10, true);
       if(tagsArray.length >=2 || tagsArray[0] !== ''){
         tagInput.select2( 'val', tagsArray);
       }
