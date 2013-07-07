@@ -114,11 +114,11 @@ define([ '../models/app_model',
     },
 
     onQuestionTextChange: function(ev){
-      this.$('.dialog-main-question').text($(ev.target).val());
+      this.$('.edit-form-dialog-main-question').text($(ev.target).val());
     },
 
     onAnswerTextChange: function(ev){
-      this.$('.dialog-main-answer').text($(ev.target).val());
+      this.$('.edit-form-dialog-main-answer').text($(ev.target).val());
     },
 
     doAfterViewShowed: function(){
