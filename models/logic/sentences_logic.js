@@ -61,6 +61,7 @@ module.exports = {
           });
           updateDoc['studied_times'] = dates;
           updateDoc['last_studied_time'] = _.max(dates);
+          console.log("id:" + itemId + " studied_time: ", dates);
         }else{
           updateDoc[field] = sentence[field];
         }
