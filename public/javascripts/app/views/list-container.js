@@ -46,6 +46,7 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
     setBottomEvent: function(){
       var self = this;
       $(window).bottom().on('bottom', function(){
+        console.log("on bottom");
         var $window = $(this);
         var currentSize = self.collection.length;
         var newRecords = new SentenceCollection();
