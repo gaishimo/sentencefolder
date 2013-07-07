@@ -1,4 +1,4 @@
-define(['../collections/sentences', './list', 'backbone', 'bottom'],
+define(['../collections/sentences', './list', 'backbone'],
     function(SentenceCollection, ListView ){
   'use strict';
   var StudyItemListView = ListView.extend({

@@ -37,6 +37,7 @@ define([
     },
 
     initialize: function(){
+
       this.listenTo(AppModel.getGeneralModel(),
         'goto_next_item', this.changeToNextItem);
     },
@@ -51,9 +52,6 @@ define([
       var self = this;
 
       this.currentItemModel = this.selectItemAtRandom();
-      if(this.currentItemView){
-        this.currentItemView.remove();
-      }
       this.currentItemView =new StudyingItemView({ model: this.currentItemModel });
       this.$('.studying-item-num').after(this.currentItemView.render().el);
       this.currentItemView.setPointClass();
@@ -67,6 +65,7 @@ define([
     },
 
     addStudiedTime: function(){
+      console.log("addStudiedTime", this.currentItemModel);
       var now = moment(),
             nowFormatted = now.format('YYYY/MM/DD HH:mm'),
             studiedTimesFormatted = this.currentItemModel.get('formattedStudiedTimes'),

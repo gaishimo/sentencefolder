@@ -7,8 +7,8 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
 
     initialize: function(){
       this.listenTo( AppModel.getGeneralModel(), {
-        'show_list_container':  this.setBottomEvent,
-        'hide_list_container': this.unsetBottomEvent
+        'show_list_container':  this.setBottomEventHandler,
+        'hide_list_container': this.unsetBottomEventHandler
       });
     },
 
@@ -36,30 +36,29 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
       sentences.fetch({ success: function(){
          self.$el.append(self.studyItemListView.render().el);
          self.collection = sentences;
-         self.setBottomEvent();
+         self.setBottomEventHandler();
       }});
       AppModel.getGeneralModel().trigger('load_items', {});
 
       return this;
     },
 
-    setBottomEvent: function(){
+    setBottomEventHandler: function(){
       var self = this;
-      $(window).bottom().on('bottom', function(){
-        console.log("on bottom");
+      $(window).on('bottom', function(){
         var $window = $(this);
         var currentSize = self.collection.length;
         var newRecords = new SentenceCollection();
         var filterParams;
 
-        if(!$window.data('loading')) {
-          $window.data('loading', true);
+        if(!self.loading){
+          self.loading = true;
           $('#study-item-list-loading').show();
           filterParams = AppModel.getFilterModel().attributes;
           newRecords.fetch({
             data: _.extend( {}, filterParams, { offset: currentSize }),
             success: function(fetchedCollection){
-              $window.data('loading', false);
+              self.loading = false;
               $('#study-item-list-loading').hide(function(){
                 self.collection.add(fetchedCollection.models);
               });
@@ -69,8 +68,8 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
       });
     },
 
-    unsetBottomEvent: function(){
-      $(window).bottom().off('bottom');
+    unsetBottomEventHandler: function(){
+      $(window).off('bottom');
     }
 
 

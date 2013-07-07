@@ -13,6 +13,16 @@ define([ './header', './list-container', 'backbone'],
          el: '#list-container'
       });
       $('#main-content').append(this.listContainerView.render().el);
+
+      //detect bottom scroll
+      $(document).ready(function(){
+        $(window).scroll(function() {
+          var current = $(window).scrollTop() + window.innerHeight;
+          if (current < $(document).height() - 50) return;
+          $(window).trigger('bottom');
+        });
+      });
+
       return this;
     },
 
