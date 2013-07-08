@@ -9,7 +9,7 @@
     "grunt": "*",
     "grunt-contrib-jshint": "*",
     "grunt-contrib-csslint": "*",
-    "grunt-contrib-sass": "*",
+    "grunt-contrib-compass": "*",
     "grunt-contrib-watch": "*",
     "express": "3.1.0",
     "express-partials": "*",

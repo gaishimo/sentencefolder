@@ -1,3 +1,4 @@
+@import "compass";
 
 $content-width: 945px;
 
@@ -1173,6 +1174,10 @@ input.error, textarea.error{
   /* prevent a black shadow on tapping */
   @include prefixed("tap-highlight-color", "rgba(0,0,0,0)");
   // -webkit-tap-highlight-color:rgba(0,0,0,0);
+
+  .large{
+
+  }
 }
 
 .studying-item-top-line{

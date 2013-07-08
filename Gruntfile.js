@@ -1,28 +1,25 @@
 module.exports = function(grunt){
 
-  grunt.loadNpmTasks("grunt-contrib-sass");
+  grunt.loadNpmTasks("grunt-contrib-compass");
   grunt.loadNpmTasks("grunt-contrib-watch");
 
   grunt.initConfig({
-    sass: {
+    compass: {
       dist: {
-        files: {
-          'public/css/app.css': 'public/sass/app.scss'
+        options: {
+          config: 'public/config.rb'
         }
       },
       dev: {
         options: {
-          style: 'expanded'
-        },
-        files: {
-          'public/css/app.css': 'public/sass/app.scss'
+          config: 'public/config.rb'
         }
       }
     },
     watch:{
-      sass:{
+      compass:{
         files: [ 'public/sass/*.scss' ],
-        tasks: [ 'sass:dev' ]
+        tasks: [ 'compass:dev' ]
       }
     }
   });
