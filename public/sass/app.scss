@@ -59,6 +59,10 @@ body{
   position: relative;
 }
 
+header{
+  width: 100%;
+}
+
 footer{
   height: 30px;
 }
@@ -317,10 +321,6 @@ input.error, textarea.error{
 
 #sentence-folder{
   background-color: rgb(255, 245, 235);
-}
-
-#header{
-  width: 100%;
 }
 
 #overall-layer{
