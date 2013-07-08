@@ -4,6 +4,11 @@ html, body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, pre, code, address, variable,
  font-size: 100%;
  font-weight: normal;
 }
+
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary{
+  display: block;
+}
+
 table { border-collapse: collapse; border-spacing: 0; }
 td, th, caption { font-weight: normal; text-align: left; }
 img, fieldset { border: 0; }
