@@ -11,6 +11,7 @@ var express = require('express'),
       ltsvlogger = require('./util/connect_ltsv_logger'),
       spawn = require('child_process').spawn,
       request = require('request'),
+      device = require('express-device'),
       basicAuth = config.basicAuth,
       index = require('./controllers/index_controller'),
       login = require('./controllers/login_controller'),
@@ -45,9 +46,11 @@ module.exports = function(){
         }
 
         app.set('views', __dirname + '/views');
+
         app.set('view engine', 'ejs');
         app.set('template_engine', 'ejs');
         app.set('view cache');
+
 
         app.set('secret key', 'mySecret');
         app.set('cookie session key', 'sid');
@@ -61,10 +64,22 @@ module.exports = function(){
             stream: fs.createWriteStream("logs/ltsv-access.log",{flags: 'a+'})
           }
         ));
+
+        app.use(express.static(path.join(__dirname, 'public')));
+
         app.use(express.bodyParser());
         app.use(express.methodOverride());
 
         app.use(express.cookieParser(app.get('secret key')));
+
+        app.use(device.capture());
+        app.enableDeviceHelpers();
+        app.use(function(req, res, next){
+          res.locals.tooltip_class = function(){
+            return res.locals.is_desktop ? 'tooltip': '';
+          }
+          next();
+        });
 
         app.use(express.session(
           {
@@ -79,10 +94,7 @@ module.exports = function(){
               })
           }
         ));
-
         app.use(express.session());
-
-        app.use(express.static(path.join(__dirname, 'public')));
 
         app.use(checkAuth);
 

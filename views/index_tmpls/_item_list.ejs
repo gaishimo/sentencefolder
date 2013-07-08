@@ -2,13 +2,13 @@
       <form id="filter-form" method="get" class="medium">
         <div class="filter-row">
           <label>
-            <span class="tooltip" title="理解度の範囲を指定">理解度</span>
+            <span class="<%=tooltip_class()%>" title="理解度の範囲を指定">理解度</span>
           </label>
           <div class="filter-search-input">
             <div id="range-slider-point"></div>
           </div>
           <label>
-            <span class="tooltip" title="直近で学習した日時の範囲を指定">最終学習日時</span>
+            <span class="<%=tooltip_class()%>" title="直近で学習した日時の範囲を指定">最終学習日時</span>
           </label>
           <div class="filter-search-input">
             <div id="range-slider-last-study"></div>
@@ -16,7 +16,7 @@
         </div>
         <div class="filter-row">
           <label>
-            <span class="tags-icon large-xx tooltip" title="指定のタグで絞り込む(AND条件)">
+            <span class="tags-icon large-xx <%=tooltip_class()%>" title="指定のタグで絞り込む(AND条件)">
               <i class="icon-tags"></i>
             </span>
           </label>
@@ -29,7 +29,7 @@
             </span>
           </div>
           <label>
-            <span class="large-xx tooltip" title="テキストで絞り込む">
+            <span class="large-xx <%=tooltip_class()%>" title="テキストで絞り込む">
               <i class="icon-search"></i>
             </span>
           </label>
@@ -56,23 +56,23 @@
         </div>
         <div class="operate-toolbar">
           <ul>
-            <li class="large-xx tooltip add-new-item"
+            <li class="large-xx <%=tooltip_class()%> add-new-item"
                 title="新規センテンスの追加">
                 <i class="icon-plus-sign"></i>
             </li>
-            <li class="large-xx tooltip check-select-all-switch"
+            <li class="large-xx <%=tooltip_class()%> check-select-all-switch"
                 title="全て選択/解除">
                 <i class="icon-check-empty"></i>
             </li>
-            <li class="large-xx tooltip show-at-selected add-tag" title="タグを追加">
+            <li class="large-xx <%=tooltip_class()%> show-at-selected add-tag" title="タグを追加">
               <i class="icon-tag"></i>
             </li>
-            <li class="large-xx tag-trash tooltip show-at-selected remove-tag"
+            <li class="large-xx tag-trash <%=tooltip_class()%> show-at-selected remove-tag"
                  title="設定しているタグを解除">
               <i class="icon-tag"></i>
               <i class="icon-trash"></i>
             </li>
-            <li class="large-xx tooltip show-at-selected remove-item"
+            <li class="large-xx <%=tooltip_class()%> show-at-selected remove-item"
                   title="センテンスを削除">
               <i class="icon-trash"></i>
             </li>
@@ -125,22 +125,22 @@
                   <i class="icon-star<@=get('star') ? '':'-empty' @>"
                       data-star-idx="<@=get('star')? get('star') : '0'@>"></i>
                 </div>
-                  <i class="icon-copy tooltip" title="複製する"></i>
-                  <i class="icon-trash tooltip" title="削除する"></i>
+                  <i class="icon-copy <%=tooltip_class()%>" title="複製する"></i>
+                  <i class="icon-trash <%=tooltip_class()%>" title="削除する"></i>
                 </p>
               </div>
 
               <div class="study-item-sub small">
                 <div class="study-item-situation">
                   <@if(get('situation')){@>
-                  <span class="study-item-situation-text tooltip"
+                  <span class="study-item-situation-text <%=tooltip_class()%>"
                      title="<@=get('situation')@>"><@=get('situation')@></span>
                   <@}@>
                 </div>
                 <div class="study-item-tags">
                   <span class="tags-icon"><i class="icon-tags"></i></span>
                   <div class="study-item-tags-text">
-                    <a  title="タグ: <@=get('formattedTags')@>" class="tooltip"><@=get('formattedTags')@></a>
+                    <a  title="タグ: <@=get('formattedTags')@>" class="<%=tooltip_class()%>"><@=get('formattedTags')@></a>
                   </div>
                 </div>
               </div>
@@ -160,7 +160,7 @@
 
     <script id="tmpl-studied-times" type="text/template">
       <@var existRecords = get('formattedStudiedTimes').length > 0; @>
-      <div class="study-item-studied-times<@=existRecords ? ' tooltip':''@>" <@=existRecords ? "title='学習日時(クリックで全て表示)'" : "" @>>
+      <div class="study-item-studied-times<@=existRecords ? '<%=tooltip_class()%>' :''@>" <@=existRecords ? "title='学習日時(クリックで全て表示)'" : "" @>>
         <ul class="medium" >
           <@get('formattedStudiedTimes').forEach(function(time, i){ @>
             <@if( i < 3 ){@>
