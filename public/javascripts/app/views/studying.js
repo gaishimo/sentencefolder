@@ -9,7 +9,7 @@ define([
   'use strict';
   var StudyingView = Backbone.View.extend({
     id: 'studying',
-    className: 'studying large',
+    className: 'studying',
     currentItemView: null,
     currentItemModel: null,
     template: _.template($('#tmpl-studying').html()),

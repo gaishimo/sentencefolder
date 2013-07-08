@@ -405,8 +405,18 @@ input.error, textarea.error{
 #studying{
   position: relative;
   margin: 40px auto 0 auto;
-  // width: 90%;
+  padding: 0 10px;
   max-width: 600px;
+
+  @media screen and (max-width: 599px){
+      font-size: 1.3rem;
+      font-size: 13px;
+   }
+  @media screen and (min-width: 600px){
+      font-size: 1.5rem;
+      font-size: 15px;
+   }
+
 }
 
 
@@ -1171,13 +1181,7 @@ input.error, textarea.error{
   border: 1px solid rgb(240, 220, 220);
   -webkit-box-sizing:border-box;
   line-height: 1.5;
-  /* prevent a black shadow on tapping */
   @include prefixed("tap-highlight-color", "rgba(0,0,0,0)");
-  // -webkit-tap-highlight-color:rgba(0,0,0,0);
-
-  .large{
-
-  }
 }
 
 .studying-item-top-line{
@@ -1192,7 +1196,10 @@ input.error, textarea.error{
 
 .studying-item-content-wrapper{
   padding: 15px 15px 0 15px;
-  min-height: 400px;
+  @media screen and (min-height: 700px){
+    min-height: 600px;
+  }
+
 }
 
 .studying-item{
@@ -1275,8 +1282,17 @@ input.error, textarea.error{
   padding: 5px 10px;
   margin-top: 5px;
   margin-bottom: 10px;
+  @media screen and (min-width: 600px){
+      font-size: 1.5rem;
+      font-size: 15px;
+   }
+
   .sub-text{
     font-size: 1.0rem; font-size: 10px;
+    @media screen and (min-width: 600px){
+        font-size: 1.2rem;
+        font-size: 12px;
+     }
     color: gray;
   }
   >li{
