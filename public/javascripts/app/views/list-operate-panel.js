@@ -11,7 +11,7 @@ define([
   'tiptip', 'backbone', 'jquery.ui.effect' ],
    function(AppModel, SentenceModel, SentenceCollection,
     DeleteConfirm, TagModalAddView, TagModalRemoveView,
-    StudyItemEditView, StudyingView, TransitionHelper){
+    StudyItemEditView, StudyingView, TransitionHelper ){
 
   'use strict';
   var ListOperatePanelView = Backbone.View.extend({
@@ -137,6 +137,7 @@ define([
       var studyingView = new StudyingView({ collection: items });
       $('#list-container').fadeOut(500, function(){
         AppModel.getGeneralModel().trigger('hide_list_container');
+
         $('#main-content').append(studyingView.render().el);
         $('body').animate({ scrollTop: 0 }, 10);
         studyingView.showNextItem();
