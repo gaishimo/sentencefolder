@@ -1,28 +1,36 @@
+'use strict';
+
 define([
   '../models/app_model',
   './studied-times-modal',
+  './progress-modal',
+  './star-select-modal',
   './study-item-edit',
   '../models/sentence',
   '../utils/confirm',
   '../helper/star',
   '../helper/slider',
   '../helper/transition',
+  'viewport',
   'backbone',
   'slider',
   'tiptip'
   ],
-  function(AppModel, StudiedTimesModalView, StudyItemEditView,
+  function(AppModel, StudiedTimesModalView,
+    ProgressModal, StarSelectModal, StudyItemEditView,
     SentenceModel, ConfirmUtils,
-    StarHelper, SliderHelper, TransitionHelper){
+    StarHelper, SliderHelper, TransitionHelper, viewport){
 
-  'use strict';
+  var isMobile = viewport.width < 600;
+  var templateId = isMobile  ?
+        '#tmpl-study-item-mb' : '#tmpl-study-item';
+
   var StudyItemView = Backbone.View.extend({
 
     tagName: 'li',
     className: 'study-item',
-
-    template: _.template($('#tmpl-study-item').html()),
-    templateStudiedTimes: _.template($('#tmpl-studied-times').html()),
+    template: _.template($(templateId).html()),
+    templateStudiedTimes:   _.template($('#tmpl-studied-times').html()),
     pointUpdating: null,
     starUpdating: null,
 
@@ -41,13 +49,15 @@ define([
     events: function(){
       return{
         'click .study-item-select': 'clickItemSelect',
-        'click .icon-star,.icon-star-empty': 'clickStar',
-        'click .icon-trash': 'clickTrash',
-        'click .icon-copy': 'duplicateItem',
-        'click .study-item-studied-times': 'clickStudiedTimes',
-        'click .study-item-title': _.debounce(this.gotoEdit, 1000, true)
+        'click .star-button': 'clickStar',
+        'click .study-item-remove': 'clickTrash',
+        'click .study-item-duplicate': 'duplicateItem',
+        'click .study-item-studied-times, .study-item-last-studied-time': 'clickStudiedTimes',
+        'click .study-item-title': _.debounce(this.gotoEdit, 1000, true),
+        'click .point': 'clickPoint'
       }
     },
+
 
     remove: function(){
       Backbone.View.prototype.remove.call(this);
@@ -57,7 +67,10 @@ define([
     render: function(model){
       var self = this;
       this.$el.html(this.template(this.model));
-      this.renderStudiedTimes();
+      if(!isMobile){
+        this.renderStudiedTimes();
+      }
+
       this.$el.find('.tooltip').tipTip( { defaultPosition: 'top' } );
       return this;
     },
@@ -102,6 +115,8 @@ define([
     setSlider: function(){
       var self = this;
 
+      if(isMobile) return;
+
       var $slider = this.$('.study-item-slider');
       var $point = this.$('.study-item-progress-point .point')
       SliderHelper.setSlider($slider, $point,
@@ -145,7 +160,7 @@ define([
 
     clickStar: function(ev){
       var self = this;
-      var $star = $(ev.target);
+      var $star = this.$('.star-button>i');
       var starIdx = StarHelper.switchStar($star);
 
       this.starUpdating = starIdx;
@@ -162,6 +177,7 @@ define([
     },
 
     clickTrash: function(){
+      console.log("clickTrash");
       var model = this.model;
       ConfirmUtils.show({ onYes: function(){
         model.destroy();
@@ -169,6 +185,7 @@ define([
     },
 
     duplicateItem: function(){
+      console.log("duplicateItem");
       var model = new SentenceModel(_.clone(this.model.attributes));
       delete model.attributes.created_at;
       delete model.attributes.updated_at;
@@ -189,13 +206,27 @@ define([
     clickStudiedTimes : function(ev){
       if(this.model.get('studied_times').length > 0){
         var modalView = new StudiedTimesModalView({
-          model: this.model
+          model: this.model,
+          isMobile : isMobile
         });
-        $(ev.target).closest('.study-item-progress').append(modalView.render().el);
+        var elementAppendTo = isMobile ?
+            this.$('.study-item-mb-progress'): this.$('.study-item-progress');
+        elementAppendTo.append(modalView.render().el);
         modalView.$el.fadeIn(500);
       }
 
     },
+
+    clickPoint: function(){
+      var modal;
+      if(isMobile){
+        modal = new ProgressModal({
+            model: this.model, studyItemEl: this.$el
+          }).render();
+        modal.setSlider();
+      }
+    },
+
 
     selectAllItem: function(){
       this.$('.study-item-select').attr('data-checked', 'true');

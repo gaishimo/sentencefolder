@@ -52,6 +52,7 @@ html {
   font-size: 62.5%;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   color: rgb(30, 30, 30);
+  -webkit-text-size-adjust: none;
 }
 
 body{
@@ -89,6 +90,14 @@ select{
   background-color: #FFFFFF;
   padding: 0 5px;
   min-width: 80px;
+}
+
+// restrict auto focus on iphone
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select:focus, textarea:focus, input:focus {
+        font-size: 30px;
+        color: rgba(0, 0, 0, 0);
+  }
 }
 
 input{
@@ -178,6 +187,11 @@ p{
   font-size: 2.5rem; font-size: 25px;
 }
 
+@media screen and (max-width: 599px){
+  .large-xxx{
+    font-size: 3rem; font-size: 30px;
+  }
+}
 
 .time{
   /*font-family: "Lucida Console", Monaco, monospace;*/
@@ -259,16 +273,27 @@ input.error, textarea.error{
 }
 
 /* -- star button -- */
-.star-button{
+.icon-only-button{
   @include prefixed("user-select", "none");
   display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  padding: 5px 3px;
+}
+
+.star-button{
   .icon-star,
   .icon-star-empty{
-    cursor: pointer;
     opacity: 0.7;
-    &:hover{
+    @media screen and (max-width: 599px){
       opacity: 1;
     }
+    @media screen and (min-width: 600px){
+      &:hover{
+        opacity: 1;
+      }
+    }
+
   }
   i{
     cursor: pointer;
@@ -293,6 +318,7 @@ input.error, textarea.error{
   display: inline-block;
   width: 60px;
   padding-top: 5px;
+  cursor: pointer;
 }
 
 .point:after{
@@ -339,6 +365,14 @@ input.error, textarea.error{
 
 #list-container{
   width: $content-width;
+  @media screen and (max-width: 599px){
+    width: 95%;
+  }
+  @media screen and (min-width: 600px){
+    width: $content-width;
+  }
+
+
   min-height: 500px;
   margin: 15px auto;
   border: 1px solid lightgray;
@@ -349,24 +383,37 @@ input.error, textarea.error{
 }
 
 #list-header{
-  margin-bottom: 100px;
+  margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
-  width: 860px;
-  height: 100px;
+
+  @media screen and (max-width: 599px){
+    width: 95%;
+  }
+  @media screen and (min-width: 600px){
+    width: 860px;
+  }
+
   padding: 30px 20px 10px 20px;
 }
 
 #list-operate-panel{
+  clear: both;
   margin-top: 5px;
   height: 40px;
   line-height: 40px;
-  width: 820px;
   padding: 5px 10px;
+  width: 820px;
+  @media screen and (max-width: 599px){
+    width: 100%;
+  }
 }
 
 #study-item-list{
   width: $content-width - 15px;
+  @media screen and (max-width: 599px){
+    width: 95%;
+  }
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 80px;
@@ -408,14 +455,8 @@ input.error, textarea.error{
   padding: 0 10px;
   max-width: 600px;
 
-  @media screen and (max-width: 599px){
-      font-size: 1.3rem;
-      font-size: 13px;
-   }
-  @media screen and (min-width: 600px){
-      font-size: 1.5rem;
-      font-size: 15px;
-   }
+  font-size: 1.5rem;
+  font-size: 15px;
 
 }
 
@@ -462,10 +503,10 @@ input.error, textarea.error{
 #filter-form{
   border-bottom: 1px solid lightgray;
   padding-bottom: 15px;
-
+  @include prefixed("tap-highlight-color", "rgba(0,0,0,0)");
   label{
     float: left;
-    width: 100px;
+    width: 80px;
     margin-right: 10px;
     text-align: right;
     line-height: 30px;
@@ -476,40 +517,90 @@ input.error, textarea.error{
 .filter-row{
   padding: 0 30px 0 10px;
   height: 50px;
+  width: 100%;
+  @media screen and (max-width: 600px) {
+    // width: 50%;
+    padding: 0;
+    height: 110px;
+  }
+  @include prefixed("tap-highlight-color", "rgba(0,0,0,0)");
+  @include prefixed("user-select", "none");
+}
+
+.filter-search-item-grp{
+  float: left;
+  @media screen and (max-width: 600px) {
+    margin-bottom: 20px;
+  }
+}
+
+.filter-search-item-grp-bottom-space{
+  @media screen and (max-width: 600px) {
+    margin-bottom: 40px;
+  }
 }
 
 .filter-search-input{
   float: left;
-  width: 300px;
+  width: 270px;
   height: 30px;
   position: relative;
 }
 
 .filter-search-tags-wrapper{
-  width: 260px;
+  width: 220px;
   float: left;
 }
 
 .filter-star-button{
-  position: relative;
   float: left;
+  position: relative;
+  bottom: 3px;
   margin-left: 10px;
+  padding: 5px;
+  @include prefixed("user-select", "none");
 }
 
 .filter-text-search{
-  width: 170px;
+  width: 150px;
   padding-right: 15px;
 }
 
 .filter-text-search-enter{
   position: absolute;
   top: 8px;
-  left: 175px;
+  left: 145px;
   width: 20px;
   height: 20px;
   z-index: 2;
   color: rgb(150, 150, 150);
   color: rgba(0, 0, 0, 0.2);
+}
+
+.star-select-modal{
+  top: 200px;
+  left: 60px;
+  width: 320px;
+  height: 140px;
+  position: fixed;
+  text-align: center;
+  padding: 10px 0;
+  z-index: 105;
+  background-color: white;
+  @include border-radius(5px, 5px);
+  @include prefixed("tap-highlight-color", "rgba(0,0,0,0)");
+}
+
+.star-select-modal-star-list{
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  >li{
+    float: left;
+    font-size: 50px;
+    margin-right: 5px;
+  }
+
 }
 
 /* operate -------------------------------- */
@@ -520,11 +611,14 @@ input.error, textarea.error{
 .operate-study-start{
   float: left;
   width: 160px;
+  @media screen and (max-width: 600px){
+    width: 100px;
+  }
   height: 1px;
 }
 
 .operate-study-start>button{
-  width: 150px;
+  width: 90%;
   font-size: 1.5rem; font-size: 15px;
   cursor: pointer;
   color: white;
@@ -540,6 +634,7 @@ input.error, textarea.error{
 
 .operate-toolbar{
   float: left;
+  @include clearfix;
 
   ul{
     border-right: 1px solid lightgray;
@@ -548,6 +643,9 @@ input.error, textarea.error{
   li{
     float: left;
     width: 60px;
+    @media screen and (max-width: 600px){
+      width: 55px;
+    }
     height: 30px;
     border: 1px solid lightgray;
     border-right: none;
@@ -581,6 +679,12 @@ input.error, textarea.error{
 .operate-number-and-sort{
   float: right;
   text-align: right;
+  @media screen and (max-width: 599px){
+    float: none;
+    padding-right: 30px;
+    margin-top: 40px;
+  };
+
 }
 
 .operate-number-of-items{
@@ -591,6 +695,9 @@ input.error, textarea.error{
 
 .operate-sort{
   float: right;
+  @media screen and (max-width:599px){
+    float :left;
+  }
 }
 
 .operate-sort select{
@@ -603,7 +710,12 @@ input.error, textarea.error{
 .study-item{
   border: 1px solid lightgray;
   border-bottom: none;
-  height: 105px;
+  height: 110px;
+  @media screen and (max-width: 599px){
+    height: 135px;
+  }
+  @include prefixed("user-select", "none");
+  @include prefixed("tap-highlight-color", "rgba(0,0,0,0)");
 }
 
 .study-item>div{
@@ -619,7 +731,11 @@ input.error, textarea.error{
 .study-item-select{
   float: left;
   width: 50px;
-  height: 105px;
+  height: 110px;
+  @media screen and (max-width: 599px){
+    width: 12%;
+    height: 135px;
+  }
   position: relative;
   cursor: pointer;
 
@@ -628,9 +744,8 @@ input.error, textarea.error{
     height: 26px;
     margin-left: auto;
     margin-right: auto;
-    position: absolute;
-    top: 30px;
-    left: 12px;
+    position: relative;
+    top: 35%;
     content: " ";
     border-radius: 8px;
     border: 1px solid lightgray;
@@ -652,6 +767,9 @@ input.error, textarea.error{
 .study-item-ribbon{
   float: left;
   width: 8px;
+  @media screen and (max-width: 599px){
+    width: 2%;
+  }
   height: 100%;
   background-color: lightgray;
 }
@@ -778,21 +896,23 @@ input.error, textarea.error{
 
 .study-item-edit{
   display: inline-block;
-  color: rgb(70, 70, 70);
+  color: rgb(120, 120, 120);
   text-align: right;
   margin-left: 20px;
   i{
     opacity: 0.8;
-    margin-left: 10px;
+    // margin-left: 10px;
     &:hover{
       opacity: 1;
     }
   }
   .icon-copy{
     font-size: 85%;
+    // margin-left: 3px;
+    // margin-bottom: 3px;
   }
   .icon-trash{
-    margin-left: 3px;
+    // margin-left: 3px;
     &:hover{
       color: red;
     }
@@ -829,11 +949,12 @@ input.error, textarea.error{
   float: left;
   position: relative;
   margin-left: 10px;
-  span{
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+}
+
+.study-item-tags-icon{
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .study-item-tags-text{
@@ -885,6 +1006,114 @@ input.error, textarea.error{
   }
 }
 
+
+
+/* -- for mobile -- */
+.study-item-mb-master{
+  float: left;
+  width: 80%;
+  padding: 9px;
+}
+
+.study-item-mb-master-main{
+  float: left;
+  width: 63%;
+}
+
+.study-item-mb-title{
+  display: block;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+
+  span{
+    position: absolute;
+    top: 2px;
+    left: 0;
+  }
+  a{
+    color: rgb(0, 60, 130);
+    @include prefixed("transition", "color 0.5s");
+    // -webkit-transition: color 0.5s;
+    &:hover{
+      color: rgb(0, 150, 250);
+    }
+  }
+}
+
+.study-item-mb-updated-info{
+  margin-top: 10px;
+  margin-left: 5px;
+  height: 15px;
+  li{
+    float: left;
+    height: 15px;
+    line-height: 15px;
+    margin-right: 5px;
+  }
+}
+
+.study-item-mb-situation{
+  clear: left;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+
+
+.study-item-mb-tags{
+  margin-top: 10px;
+  margin-left: 5px;
+  position: relative;
+
+}
+
+.study-item-mb-tags-text{
+  margin-left: 20px;
+  color: rgb(70, 70, 70);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 80%;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+
+.study-item-mb-edit-and-progress{
+  float: left;
+  width: 35%;
+  text-align: center;
+}
+
+.study-item-mb-edit{
+  margin-left: 0;
+  >div:last-child{
+    margin-right: 0;
+  }
+}
+
+.study-item-mb-progress {
+  position: relative;
+  // float: left;
+  text-align: center;
+  width: 100%;
+  .study-item-progress-point{
+    margin-top: 0;
+    height: 50px;
+    @include clearfix;
+  }
+}
+
+.study-item-last-studied-time{
+  padding: 5px 0;
+  height: 1em;
+  width: 100%;
+}
+
+
 .studied-times-modal{
   display: none;
   position: absolute;
@@ -896,6 +1125,24 @@ input.error, textarea.error{
   z-index: 105;
   border: 1px solid rgb(230, 180, 100);
   background-color: white;
+  text-align: center;
+
+  &.studied-times-modal-mb{
+    top: 30px;
+    left: -240px;
+    width: 360px;
+    height: 350px;
+    .large-x{
+      font-size: 3rem; font-size: 30px;
+    }
+    .large{
+      font-size: 2.5rem; font-size: 25px;
+    }
+    .body{
+      height: 250px;
+    }
+  }
+
   h1{
     border-bottom: solid 1px #6EA31D;
     padding: 3px;
@@ -934,13 +1181,44 @@ input.error, textarea.error{
   .remove-studied-time{
     position: relative;
     display: inline-block;
-    margin-left: 7px;
+    // margin-left: 7px;
+    padding: 3px 7px 3px 7px;
     bottom: 1px;
     &:hover{
       color: rgb(200, 0, 0);
     }
   }
 }
+
+.progress-modal{
+  position: fixed;
+  top: 300px;
+  left: 60px;
+  width: 300px;
+  height: 140px;
+  text-align: center;
+  padding: 10px;
+  z-index: 105;
+  background-color: white;
+  @include border-radius(5px, 5px);
+}
+
+.progress-modal-body{
+  width : 100%;
+  .point{
+    margin-bottom: 30px;
+    font-size: 50px;
+  }
+  .slider{
+    width: 90%;
+    > .dragger{
+      width: 30px;
+      height: 30px;
+      @include border-radius(15px, 15px);
+    }
+  }
+}
+
 
 /* ------------------------------------------------------
   study item edit
@@ -1242,7 +1520,7 @@ input.error, textarea.error{
   .star-button{
     position: absolute;
     left: 220px;
-    top: 10px;
+    top: 20px;
     font-size: 30px;
     padding: 5px;
   }
@@ -1282,18 +1560,21 @@ input.error, textarea.error{
   padding: 5px 10px;
   margin-top: 5px;
   margin-bottom: 10px;
-  @media screen and (min-width: 600px){
-      font-size: 1.5rem;
-      font-size: 15px;
-   }
+  // @media screen and (min-width: 600px){
+  //     font-size: 1.5rem;
+  //     font-size: 15px;
+  //  }
 
   .sub-text{
-    font-size: 1.0rem; font-size: 10px;
-    @media screen and (min-width: 600px){
-        font-size: 1.2rem;
-        font-size: 12px;
-     }
     color: gray;
+    font-size: 80%;
+    // >p{
+    //   font-size: 1.0rem; font-size: 10px;
+    //   @media screen and (min-width: 600px){
+    //       font-size: 1.2rem;
+    //       font-size: 12px;
+    //    }
+    // }
   }
   >li{
     margin-bottom: 10px;

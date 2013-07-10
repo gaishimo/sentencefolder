@@ -87,6 +87,7 @@ define([
 
     onChangeItemSort: function(){
       AppModel.getGeneralModel().trigger('change_sort');
+
     },
 
     showTagAddModal: function(){

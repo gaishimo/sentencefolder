@@ -1,49 +1,56 @@
     <script id='tmpl-filter-form' type='text/template'>
       <form id="filter-form" method="get" class="medium">
         <div class="filter-row">
-          <label>
-            <span class="<%=tooltip_class()%>" title="理解度の範囲を指定">理解度</span>
-          </label>
-          <div class="filter-search-input">
-            <div id="range-slider-point"></div>
+          <div class="filter-search-item-grp filter-search-item-grp-bottom-space">
+            <label>
+              <span class="<%=tooltip_class()%>" title="理解度の範囲を指定">理解度</span>
+            </label>
+            <div class="filter-search-input">
+              <div id="range-slider-point" class="filter-search-range-slider"></div>
+            </div>
           </div>
-          <label>
-            <span class="<%=tooltip_class()%>" title="直近で学習した日時の範囲を指定">最終学習日時</span>
-          </label>
-          <div class="filter-search-input">
-            <div id="range-slider-last-study"></div>
+          <div class="filter-search-item-grp">
+            <label>
+              <span class="<%=tooltip_class()%>" title="直近で学習した日時の範囲を指定">最終学習日時</span>
+            </label>
+            <div class="filter-search-input">
+              <div id="range-slider-last-study" class="filter-search-range-slider"></div>
+            </div>
           </div>
         </div>
         <div class="filter-row">
-          <label>
-            <span class="tags-icon large-xx <%=tooltip_class()%>" title="指定のタグで絞り込む(AND条件)">
-              <i class="icon-tags"></i>
-            </span>
-          </label>
-          <div class="filter-search-input">
-            <div class="filter-search-tags-wrapper">
-              <div id="search-tags"></div>
+          <div class="filter-search-item-grp">
+            <label>
+              <span class="tags-icon large-xx <%=tooltip_class()%>" title="指定のタグで絞り込む(AND条件)">
+                <i class="icon-tags"></i>
+              </span>
+            </label>
+            <div class="filter-search-input">
+              <div class="filter-search-tags-wrapper">
+                <div id="search-tags"></div>
+              </div>
+              <div class="large-xxx icon-only-button star-button filter-star-button"><i class="icon-star-empty" data-star-idx="0"></i>
+              </div>
             </div>
-            <span class="large-xxx star-button filter-star-button">
-              <i class="icon-star-empty" data-star-idx="0"></i>
-            </span>
           </div>
-          <label>
-            <span class="large-xx <%=tooltip_class()%>" title="テキストで絞り込む">
-              <i class="icon-search"></i>
-            </span>
-          </label>
-          <div class="filter-search-input">
 
-            <span>
-              <i class="filter-text-search-enter icon-level-down large-x"></i>
-            </span>
-            <input type="text" name="text-search" id="text-search" class="filter-text-search">
-            <select id="text-lang" name="lang">
-              <option value="ja">日本語</option>
-              <option value="en">英語</option>
-              <option value="id">ID</option>
-            </select>
+          <div class="filter-search-item-grp">
+            <label>
+              <span class="large-xx <%=tooltip_class()%>" title="テキストで絞り込む">
+                <i class="icon-search"></i>
+              </span>
+            </label>
+            <div class="filter-search-input">
+              <span>
+                <i class="filter-text-search-enter icon-level-down large-x"></i>
+              </span>
+              <input type="text" name="text-search" id="text-search" class="filter-text-search">
+              <select id="text-lang" name="lang">
+                <option value="ja">日本語</option>
+                <option value="en">英語</option>
+                <option value="id">ID</option>
+              </select>
+            </div>
           </div>
         </div>
       </form>
@@ -121,16 +128,20 @@
               </div>
 
               <div class="study-item-edit large-xxx">
-                <div class="star-button">
+                <div class="star-button icon-only-button">
                   <i class="icon-star<@=get('star') ? '':'-empty' @>"
                       data-star-idx="<@=get('star')? get('star') : '0'@>"></i>
                 </div>
+                <div class="icon-only-button study-item-duplicate">
                   <i class="icon-copy <%=tooltip_class()%>" title="複製する"></i>
+                </div>
+                <div class="icon-only-button study-item-remove">
                   <i class="icon-trash <%=tooltip_class()%>" title="削除する"></i>
+                </div>
                 </p>
               </div>
 
-              <div class="study-item-sub small">
+              <div class="study-item-sub small clearfix">
                 <div class="study-item-situation">
                   <@if(get('situation')){@>
                   <span class="study-item-situation-text <%=tooltip_class()%>"
@@ -138,7 +149,7 @@
                   <@}@>
                 </div>
                 <div class="study-item-tags">
-                  <span class="tags-icon"><i class="icon-tags"></i></span>
+                  <span class="study-item-tags-icon tags-icon"><i class="icon-tags"></i></span>
                   <div class="study-item-tags-text">
                     <a  title="タグ: <@=get('formattedTags')@>" class="<%=tooltip_class()%>"><@=get('formattedTags')@></a>
                   </div>
@@ -158,9 +169,81 @@
         </div>
     </script>
 
+
+    <script id='tmpl-study-item-mb' type='text/template'>
+
+        <div class="study-item-container point-<@=get('point')@> <@=get('isNew')? 'new-item':''@>"
+              data-id="<@=get('_id')@>">
+          <div class="study-item-select" data-checked="false">
+            <div class="pseudo-check"></div>
+          </div>
+          <div class="study-item-ribbon"></div>
+          <div class="study-item-mb-master">
+            <div class="study-item-mb-master-main">
+              <div class="study-item-mb-title link large">
+                <a><@=get('question')@></a>
+              </div>
+              <div class="study-item-mb-updated-info small">
+                <ul>
+                  <li class="clearfix">ID: <@=get('sentence_id')@></li>
+                  <li class="clear-fix"><span class="time"><@=get('formattedCreatedTime') @></span>作成</li>
+                </ul>
+              </div>
+              <div class="study-item-mb-sub small">
+                <div class="study-item-mb-situation">
+                  <@if(get('situation')){@>
+                  <span class="study-item-situation-text <%=tooltip_class()%>"
+                     title="<@=get('situation')@>"><@=get('situation')@></span>
+                  <@}@>
+                </div>
+                <div class="study-item-mb-tags">
+                  <span class="study-item-tags-icon tags-icon"><i class="icon-tags"></i></span>
+                  <div class="study-item-mb-tags-text">
+                    <a  title="タグ: <@=get('formattedTags')@>" class="<%=tooltip_class()%>"><@=get('formattedTags')@></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="study-item-mb-edit-and-progress">
+                <div class="study-item-edit study-item-mb-edit large-xxx">
+                  <div class="star-button icon-only-button">
+                    <i class=" icon-star<@=get('star') ? '':'-empty' @>"
+                        data-star-idx="<@=get('star')? get('star') : '0'@>"></i>
+                  </div>
+                  <div class="icon-only-button study-item-duplicate">
+                    <i class="icon-copy <%=tooltip_class()%>" title="複製する"></i>
+                  </div>
+                  <div class="icon-only-button study-item-remove">
+                    <i class="icon-trash  <%=tooltip_class()%>" title="削除する"></i>
+                  </div>
+                </div>
+
+                <div class="study-item-mb-progress">
+                  <div class="study-item-progress-point">
+                    <div>
+                      <span class="point"><@=get('point')@></span>
+                    </div>
+                  </div>
+                </div>
+                <@
+                (function(){
+                  var lastStudiedTime = get('formattedLastStudiedTime'), isEmpty = lastStudiedTime == '';
+                @>
+                <p class="large study-item-last-studied-time <@=isEmpty ? '' : 'link' @>">
+                  <@=isEmpty ? '&nbsp;&nbsp;未学習&nbsp;&nbsp;': lastStudiedTime@>
+                </p>
+              <@})(); @>
+            </div>
+
+          </div>
+
+        </div>
+    </script>
+
     <script id="tmpl-studied-times" type="text/template">
       <@var existRecords = get('formattedStudiedTimes').length > 0; @>
-      <div class="study-item-studied-times<@=existRecords ? '<%=tooltip_class()%>' :''@>" <@=existRecords ? "title='学習日時(クリックで全て表示)'" : "" @>>
+      <div class="study-item-studied-times <@=existRecords ? '<%=tooltip_class()%>' :''@>" <@=existRecords ? "title='学習日時(クリックで全て表示)'" : "" @>>
         <ul class="medium" >
           <@get('formattedStudiedTimes').forEach(function(time, i){ @>
             <@if( i < 3 ){@>

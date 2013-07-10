@@ -6,12 +6,15 @@ define([
    '../utils/input',
    '../helper/star',
    '../helper/select2',
+   'viewport',
    'select2',
    'range-slider',
    'tiptip',
    'backbone'],
     function(AppModel, StudiedRangeUtil,
-      InputUtils, StarHelper, Select2Helper){
+      InputUtils, StarHelper, Select2Helper, viewport){
+
+  var isMobile = viewport.width < 600;
 
   var FilterFormView = Backbone.View.extend({
 
@@ -20,7 +23,7 @@ define([
     template: _.template($('#tmpl-filter-form').html()),
 
     events: {
-      'click .icon-star,.icon-star-empty': 'clickStar',
+      'click .filter-star-button': 'clickStar',
       'keypress #text-search': 'onKeyPress'
     },
 
@@ -146,7 +149,7 @@ define([
 
     clickStar: function(ev){
       var self = this;
-      var $star = $(ev.target);
+      var $star = this.$('.filter-star-button>i');
       var starIdx = StarHelper.switchStar($star);
 
       this.starSearching = starIdx;

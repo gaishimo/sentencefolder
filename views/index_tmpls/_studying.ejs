@@ -33,7 +33,7 @@
           <pre class="description-text text-content hide"><@=get('description')@></pre>
         </div>
         <@}@>
-        <div class="star-button">
+        <div class="star-button icon-only-button">
           <i class="icon-star" data-star-idx="<@=get('star')@>"></i>
         </div>
 
@@ -61,18 +61,18 @@
         </div>
 
         <@var dialog = get('dialog') || { before: [], after:[] };@>
-        <ul class="large studying-item-sentences">
+        <ul class="studying-item-sentences">
           <@_.each(dialog.before, function(sentence){@>
           <li class="studying-item-sub-sentence speaker-<@=sentence.speaker@>">
             <div>
               <div class="answer">
               <@(sentence.answer.match(/[^\r\n]+/g) || []).forEach(function(line){ @>
-                <p data-original-text="<@=line@>"><@=line@></p>
+                <p data-original-text="<@-line@>"><@-line@></p>
               <@});@>
               </div>
               <div class="question">
               <@(sentence.question.match(/[^\r\n]+/g) || []).forEach(function(line){ @>
-                <p class="sub-text" data-original-text="<@=line@>"><@=line@></p>
+                <p class="sub-text" data-original-text="<@-line@>"><@-line@></p>
               <@});@>
               </div>
             </div>
@@ -82,7 +82,7 @@
           <li class="studying-item-main-sentence speaker-1">
             <div class="question sub-text">
             <@get('question').match(/[^\r\n]+/g).forEach(function(line){ @>
-              <p class="question" data-original-text="<@=line@>"><@=line@></p>
+              <p class="question" data-original-text="<@-line@>"><@-line@></p>
             <@});@>
             </div>
             <div>
@@ -92,10 +92,10 @@
                   <div>
                     <div class="sentence-item" data-is-showing="false">
                       <i class="icon-question"></i>
-                      <div class="memo small"><@=answer.memo@></div>
+                      <div class="memo sub-text"><@=answer.memo@></div>
                       <div class="sentence-text answer hidden">
                         <@(answer.sentence.match(/[^\r\n]+/g) || [] ).forEach(function(line){ @>
-                        <p data-original-text="<@=line@>"><@=line@></p>
+                        <p data-original-text="<@-line@>"><@-line@></p>
                         <@});@>
                       </div>
                     </div>
@@ -115,12 +115,12 @@
             <div>
               <div class="answer">
               <@(sentence.answer.match(/[^\r\n]+/g) || []).forEach(function(line){ @>
-                <p data-original-text="<@=line@>"><@=line@></p>
+                <p data-original-text="<@-line@>"><@-line@></p>
               <@});@>
               </div>
               <div class="question">
               <@(sentence.question.match(/[^\r\n]+/g) || []).forEach(function(line){ @>
-                <p class="sub-text" data-original-text="<@=line@>"><@=line@></p>
+                <p class="sub-text" data-original-text="<@-line@>"><@-line@></p>
               <@});@>
               </div>
             </div>

@@ -81,9 +81,22 @@ define([ 'underscore', 'moment', 'underscore-string', 'backbone', 'backbone.comp
       }
     },
 
+    formattedLastStudiedTime: {
+      fields: ['last_studied_time'],
+      compute: function(fields){
+        if(fields.last_studied_time){
+          return moment(fields.last_studied_time).format('YYYY/MM/DD HH:mm');
+        }else{
+          return '';
+        }
+
+      }
+    },
+
     toJSON: function(){
       var attrs = _.clone(this.attributes);
       delete attrs.formattedStudiedTimes;
+      delete attrs.formattedLastStudiedTime;
       delete attrs.isNew;
       return attrs;
     }

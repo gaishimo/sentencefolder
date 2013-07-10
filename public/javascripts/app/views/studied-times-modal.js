@@ -1,16 +1,24 @@
 define([ './modal',  'backbone'],
     function(ModalView){
-  'use strict';
   var studiedTimesModalView = ModalView.extend({
     className: 'studied-times-modal',
     template: _.template($('#tmpl-studied-times-modal').html()),
+
+    initialize: function(options){
+    },
 
     events: _.extend({}, ModalView.prototype.events, {
       'click .remove-studied-time': 'removeStudiedTime'
     }),
 
     render: function(){
+
       ModalView.prototype.render.call(this);
+
+      if(this.options.isMobile){
+        this.$el.addClass('studied-times-modal-mb');
+      }
+
       this.$el.html(this.template(this.model));
       return this;
     },
