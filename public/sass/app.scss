@@ -94,7 +94,7 @@ select{
 
 // restrict auto focus on iphone
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  select:focus, textarea:focus, input:focus {
+  select:focus{
         font-size: 30px;
         color: rgba(0, 0, 0, 0);
   }
