@@ -1,6 +1,8 @@
-define(['./filter-form', './list-operate-panel' ,'backbone'],
-    function(FilterFormView, ListOperatePanelView){
-  'use strict';
+'use strict';
+
+define([ '../router', './filter-form',  './list-operate-panel' ,'backbone'],
+    function(Router, FilterFormView, ListOperatePanelView){
+
   var ListHeaderView = Backbone.View.extend({
     render: function(){
       this.filterFormView = new FilterFormView({
@@ -15,6 +17,8 @@ define(['./filter-form', './list-operate-panel' ,'backbone'],
       );
       this.filterFormView.setRangeSlider();
       this.filterFormView.setSelect2();
+
+      Router.initialize(this.filterFormView);
       return this;
     }
   });

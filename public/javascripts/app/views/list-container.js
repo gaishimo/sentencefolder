@@ -21,25 +21,24 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
         return -( moment(s.get("created_at")).unix() );
       };
 
-      this.listHeaderView = new ListHeaderView( {
-        el: '#list-header' ,
-        collection: sentences
-      } );
-      this.$el.append(this.listHeaderView.render().el);
-
       this.studyItemListView = new StudyItemListView({
           modelView: StudyItemView,
           el: this.$('#study-item-list'),
           collection: sentences
       });
+      this.listHeaderView = new ListHeaderView( {
+        el: '#list-header' ,
+        collection: sentences
+      } );
+      this.$el.append(this.listHeaderView.render().el);
+      this.$el.append(this.studyItemListView.render().el);
 
-      sentences.fetch({ success: function(){
-
-         self.$el.append(self.studyItemListView.render().el);
-         self.collection = sentences;
-         self.setBottomEventHandler();
-      }});
-      AppModel.getGeneralModel().trigger('load_items', {});
+      // sentences.fetch({ success: function(){
+      //    self.$el.append(self.studyItemListView.render().el);
+      //    self.collection = sentences;
+      //    self.setBottomEventHandler();
+      // }});
+      // AppModel.getGeneralModel().trigger('load_items', {});
 
       return this;
     },

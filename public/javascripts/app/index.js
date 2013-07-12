@@ -1,9 +1,8 @@
-define([ './views/main', 'viewport', './init'], function(MainView, viewport){
+define([ './views/main', './init'], function(MainView, Router){
 
   if (window.ENV !== 'test'){
     var mainView = new MainView( { el: 'body' } );
     mainView.render();
-
   }
 });
 

@@ -2,17 +2,19 @@
 
 define([
   '../models/app_model',
+  '../router',
   '../utils/studied_range',
    '../utils/input',
    '../helper/star',
    '../helper/select2',
+   '../utils/parse-params',
    'viewport',
    'select2',
    'range-slider',
    'tiptip',
    'backbone'],
-    function(AppModel, StudiedRangeUtil,
-      InputUtils, StarHelper, Select2Helper, viewport){
+    function(AppModel, Router, StudiedRangeUtil,
+      InputUtils, StarHelper, Select2Helper, parseParams, viewport){
 
   var isMobile = viewport.width < 600;
 
@@ -39,21 +41,12 @@ define([
     onChangeSort: function(){
       var self = this;
       var sortVal = parseInt($('.operate-sort-select').val(), 10);
-      this.collection.comparator= function(s){
-        if(sortVal === -1){
-          return -( moment(s.get("created_at")).unix() );
-        }else if(sortVal === 1){
-          return ( moment(s.get("created_at")).unix() );
-        }else if(sortVal === -2){
-          return -( moment(s.get("last_studied_time")).unix() );
-        }else{
-          return ( moment(s.get("last_studied_time")).unix() );
-        }
-      };
+      this.setComperator();
       this.collection.reset();
       this.loadRecords();
-
     },
+
+
 
     onShowListContainer: function(){
       var $pointRange = $('#range-slider-point');
@@ -80,6 +73,45 @@ define([
       this.loadRecords(function(){
         $refreshIcon.removeClass('icon-spin');
       });
+    },
+
+    loadByFilters: function(query){
+      var p = parseParams(query);
+
+      if(p.point_min || p.point_max){
+        p.point_min = p.point_min || "0";
+        p.point_max = p.point_max || "100";
+        $('#range-slider-point').rangeSlider('values',
+            p.point_min, p.point_max);
+      }
+      if(p.last_studied_time_min || p.last_studied_time_max){
+        p.last_studied_time_min = p.last_studied_time_min || "0";
+        p.last_studied_time_max = p.last_studied_time_max || "99999";
+        $('#range-slider-last-study').rangeSlider('values',
+            StudiedRangeUtil.getValFromDay(
+              parseInt(p.last_studied_time_min, 10)),
+            StudiedRangeUtil.getValFromDay(
+              parseInt(p.last_studied_time_max, 10))
+          );
+      }
+      if(p.tags){
+        var tags = p.tags.split(',');
+        $('#search-tags').select2('val', tags);
+      }
+      if(p.star){
+        StarHelper.setStar(this.$('.star-button>i'), parseInt(p.star));
+      }
+      if(p.text){
+        this.$('#text-search').val(p.text);
+        this.$('#text-lang').val(p.text_lang || 'ja');
+      }
+      if(p.sort){
+        $('.operate-sort-select').val(p.sort);
+        this.setComperator(parseInt(p.sort));
+      }
+
+      this.loadRecords();
+
     },
 
     loadRecords: function(callback){
@@ -124,7 +156,34 @@ define([
       AppModel.setFilterModel(new Backbone.Model(params));
       AppModel.getGeneralModel().trigger('load_items', params);
 
+      var query = $.param(params);
+      if(query !== ''){
+        Router.get().navigate('filter/' + query);
+      }
     },
+
+    setComperator: function(sortVal){
+      this.collection.comparator= function(s){
+        if(sortVal === -1){
+          return -( moment(s.get("created_at")).unix() );
+        }else if(sortVal === 1){
+          return ( moment(s.get("created_at")).unix() );
+        }else if(sortVal === -2){
+          if(s.get("last_studied_time")){
+            return -( moment(s.get("last_studied_time")).unix() );
+          }else{
+            return 0;
+          }
+        }else{
+          if(s.get("last_studied_time")){
+            return ( moment(s.get("last_studied_time")).unix() );
+          }else{
+            return 0;
+          }
+        }
+      };
+    },
+
 
     setRangeSlider: function(vals){
       var self = this;

@@ -1,4 +1,4 @@
-define([], function(){
+define(['underscore'], function(){
 
   //singleton
   var StudiedRangeUtil = function(){
@@ -22,6 +22,16 @@ define([], function(){
 
     this.getSetting = function(){
       return setting;
+    };
+
+    this.getValFromDay = function(day){
+      var val;
+      _.each(setting, function(v, k){
+        if(v.day === day){
+          val = parseInt( k.replace('val-', ''), 10 );
+        }
+      });
+      return val;
     };
 
     StudiedRangeUtil = function(){
