@@ -20,6 +20,7 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
       sentences.comparator= function(s){
         return -( moment(s.get("created_at")).unix() );
       };
+      self.collection = sentences;
 
       this.studyItemListView = new StudyItemListView({
           modelView: StudyItemView,
@@ -33,12 +34,7 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
       this.$el.append(this.listHeaderView.render().el);
       this.$el.append(this.studyItemListView.render().el);
 
-      // sentences.fetch({ success: function(){
-      //    self.$el.append(self.studyItemListView.render().el);
-      //    self.collection = sentences;
-      //    self.setBottomEventHandler();
-      // }});
-      // AppModel.getGeneralModel().trigger('load_items', {});
+      this.setBottomEventHandler();
 
       return this;
     },

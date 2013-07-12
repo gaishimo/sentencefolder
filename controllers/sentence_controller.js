@@ -12,7 +12,7 @@ module.exports = {
     var user_id = req.session.user._id;
     var param = request_util.editParams(req.query, {
       intParams: ['offset', 'point_min', 'point_max', 'star',
-                        'last_studied_date_min', 'last_studied_date_max']
+                        'last_studied_time_min', 'last_studied_time_max']
     });
     sentencesLogic.list(user_id, param, function(err, list){
       res.json(list);
@@ -23,7 +23,7 @@ module.exports = {
     var user_id = req.session.user._id;
     var param = request_util.editParams(req.query, {
       intParams: ['point_min', 'point_max', 'star',
-                        'last_studied_date_min', 'last_studied_date_max']
+                        'last_studied_time_min', 'last_studied_time_max']
     });
     sentencesLogic.count(user_id, param, function(err, cnt){
       res.json({cnt: cnt});

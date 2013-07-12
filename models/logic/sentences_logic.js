@@ -101,7 +101,13 @@ module.exports = {
         .add('days', -p.last_studied_time_max )
         .toDate();
      if(p.last_studied_time_min === 0 ){
-         query.last_studied_time = { $or: [ { $exist: false}, { $gte: rangeEnd } ] };
+
+        if(p.last_studied_time_max !== 0){
+          query.$nor = [];
+          query.$nor.push({ last_studied_time: {$exists: true, $lt: rangeEnd}  });
+        }else{
+          query.last_studied_time = { $exists: false };
+        }
      }else{
        var rangeBegin = moment()
           .add('days', -p.last_studied_time_min )
@@ -112,7 +118,7 @@ module.exports = {
    }
     if(!_.isUndefined(p.text)){
       if(p.text_lang === 'ja'){
-        query.$or = [];
+        query.$or =  query.$or || [];
         var regexp = new RegExp( p.text , 'ig');
         query.$or.push({ question: regexp });
         query.$or.push({ situation: regexp });
