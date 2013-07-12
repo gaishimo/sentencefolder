@@ -14,26 +14,8 @@ define([
     currentItemModel: null,
     template: _.template($('#tmpl-studying').html()),
 
-    changeToNextItem: function(isFinish){
-      console.log("isFinish", isFinish);
-      var self = this;
-      this.currentItemView.$el.fadeOut(200, function(){
-        $(this).remove();
-        if(isFinish){
-          self.addStudiedTime();
-          if(self.collection.length === 1){
-            alert('全てのアイテムの学習が完了しました。');
-            self.backToList();
-            return;
-          }
-          self.collection.remove(self.currentItemModel);
-          console.log("self.collection", self.collection);
-        }
-
-
-        self.showNextItem();
-
-      });
+    events: {
+      'click .studying-cancel': 'backToList'
     },
 
     initialize: function(){
@@ -46,6 +28,25 @@ define([
       var itemNum = this.collection.length;
       this.$el.html(this.template({ itemNum: itemNum }));
       return this;
+    },
+
+    changeToNextItem: function(isFinish){
+      var self = this;
+      this.currentItemView.$el.fadeOut(200, function(){
+        $(this).remove();
+        if(isFinish){
+          self.addStudiedTime();
+          if(self.collection.length === 1){
+            alert('全てのアイテムの学習が完了しました。');
+            self.backToList();
+            return;
+          }
+          self.collection.remove(self.currentItemModel);
+        }
+
+        self.showNextItem();
+
+      });
     },
 
     showNextItem: function(){
@@ -65,7 +66,6 @@ define([
     },
 
     addStudiedTime: function(){
-      console.log("addStudiedTime", this.currentItemModel);
       var now = moment(),
             nowFormatted = now.format('YYYY/MM/DD HH:mm'),
             studiedTimesFormatted = this.currentItemModel.get('formattedStudiedTimes'),
@@ -82,6 +82,9 @@ define([
       this.currentItemModel.save({ 'studied_times': studiedTimes }, {
         patch: true,
         success: function(model){
+          model.formattedStudiedTimes();
+          model.set('last_studied_time', studiedTimes[0]);
+          model.formattedLastStudiedTime();
           model.trigger('update_studied_times');
         }
       });
@@ -100,7 +103,6 @@ define([
     },
 
     backToList: function(){
-      console.log("content", TransitionHelper);
       TransitionHelper.comeBackToList(this);
     }
 

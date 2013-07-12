@@ -85,7 +85,7 @@ define([ 'underscore', 'moment', 'underscore-string', 'backbone', 'backbone.comp
       fields: ['last_studied_time'],
       compute: function(fields){
         if(fields.last_studied_time){
-          return moment(fields.last_studied_time).format('YYYY/MM/DD HH:mm');
+          return moment(fields.last_studied_time).format('YYYY/MM/DD');
         }else{
           return '';
         }

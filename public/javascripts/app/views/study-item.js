@@ -7,7 +7,7 @@ define([
   './star-select-modal',
   './study-item-edit',
   '../models/sentence',
-  '../utils/confirm',
+  '../utils/del-confirm',
   '../helper/star',
   '../helper/slider',
   '../helper/transition',
@@ -22,6 +22,7 @@ define([
     StarHelper, SliderHelper, TransitionHelper, viewport){
 
   var isMobile = viewport.width < 600;
+
   var templateId = isMobile  ?
         '#tmpl-study-item-mb' : '#tmpl-study-item';
 
@@ -37,7 +38,9 @@ define([
     initialize: function(){
       this.listenTo(this.model, {
         update_studied_times: this.renderStudiedTimes,
+        update_point: this.refreshPoint,
         update_tags: this.onUpdateTags,
+        update_star: this.refreshStar,
         update_item: this.onUpdateItem
       });
       this.listenTo(AppModel.getGeneralModel(), {
@@ -50,10 +53,10 @@ define([
       return{
         'click .study-item-select': 'clickItemSelect',
         'click .star-button': 'clickStar',
-        'click .study-item-remove': 'clickTrash',
+        'click .study-item-remove': 'removeItem',
         'click .study-item-duplicate': 'duplicateItem',
         'click .study-item-studied-times, .study-item-last-studied-time': 'clickStudiedTimes',
-        'click .study-item-title': _.debounce(this.gotoEdit, 1000, true),
+        'click .study-item-title,.study-item-mb-title': _.debounce(this.gotoEdit, 1000, true),
         'click .point': 'clickPoint'
       }
     },
@@ -67,15 +70,18 @@ define([
     render: function(model){
       var self = this;
       this.$el.html(this.template(this.model));
-      if(!isMobile){
-        this.renderStudiedTimes();
-      }
+
+      this.renderStudiedTimes();
 
       this.$el.find('.tooltip').tipTip( { defaultPosition: 'top' } );
       return this;
     },
 
     renderStudiedTimes: function(){
+      if(isMobile){
+        this.renderLastStudiedTime();
+        return;
+      }
       var $originalEl = this.$el.find('.study-item-studied-times');
       var $newEl = this.templateStudiedTimes(this.model);
       if($originalEl.length > 0){
@@ -84,8 +90,29 @@ define([
       this.$el.find('.study-item-progress').append($newEl);
     },
 
+    renderLastStudiedTime: function(){
+      var lastStudiedTime = this.model.get('formattedLastStudiedTime') || '未学習';
+      // console.log("renderLastStudiedTime", lastStudiedTime);
+      this.$('.study-item-last-studied-time').text(lastStudiedTime);
+    },
+
+    refreshPoint: function(){
+      var pointVal = this.model.get('point');
+      this.$('.study-item-container')
+              .removeClass(SliderHelper.getPointClasses().join(' '))
+              .addClass('point-'+ pointVal);
+      this.$('.point').text(pointVal);
+    },
+
+    refreshStar: function(){
+      var starVal = this.model.get('star');
+      StarHelper.setStar(this.$('.star-button i'), starVal);
+    },
+
     onUpdateItem: function(){
-      this.onUpdateTags();
+      this.render();
+      this.unsetSlider();
+      this.setSlider();
     },
 
     onUpdateTags: function(){
@@ -147,7 +174,10 @@ define([
     clickItemSelect: function(ev){
       var current = this.$('.study-item-select').attr('data-checked') === 'true';
       var changeTo = !current;
-      this.$('.study-item-select').attr('data-checked', changeTo)
+
+      //as attribute and child selector is not working on kindle fire,
+      // set attr to child element too.
+      this.$('.study-item-select,.pseudo-check').attr('data-checked', changeTo.toString());
 
       if(changeTo){
         AppModel.getGeneralModel().trigger('selected_item');
@@ -176,8 +206,7 @@ define([
 
     },
 
-    clickTrash: function(){
-      console.log("clickTrash");
+    removeItem: function(){
       var model = this.model;
       ConfirmUtils.show({ onYes: function(){
         model.destroy();
@@ -229,11 +258,11 @@ define([
 
 
     selectAllItem: function(){
-      this.$('.study-item-select').attr('data-checked', 'true');
+      this.$('.study-item-select,.pseudo-check').attr('data-checked', 'true');
     },
 
     unselectAllItem: function(){
-      this.$('.study-item-select').attr('data-checked', 'false');
+      this.$('.study-item-select,.pseudo-check').attr('data-checked', 'false');
     },
 
     gotoEdit: function(){

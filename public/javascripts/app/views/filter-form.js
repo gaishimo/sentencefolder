@@ -24,13 +24,16 @@ define([
 
     events: {
       'click .filter-star-button': 'clickStar',
-      'keypress #text-search': 'onKeyPress'
+      'click .filter-refresh': 'refreshRecords',
+      'keypress #text-search': 'onKeyPress',
     },
 
     initialize: function(){
       var self = this;
-      this.listenTo(AppModel.getGeneralModel(),
-         'change_sort',  this.onChangeSort);
+      this.listenTo(AppModel.getGeneralModel(), {
+        'change_sort':  this.onChangeSort,
+        'show_list_container': this.onShowListContainer
+      });
     },
 
     onChangeSort: function(){
@@ -52,13 +55,34 @@ define([
 
     },
 
+    onShowListContainer: function(){
+      var $pointRange = $('#range-slider-point');
+      var $laststudyRange = $('#range-slider-last-study');
+
+      var vals = {
+        pointRange: $pointRange.rangeSlider('values'),
+        laststudyRange: $laststudyRange.rangeSlider('values')
+      };
+      this.unsetRangeSlider();
+      this.setRangeSlider(vals);
+    },
+
     render: function(){
       this.$el.html(this.template({}));
       this.$('.tooltip').tipTip();
       return this;
     },
 
-    loadRecords: function(){
+    refreshRecords: function(){
+      var $refreshIcon = this.$('.filter-refresh i');
+      $refreshIcon.addClass('icon-spin');
+      this.collection.reset();
+      this.loadRecords(function(){
+        $refreshIcon.removeClass('icon-spin');
+      });
+    },
+
+    loadRecords: function(callback){
       var pointRange = $('#range-slider-point').rangeSlider('values');
       var lastStudyRange = $('#range-slider-last-study').rangeSlider('values');
       var tags = $('#search-tags').select2('val');
@@ -96,14 +120,18 @@ define([
         params.sort = sort;
       }
 
-      this.collection.fetch({ data: params });
+      this.collection.fetch({ data: params, success: callback });
       AppModel.setFilterModel(new Backbone.Model(params));
       AppModel.getGeneralModel().trigger('load_items', params);
 
     },
 
-    setRangeSlider: function(){
+    setRangeSlider: function(vals){
       var self = this;
+      vals = vals || {
+        pointRange: { min: 0, max: 100 },
+        laststudyRange: { min: 0, max: 12}
+      };
       var $pointRange = $('#range-slider-point').rangeSlider({
         bounds: {min: 0, max: 100},
         step: 10,
@@ -112,7 +140,8 @@ define([
           return val + '%';
         }
       });
-      $pointRange.rangeSlider("values", 0, 100);
+      $pointRange.rangeSlider("values",
+            vals.pointRange.min, vals.pointRange.max);
       $pointRange.on('userValuesChanged', function(e, data){
         self.loadRecords();
       });
@@ -126,11 +155,18 @@ define([
           return setting['val-' + val].text;
         }
       });
-      $laststudyRange.rangeSlider("values", 0, 12);
+      $laststudyRange.rangeSlider("values",
+            vals.laststudyRange.min, vals.laststudyRange.max);
       $laststudyRange.on('userValuesChanged', function(e, data){
         self.loadRecords();
       });
 
+    },
+
+    unsetRangeSlider: function(){
+      this.$('#range-slider-point,#range-slider-last-study')
+          .off('userValuesChanged')
+          .rangeSlider('destroy');
     },
 
     setSelect2: function(){

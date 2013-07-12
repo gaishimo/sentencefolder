@@ -14,7 +14,7 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
 
     render: function(){
       var self = this;
-
+      $('.loading').hide();
       var sentences = AppModel.getSentenceList();
       //set default sort
       sentences.comparator= function(s){
@@ -34,6 +34,7 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
       });
 
       sentences.fetch({ success: function(){
+
          self.$el.append(self.studyItemListView.render().el);
          self.collection = sentences;
          self.setBottomEventHandler();
@@ -53,13 +54,13 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
 
         if(!self.loading){
           self.loading = true;
-          $('#study-item-list-loading').show();
+          $('#study-item-list-loading').addClass('icon-spin').show();
           filterParams = AppModel.getFilterModel().attributes;
           newRecords.fetch({
             data: _.extend( {}, filterParams, { offset: currentSize }),
             success: function(fetchedCollection){
               self.loading = false;
-              $('#study-item-list-loading').hide(function(){
+              $('#study-item-list-loading').removeClass('icon-spin').hide(function(){
                 self.collection.add(fetchedCollection.models);
               });
             }

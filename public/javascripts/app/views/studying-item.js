@@ -59,12 +59,15 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
           setTimeout(function(){
             if(self.pointUpdating !== null){
               self.model.save({ 'point': self.pointUpdating }, {
-                patch: true
+                patch: true,
+                success: function(model){
+                  console.log("model", model);
+                  model.trigger('update_point');
+                }
               });
               self.pointUpdating = null;
             }
           }, 2000);
-
         }
       );
 
@@ -180,7 +183,10 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
       setTimeout(function(){
         if(self.starUpdating !== null){
           self.model.save({ 'star': self.starUpdating }, {
-            patch: true
+            patch: true,
+            success: function(model){
+              model.trigger('update_star');
+            }
           });
           self.starUpdating = null;
         }

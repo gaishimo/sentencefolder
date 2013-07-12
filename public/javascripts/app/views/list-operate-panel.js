@@ -2,7 +2,7 @@ define([
   '../models/app_model',
   '../models/sentence',
   '../collections/sentences',
-  '../utils/confirm',
+  '../utils/del-confirm',
   './tag-modal-add',
   './tag-modal-remove',
   './study-item-edit',
@@ -10,7 +10,7 @@ define([
   '../helper/transition',
   'tiptip', 'backbone', 'jquery.ui.effect' ],
    function(AppModel, SentenceModel, SentenceCollection,
-    DeleteConfirm, TagModalAddView, TagModalRemoveView,
+    DelConfirm, TagModalAddView, TagModalRemoveView,
     StudyItemEditView, StudyingView, TransitionHelper ){
 
   'use strict';
@@ -103,7 +103,7 @@ define([
 
     removeItem: function(){
       var self = this;
-      DeleteConfirm.show({ onYes: function(){
+      DelConfirm.show({ onYes: function(){
         var targetModels = [];
         $('.study-item-select[data-checked=true]').each(function(i, item){
           var id = $(item).closest('.study-item-container').attr('data-id');

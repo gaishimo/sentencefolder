@@ -11,7 +11,7 @@
           </div>
           <div class="filter-search-item-grp">
             <label>
-              <span class="<%=tooltip_class()%>" title="直近で学習した日時の範囲を指定">最終学習日時</span>
+              <span class="<%=tooltip_class()%>" title="直近で学習した日時の範囲を指定">最終学習</span>
             </label>
             <div class="filter-search-input">
               <div id="range-slider-last-study" class="filter-search-range-slider"></div>
@@ -41,10 +41,10 @@
               </span>
             </label>
             <div class="filter-search-input">
+              <input type="text" name="text-search" id="text-search" class="filter-text-search">
               <span>
                 <i class="filter-text-search-enter icon-level-down large-x"></i>
               </span>
-              <input type="text" name="text-search" id="text-search" class="filter-text-search">
               <select id="text-lang" name="lang">
                 <option value="ja">日本語</option>
                 <option value="en">英語</option>
@@ -53,6 +53,11 @@
             </div>
           </div>
         </div>
+
+        <div class="filter-refresh">
+          <i class="icon-refresh"></i>
+        </div>
+
       </form>
     </script>
 
@@ -180,7 +185,7 @@
           <div class="study-item-ribbon"></div>
           <div class="study-item-mb-master">
             <div class="study-item-mb-master-main">
-              <div class="study-item-mb-title link large">
+              <div class="study-item-mb-title link large-x">
                 <a><@=get('question')@></a>
               </div>
               <div class="study-item-mb-updated-info small">
@@ -214,12 +219,9 @@
                   <div class="icon-only-button study-item-duplicate">
                     <i class="icon-copy <%=tooltip_class()%>" title="複製する"></i>
                   </div>
-                  <div class="icon-only-button study-item-remove">
-                    <i class="icon-trash  <%=tooltip_class()%>" title="削除する"></i>
-                  </div>
                 </div>
 
-                <div class="study-item-mb-progress">
+                <div class="study-item-mb-progress clearfix">
                   <div class="study-item-progress-point">
                     <div>
                       <span class="point"><@=get('point')@></span>
@@ -231,7 +233,7 @@
                   var lastStudiedTime = get('formattedLastStudiedTime'), isEmpty = lastStudiedTime == '';
                 @>
                 <p class="large study-item-last-studied-time <@=isEmpty ? '' : 'link' @>">
-                  <@=isEmpty ? '&nbsp;&nbsp;未学習&nbsp;&nbsp;': lastStudiedTime@>
+                  <@=isEmpty ? '未学習': lastStudiedTime@>
                 </p>
               <@})(); @>
             </div>

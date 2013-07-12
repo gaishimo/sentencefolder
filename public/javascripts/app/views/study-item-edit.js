@@ -298,6 +298,9 @@ define([ '../models/app_model',
             AppModel.getGeneralModel().trigger('create_new_item');
             AppModel.getSentenceList().add(model);
           }else{
+            model.set('updated_at', moment());
+            model.formattedUpdatedTime();
+
             model.trigger('update_item');
           }
         },

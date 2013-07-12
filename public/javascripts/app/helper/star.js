@@ -17,6 +17,15 @@ define([], function(){
       return starIdx;
     };
 
+    this.setStar = function($star, val){
+      if(val === 0){
+        $star.removeClass('icon-star').addClass('icon-star-empty');
+      }else{
+        $star.removeClass('icon-star-empty').addClass('icon-star');
+      }
+      $star.attr('data-star-idx', val);
+    };
+
     StarHelper = function(){
       return instance;
     }
