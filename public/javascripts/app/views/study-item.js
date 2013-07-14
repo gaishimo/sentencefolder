@@ -54,7 +54,7 @@ define([
         'click .study-item-select': 'clickItemSelect',
         'click .star-button': 'clickStar',
         'click .study-item-remove': 'removeItem',
-        'click .study-item-duplicate': 'duplicateItem',
+        'click .study-item-duplicate': _.debounce(this.duplicateItem, 2000, true),
         'click .study-item-studied-times, .study-item-last-studied-time': 'clickStudiedTimes',
         'click .study-item-title,.study-item-mb-title': _.debounce(this.gotoEdit, 2000, true),
         'click .point': 'clickPoint'
