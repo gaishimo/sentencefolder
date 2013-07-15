@@ -11,7 +11,7 @@ define([
     className: 'studying',
     currentItemView: null,
     currentItemModel: null,
-    template: _.template($('#tmpl-studying').html()),
+    // template: _.template($('#tmpl-studying').html()),
 
     events: {
       'click .studying-cancel': 'backToList'
@@ -25,7 +25,7 @@ define([
 
     render: function(){
       var itemNum = this.collection.length;
-      this.$el.html(this.template({ itemNum: itemNum }));
+      this.$el.html(_.template($('#tmpl-studying').html())({ itemNum: itemNum }));
       return this;
     },
 

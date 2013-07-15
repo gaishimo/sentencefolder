@@ -30,8 +30,8 @@ define([
 
     tagName: 'li',
     className: 'study-item',
-    template: _.template($(templateId).html()),
-    templateStudiedTimes:   _.template($('#tmpl-studied-times').html()),
+    // template: _.template($(templateId).html()),
+    // templateStudiedTimes:   _.template($('#tmpl-studied-times').html()),
     pointUpdating: null,
     starUpdating: null,
 
@@ -69,7 +69,7 @@ define([
 
     render: function(model){
       var self = this;
-      this.$el.html(this.template(this.model));
+      this.$el.html(_.template($(templateId).html())(this.model));
 
       this.renderStudiedTimes();
 
@@ -83,7 +83,7 @@ define([
         return;
       }
       var $originalEl = this.$el.find('.study-item-studied-times');
-      var $newEl = this.templateStudiedTimes(this.model);
+      var $newEl = _.template($('#tmpl-studied-times').html())(this.model);
       if($originalEl.length > 0){
         $originalEl.remove();
       }

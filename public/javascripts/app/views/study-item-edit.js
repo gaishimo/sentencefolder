@@ -46,10 +46,10 @@ define([ '../models/app_model',
     });
   }
 
-  var addDialogRow = function($button, $dialogList, templateDialog){
+  var addDialogRow = function($button, $dialogList){
     var rowNum = $dialogList.children('li').length;
     if( rowNum < 5){
-      $dialogList.append(templateDialog());
+      $dialogList.append(_.template($('#tmpl-dialog-row').html())());
       $dialogList.children('li:last-child').fadeIn(function(){
         $(this).find('textarea').eq(0).focus();
       });
@@ -87,14 +87,14 @@ define([ '../models/app_model',
       }
     },
 
-    template: _.template($('#tmpl-study-item-edit').html()),
-    templateAnswer: _.template($('#tmpl-answer-row').html()),
-    templateDialog: _.template($('#tmpl-dialog-row').html()),
-    templateParamSet: _.template($('#tmpl-param-set-row').html()),
-    templateParam: _.template($('#tmpl-param-row').html()),
+    // template: _.template($('#tmpl-study-item-edit').html()),
+    // templateAnswer: _.template($('#tmpl-answer-row').html()),
+    // templateDialog: _.template($('#tmpl-dialog-row').html()),
+    // templateParamSet: _.template($('#tmpl-param-set-row').html()),
+    // templateParam: _.template($('#tmpl-param-row').html()),
 
     render: function(){
-       this.$el.html(this.template(this.model));
+       this.$el.html(_.template($('#tmpl-study-item-edit').html())(this.model));
        this.$el.fadeIn();
       return this;
     },
@@ -193,7 +193,7 @@ define([ '../models/app_model',
       var rowNum = answerList.children('li').length;
       ev.preventDefault();
       if( rowNum < 5){
-        answerList.append(this.templateAnswer());
+        answerList.append(_.template($('#tmpl-answer-row').html())());
         answerList.children(':last-child').fadeIn(function(){
           $(this).find('textarea:first-child').focus();
         });
@@ -210,7 +210,7 @@ define([ '../models/app_model',
       var rowNum = $paramSetList.children('li').length;
       ev.preventDefault();
       if( rowNum < 3){
-        $paramSetList.append(this.templateParamSet({ idx: rowNum }));
+        $paramSetList.append(_.template($('#tmpl-param-set-row').html())({ idx: rowNum }));
         $paramSetList.children(':last-child').fadeIn(function(){
           $(this).find('input:first-child').focus();
         });
@@ -228,7 +228,7 @@ define([ '../models/app_model',
       var rowNum = $paramList.children('li').length;
       ev.preventDefault();
       if( rowNum <= 4){
-        $paramList.append(this.templateParam());
+        $paramList.append( _.template($('#tmpl-param-row').html())());
         $paramList.children(':last-child').fadeIn(function(){
           $(this).find('input:first-child').focus();
         });
@@ -243,13 +243,13 @@ define([ '../models/app_model',
     addDialogBeforeRow: function(ev){
       ev.preventDefault();
       var $dialogList = this.$('.edit-form-dialog-before-list');
-      addDialogRow($(ev.target), $dialogList, this.templateDialog);
+      addDialogRow($(ev.target), $dialogList);
    },
 
     addDialogAfterRow: function(ev){
       ev.preventDefault();
       var $dialogList = this.$('.edit-form-dialog-after-list');
-      addDialogRow($(ev.target), $dialogList, this.templateDialog);
+      addDialogRow($(ev.target), $dialogList);
    },
 
    switchAdvancedSettingShowing: function(ev){

@@ -3,7 +3,7 @@ define([ './modal', '../helper/item_select', '../helper/select2', 'select2',  'b
   var TagModalAddView = ModalView.extend({
     id: 'add-tag-modal',
     className: 'edit-tag-modal',
-    template: _.template($('#tmpl-add-tag-modal').html()),
+    // template: _.template($('#tmpl-add-tag-modal').html()),
 
     events: _.extend({}, ModalView.prototype.events, {
       'click .edit-tag-modal-add': 'addTags'
@@ -11,7 +11,7 @@ define([ './modal', '../helper/item_select', '../helper/select2', 'select2',  'b
 
     render: function(){
       ModalView.prototype.render.call(this);
-      this.$el.html(this.template());
+      this.$el.html(_.template($('#tmpl-add-tag-modal').html())());
       return this;
     },
 

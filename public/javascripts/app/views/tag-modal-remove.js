@@ -3,7 +3,7 @@ define([ './modal', '../helper/item_select', 'select2',  'backbone'],
   var TagModalRemoveView = ModalView.extend({
     id: 'remove-tag-modal',
     className: 'edit-tag-modal',
-    template: _.template($('#tmpl-remove-tag-modal').html()),
+    // template: _.template($('#tmpl-remove-tag-modal').html()),
 
     events: _.extend({}, ModalView.prototype.events, {
       'click .edit-tag-modal-remove': 'removeTags'
@@ -21,7 +21,7 @@ define([ './modal', '../helper/item_select', 'select2',  'backbone'],
         }
       });
       alltags = _.unique(alltags);
-      this.$el.html(this.template({ tags: alltags }));
+      this.$el.html(_.template($('#tmpl-remove-tag-modal').html())({ tags: alltags }));
 
       this.$('select').on('change', function(ev){
         self.$('button').show();

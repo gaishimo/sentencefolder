@@ -2,14 +2,14 @@ define([ './modal', '../helper/slider', 'backbone'],
     function(ModalView, SliderHelper){
   var ProgressModalView = ModalView.extend({
     className: 'progress-modal',
-    template: _.template($('#tmpl-progress-modal').html()),
+    // template: _.template($('#tmpl-progress-modal').html()),
 
     events: _.extend({}, ModalView.prototype.events, {
     }),
 
     render: function(){
       ModalView.prototype.render.call(this);
-      this.$el.html(this.template(this.model));
+      this.$el.html(_.template($('#tmpl-progress-modal').html())(this.model));
       this.options.studyItemEl.find('.study-item-container').append(this.el);
       return this;
     },

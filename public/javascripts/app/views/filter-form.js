@@ -21,7 +21,7 @@ define([
 
     starSearching: null,
 
-    template: _.template($('#tmpl-filter-form').html()),
+    // template: _.template($('#tmpl-filter-form').html()),
 
     events: {
       'click .filter-star-button': 'clickStar',
@@ -60,7 +60,7 @@ define([
     },
 
     render: function(){
-      this.$el.html(this.template({}));
+      this.$el.html( _.template($('#tmpl-filter-form').html())({}));
       this.$('.tooltip').tipTip();
       return this;
     },

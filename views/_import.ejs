@@ -6,9 +6,15 @@
     <link href="/css/select2/select2.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
 
+<%if(jsOptimizing){%>
+
+    <script src="/javascripts/require.js" data-main="/javascripts/main-built"></script>
+
+<%}else{%>
     <script>
     window.require = {
       paths: {
+        'jquery': '../jquery/jquery-2.0.3.min' ,
         'backbone': '../backbone/backbone',
         'backbone.compute': '../backbone/backbone.compute',
         'underscore': '../underscore/underscore',
@@ -65,3 +71,6 @@
       }
     };
     </script>
+    <script defer src="/javascripts/require.js"
+          data-main="/javascripts/app/index.js"></script>
+<%}%>

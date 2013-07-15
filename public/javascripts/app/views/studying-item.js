@@ -7,7 +7,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
 
     pointUpdating: null,
     starUpdating: null,
-    template: _.template($('#tmpl-studying-item').html()),
+    // template: _.template($('#tmpl-studying-item').html()),
 
     events: {
       'click .star-button': 'changeStar',
@@ -25,7 +25,7 @@ define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone']
     },
 
     render: function(){
-      this.$el.html(this.template(this.model));
+      this.$el.html(_.template($('#tmpl-studying-item').html())(this.model));
       if(this.model.get('param_sets').length > 0){
         this.reflectParam();
       }

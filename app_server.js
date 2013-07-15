@@ -31,9 +31,16 @@ module.exports = function(){
           { dumpExceptions: true, showStack: true }
         ));
       });
-
-      app.configure('production', function(){
+      app.configure('development', function(){
+        app.locals({"jsOptimizing": true } );
       });
+
+      app.configure('prototype', 'production', function(){
+        app.locals({"jsOptimizing": true } );
+      });
+
+
+
 
       app.configure(function(){
         app.set('port', port || 3000);
@@ -102,6 +109,8 @@ module.exports = function(){
         app.use(app.router);
 
       });
+
+
 
       app.get('/', index);
       app.get('/login', login.index);

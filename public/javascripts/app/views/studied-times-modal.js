@@ -2,7 +2,7 @@ define([ './modal',  'backbone'],
     function(ModalView){
   var studiedTimesModalView = ModalView.extend({
     className: 'studied-times-modal',
-    template: _.template($('#tmpl-studied-times-modal').html()),
+    // template: _.template($('#tmpl-studied-times-modal').html()),
 
     initialize: function(options){
     },
@@ -19,7 +19,7 @@ define([ './modal',  'backbone'],
         this.$el.addClass('studied-times-modal-mb');
       }
 
-      this.$el.html(this.template(this.model));
+      this.$el.html(_.template($('#tmpl-studied-times-modal').html())(this.model));
       return this;
     },
 

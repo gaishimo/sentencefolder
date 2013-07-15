@@ -6,24 +6,13 @@
         content="width=device-width, initial-scale=0.7" />
     <meta name="format-detection" content="telephone=no" />
     <title>Sentence Folder</title>
-    <%- partial('_import') %>
-    <script>
-      (function(){
-        // var width = 'device-width';
-        // var scale = width >= 900 ? '0.8' : '0.7';
-        // document.getElementById( 'viewport' ).content =
-        //     'width=' + width+ ', initial-scale=' + scale;
-      })();
 
-    </script>
-    <script defer src="/javascripts/require-jquery-1.9.1.js"
-          data-main="/javascripts/app/index.js"></script>
     <%- partial('index_tmpls/_item_list') %>
     <%- partial('index_tmpls/_modals') %>
     <%- partial('index_tmpls/_edit_form') %>
     <%- partial('index_tmpls/_studying') %>
-    <script id="tmpl-studying" type="text/template">
-    </script>
+
+    <%- partial('_import') %>
   </head>
   <body id="sentence-folder">
     <div id="overall-layer"></div>

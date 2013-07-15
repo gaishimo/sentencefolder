@@ -14,7 +14,7 @@ define([
     StudyItemEditView, StudyingView, TransitionHelper ){
 
   var ListOperatePanelView = Backbone.View.extend({
-    template: _.template($('#tmpl-list-operate-panel').html()),
+    // template: _.template($('#tmpl-list-operate-panel').html()),
 
     initialize: function(){
       this.listenTo(AppModel.getGeneralModel(), {
@@ -38,7 +38,7 @@ define([
     },
 
     render: function(){
-      this.$el.append(this.template({}));
+      this.$el.append(_.template($('#tmpl-list-operate-panel').html())({}));
       this.$('.tooltip').tipTip({ defaultPosition: 'top' });
       this.collection.count({}, { onSuccess: function(cnt){
         $('#total-cnt').text(cnt);
