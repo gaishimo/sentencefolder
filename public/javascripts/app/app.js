@@ -1,4 +1,4 @@
-define(['./init', './views/main'], function(MainView){
+define(['./init', './views/main'], function(init, MainView){
   var app = {
     init: function () {
       this.mainView = new MainView();
