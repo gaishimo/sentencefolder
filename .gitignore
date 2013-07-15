@@ -31,7 +31,6 @@ dwsync.xml
 *.komodoproject
 .komodotools
 
-css
 
 # Folders to ignore
 .hg
@@ -48,9 +47,15 @@ docs
 build/buildinfo.properties
 build/config/buildinfo.properties
 
+# css file (exist sass file)
+app.css
+
 # built file
 *-built.js
 
 # minified file
 *.min.css
 
+
+# others
+main-built-new.js

@@ -33,9 +33,9 @@ module.exports = function(grunt){
               'public/css/reset.css',
                  'public/css/select2/*.css',
                  'public/css/iThing.css',  'public/css/tiptip.css',
-                  'public/css/simple-slider.css',
-                  'public/css/font-awesome.css',
-                  'public/css/app.css']
+                 'public/css/simple-slider.css',
+                 'public/css/font-awesome.css',
+                 'public/css/app.css']
         }
       }
 
