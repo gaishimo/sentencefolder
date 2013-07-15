@@ -3,6 +3,7 @@ module.exports = function(grunt){
   grunt.loadNpmTasks("grunt-contrib-compass");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-requirejs");
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   grunt.initConfig({
     compass: {
@@ -22,6 +23,22 @@ module.exports = function(grunt){
         files: [ 'public/sass/*.scss' ],
         tasks: [ 'compass:dev' ]
       }
+    },
+
+    cssmin: {
+      minify: {
+        files: {
+          'public/css/all.min.css':
+              [
+              'public/css/reset.css',
+                 'public/css/select2/*.css',
+                 'public/css/iThing.css',  'public/css/tiptip.css',
+                  'public/css/simple-slider.css',
+                  'public/css/font-awesome.css',
+                  'public/css/app.css']
+        }
+      }
+
     },
 
     requirejs: {
@@ -91,6 +108,6 @@ module.exports = function(grunt){
     }
   });
 
-
+  grunt.registerTask('default', ['compass:dist', 'cssmin:minify', 'requirejs:compile']);
 
 };

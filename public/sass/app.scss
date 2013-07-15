@@ -582,7 +582,9 @@ input.error, textarea.error{
 
 .filter-search-tags-wrapper{
   width: 220px;
-  width: 70%;
+  @media screen and (max-width: 599px) {
+    width: 70%;
+  }
   float: left;
 }
 

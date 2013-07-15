@@ -12,6 +12,7 @@
     "grunt-contrib-compass": "*",
     "grunt-contrib-watch": "*",
     "grunt-contrib-requirejs": "*",
+    "grunt-contrib-cssmin": "*",
     "express": "3.1.0",
     "express-partials": "*",
     "express-logger": "*",

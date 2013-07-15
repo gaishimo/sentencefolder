@@ -50,3 +50,7 @@ build/config/buildinfo.properties
 
 # built file
 *-built.js
+
+# minified file
+*.min.css
+

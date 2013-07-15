@@ -32,11 +32,11 @@ module.exports = function(){
         ));
       });
       app.configure('development', function(){
-        app.locals({"jsOptimizing": false } );
+        app.locals({"staticFileOptimizing": true } );
       });
 
       app.configure('prototype', 'production', function(){
-        app.locals({"jsOptimizing": true } );
+        app.locals({"staticFileOptimizing": true } );
       });
 
 
