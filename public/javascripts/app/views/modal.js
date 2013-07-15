@@ -1,6 +1,5 @@
 define(['backbone'],
     function(){
-  'use strict';
   var ModalView = Backbone.View.extend({
     events:{
       'click .icon-remove-sign': 'close'

@@ -2,7 +2,6 @@ define(['../models/app_model', './list-header', './study-item-list', './study-it
    '../collections/sentences',  '../models/sentence', 'backbone'],
     function(AppModel, ListHeaderView, StudyItemListView, StudyItemView,
         SentenceCollection, SentenceModel){
-  'use strict';
   var ListContainerView = Backbone.View.extend({
 
     initialize: function(){

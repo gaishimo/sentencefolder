@@ -1,6 +1,5 @@
 define([ 'underscore', 'moment', 'underscore-string', 'backbone', 'backbone.compute'],
     function(){
-  'use strict';
   var SentenceModel = Backbone.Model.extend({
 
     idAttribute: '_id',

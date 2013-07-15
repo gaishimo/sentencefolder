@@ -1,6 +1,5 @@
 define([ './header', './list-container', 'backbone'],
     function(HeaderView, ListContainerView){
-  'use strict';
   var mainView = Backbone.View.extend({
 
     events: {

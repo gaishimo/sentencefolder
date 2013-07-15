@@ -1,6 +1,5 @@
 define(['../collections/sentences','backbone'],
     function(SentenceCollection){
-  'use strict';
   var SentencesBoardModel = Backbone.Model.extend({
     defaults: {
     },

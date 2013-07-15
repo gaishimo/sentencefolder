@@ -1,5 +1,4 @@
 define(['./init', './views/main'], function(MainView){
-  'use strict';
   var app = {
     init: function () {
       this.mainView = new MainView();

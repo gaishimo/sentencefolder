@@ -6,7 +6,6 @@ define([
     'backbone'],
     function( AppModel, StudyingItemView, SliderHelper, TransitionHelper ){
 
-  'use strict';
   var StudyingView = Backbone.View.extend({
     id: 'studying',
     className: 'studying',

@@ -1,6 +1,5 @@
 define(['backbone'],
     function(){
-  'use strict';
 
   var ListView = Backbone.View.extend({
     initialize: function () {

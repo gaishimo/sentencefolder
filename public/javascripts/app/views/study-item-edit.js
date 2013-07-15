@@ -1,5 +1,3 @@
-'use strict';
-
 define([ '../models/app_model',
   '../helper/transition',
   '../helper/select2',

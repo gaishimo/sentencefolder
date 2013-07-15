@@ -13,7 +13,6 @@ define([
     DelConfirm, TagModalAddView, TagModalRemoveView,
     StudyItemEditView, StudyingView, TransitionHelper ){
 
-  'use strict';
   var ListOperatePanelView = Backbone.View.extend({
     template: _.template($('#tmpl-list-operate-panel').html()),
 

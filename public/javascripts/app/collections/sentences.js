@@ -1,6 +1,5 @@
 define([ '../models/sentence', 'backbone'],
     function(SentenceModel){
-  'use strict';
   var SentenceCollection = Backbone.Collection.extend({
     model: SentenceModel,
     initialize: function(){

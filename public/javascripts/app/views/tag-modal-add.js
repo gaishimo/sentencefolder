@@ -1,6 +1,5 @@
 define([ './modal', '../helper/item_select', '../helper/select2', 'select2',  'backbone'],
     function(ModalView, ItemSelectHelper, Select2Helper){
-  'use strict';
   var TagModalAddView = ModalView.extend({
     id: 'add-tag-modal',
     className: 'edit-tag-modal',

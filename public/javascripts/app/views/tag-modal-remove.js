@@ -1,6 +1,5 @@
 define([ './modal', '../helper/item_select', 'select2',  'backbone'],
     function(ModalView, ItemSelectHelper){
-  'use strict';
   var TagModalRemoveView = ModalView.extend({
     id: 'remove-tag-modal',
     className: 'edit-tag-modal',

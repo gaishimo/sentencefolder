@@ -1,8 +1,5 @@
 define(['../models/app_model', '../helper/slider', '../helper/star', 'backbone'],
     function( AppModel, SliderHelper, StarHelper ){
-  'use strict';
-
-
 
   var StudyingItemView = Backbone.View.extend({
 
