@@ -32,7 +32,7 @@ module.exports = function(){
         ));
       });
       app.configure('development', function(){
-        app.locals({"jsOptimizing": true } );
+        app.locals({"jsOptimizing": false } );
       });
 
       app.configure('prototype', 'production', function(){
