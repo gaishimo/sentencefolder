@@ -1,23 +1,15 @@
-# node-prototype-boilerplate
+# Sentence Folder
 
-This is a template for a prototype of node web application.  This is not for a product but a prototype.
+This is a web application for studying English sentences
 
- It contains below:
+## β version
 
+http://seproto.memorizelanguage.net
 
-+ express
-+ mongoskin
-+ Twitter Bootstrap
+account: guest1 password: ******* (secret)
+
+## Technologies used in this application
++ Node.js (Express + ejs)
 + backbone.js
-+ require.js
-+ underscore
-+ moment
-+ ejs
-+ qunit
-
-## Getting Started
-```
-$ npm install
-$ node app.js
-```
-
++ MongoDB
++ SCSS(Compass)
