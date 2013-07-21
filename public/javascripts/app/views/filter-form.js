@@ -51,12 +51,16 @@ define([
       var $pointRange = $('#range-slider-point');
       var $laststudyRange = $('#range-slider-last-study');
 
-      var vals = {
+      var sliderVals = {
         pointRange: $pointRange.rangeSlider('values'),
         laststudyRange: $laststudyRange.rangeSlider('values')
       };
-      this.unsetRangeSlider();
-      this.setRangeSlider(vals);
+      if(isMobile){
+        //refresh range slider
+        this.unsetRangeSlider();
+        this.setRangeSlider(sliderVals);
+      }
+
     },
 
     render: function(){
