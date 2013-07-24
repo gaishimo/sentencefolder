@@ -1748,7 +1748,6 @@ button.edit-form-save-item{
     box-sizing:border-box;
     border: 1px dotted rgb(200, 160, 110);
     border-radius: 3px;
-    @include prefixed("user-select", "none");
     .icon-question{
       position: absolute;
       font-size: 30px;
